@@ -6,10 +6,11 @@ This is the **user-testing version**. It runs entirely in the browser as a singl
 
 ## Features
 
-- **92 phrase cards** across Basics, Family & people, Pronouns (I, you, he, she, we), Getting around, Shopping & money, Food & drink, Weather, Numbers and Emergencies
+- **98 phrase cards** across Basics, Family & people, Pronouns (I, you, he, she, we), Getting around, Shopping & money, Food & drink, Weather, Numbers and Emergencies
 - **How are you feeling?** one card with 14 one-tap feelings (happy, not happy, sad, hungry, want to eat, not hungry, full, thirsty, tired, exhausted, sleepy, want to rest, want to relax, want to dance), which a local can also tap to answer
 - **Family at a glance:** the "Family" card lists one-tap buttons for husband, wife, child/children, son, daughter, father, mother, sister, brother, older and younger brother and sister, p'oun, uncle, aunt, grandpa and grandma
 - **Pets:** one card with Dog, Cat, Monkey, Bird and Fish buttons
+- **Weather:** one card with Hot day, Sunny day, Cool day, Cloudy day and Rainy day buttons, plus an Umbrella card
 - **Show mode:** large Khmer text, pronunciation and English on one screen
 - **Tap-to-answer replies:** for questions like "How much?" or "Where is the toilet?", the local person taps an answer in Khmer and the traveler sees it in English (prices in riel or dollars, directions, yes/no, places)
 - **Fill-in builders:** "Please take me to ___" (with one-tap Hotel, House, Restaurant, Cafe, Bar, Hospital and Airport buttons right on the phrase) and "Where is ___?" with destinations such as Angkor Wat, the Royal Palace, the airport and the hotel; "This is my ___" (in the I, you, he, she tab) with one-tap friend, boyfriend, girlfriend, husband, wife, child/children, son, daughter, uncle, aunt, grandpa and grandma, plus parents and siblings in the full list; "I am sick" with one-tap symptoms: pain, headache, stomachache, diarrhea, toothache, dizzy and fever

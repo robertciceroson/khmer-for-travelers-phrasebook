@@ -1,0 +1,440 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="Khmer for Travelers Phrasebook: simple Khmer phrases for visitors to Cambodia, with a big-text Show mode and tap-to-answer replies.">
+<meta name="theme-color" content="#1F3C88">
+<meta name="author" content="Robert Son">
+<!-- Copyright (c) 2026 Robert Son. All rights reserved. No license is granted to copy, modify or redistribute this code. -->
+<title>Khmer for Travelers Phrasebook</title>
+<style>
+:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+[hidden]{display:none!important}
+body{margin:0}
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Kantumruy+Pro:wght@400;500;700&family=Moul&display=swap">
+<style>
+:root{
+  --ground:#EDF1F5; --surface:#FFFFFF; --sunk:#E1E7EF; --ink:#15203B; --muted:#4B5873; --line:#D3DBE6;
+  --accent:#1F3C88; --accent-ink:#FFFFFF; --accent-soft:#DCE4F7; --saffron:#E3A018; --saffron-ink:#231A02; --focus:#C8102E;
+  --font:"Kantumruy Pro", "Noto Sans Khmer", "Khmer OS", system-ui, sans-serif;
+  --display:"Moul", "Kantumruy Pro", serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --ground:#0E1424; --surface:#172039; --sunk:#1E2946; --ink:#E6ECF7; --muted:#A5B1C9; --line:#2A3656;
+    --accent:#8FA8F0; --accent-ink:#0B1330; --accent-soft:#223463; --saffron:#F2B73A; --saffron-ink:#231A02; --focus:#FF6B81;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --ground:#0E1424; --surface:#172039; --sunk:#1E2946; --ink:#E6ECF7; --muted:#A5B1C9; --line:#2A3656;
+  --accent:#8FA8F0; --accent-ink:#0B1330; --accent-soft:#223463; --saffron:#F2B73A; --saffron-ink:#231A02; --focus:#FF6B81;
+}
+html,body{height:100%}
+body{background:var(--ground);color:var(--ink);font-family:var(--font);font-size:16px;line-height:1.5;padding-inline:16px}
+*{box-sizing:border-box}
+button,input{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+.app{max-width:560px;margin:0 auto;padding-block:20px 48px;display:flex;flex-direction:column;gap:16px}
+.brand{display:flex;flex-direction:column;gap:2px}
+.brand .km{font-family:var(--display);font-size:30px;line-height:1.5;color:var(--accent)}
+.brand h1{margin:0;font-size:22px;font-weight:700;letter-spacing:-0.01em}
+.brand p{margin:0;color:var(--muted);font-size:15px}
+.searchrow{display:flex;gap:8px}
+.search{flex:1;min-height:50px;border-radius:14px;border:1px solid var(--line);background:var(--surface);padding:0 14px;font-size:16px;min-width:0}
+.iconbtn{flex-shrink:0;width:50px;height:50px;border-radius:14px;border:none;background:var(--accent);color:var(--accent-ink);cursor:pointer;display:grid;place-items:center}
+.iconbtn svg{width:24px;height:24px}
+.iconbtn.listening{background:var(--focus);color:#fff;animation:pulse 1.2s ease-in-out infinite}
+@keyframes pulse{50%{transform:scale(1.06)}}
+@media (prefers-reduced-motion: reduce){.iconbtn.listening{animation:none}}
+.chips{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;margin-inline:-16px;padding-inline:16px;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex-shrink:0;min-height:44px;padding:0 16px;border-radius:22px;border:1px solid var(--line);background:var(--surface);cursor:pointer;font-size:15px;font-weight:500;white-space:nowrap}
+.chip[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink);font-weight:700}
+.status{font-size:14px;color:var(--muted);min-height:1em}
+.list{display:flex;flex-direction:column;gap:10px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:14px 14px 10px;display:flex;flex-direction:column;gap:2px}
+.card .en{font-weight:700;font-size:16px}
+.card .km{font-size:26px;line-height:1.6;color:var(--accent)}
+.card .rom{font-size:15px;color:var(--muted);font-style:italic}
+.card .note{font-size:13px;color:var(--muted)}
+.actions{display:flex;gap:6px;margin-top:6px;flex-wrap:wrap}
+.act{min-height:44px;padding:0 14px;border-radius:12px;border:1px solid var(--line);background:transparent;cursor:pointer;display:inline-flex;align-items:center;gap:6px;font-size:14px;font-weight:600}
+.act svg{width:18px;height:18px}
+.act.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.act.star[aria-pressed="true"]{background:var(--saffron);border-color:var(--saffron);color:var(--saffron-ink)}
+.empty{background:var(--surface);border:1px dashed var(--line);border-radius:18px;padding:18px;color:var(--muted);text-align:center}
+.panel{background:var(--sunk);border-radius:16px;padding:14px 16px;font-size:14px;color:var(--muted);display:flex;flex-direction:column;gap:6px}
+.panel strong{color:var(--ink)}
+.linkbtn{background:none;border:none;color:var(--accent);text-decoration:underline;cursor:pointer;min-height:44px;padding:0 4px;font-size:14px}
+.overlay{position:fixed;inset:0;background:var(--ground);z-index:10;overflow-y:auto;padding:calc(16px + env(safe-area-inset-top,0px)) 16px calc(24px + env(safe-area-inset-bottom,0px))}
+.show{max-width:560px;margin:0 auto;display:flex;flex-direction:column;gap:16px}
+.showcard{background:var(--accent);color:var(--accent-ink);border-radius:24px;padding:28px 20px;text-align:center;display:flex;flex-direction:column;gap:8px}
+.showcard .km{font-size:clamp(40px,11vw,64px);line-height:1.45;font-weight:500}
+.showcard .rom{font-size:19px;font-style:italic;opacity:.9}
+.showcard .en{font-size:17px;font-weight:700;opacity:.9}
+.sectionlabel{font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.replies{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.reply{min-height:64px;border-radius:14px;border:1px solid var(--line);background:var(--surface);cursor:pointer;padding:8px 10px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;text-align:center}
+.reply .rkm{font-size:20px;line-height:1.5}
+.reply .ren{font-size:13px;color:var(--muted)}
+.reply[aria-pressed="true"]{background:var(--saffron);border-color:var(--saffron);color:var(--saffron-ink)}
+.reply[aria-pressed="true"] .ren{color:var(--saffron-ink)}
+.answer{background:var(--saffron);color:var(--saffron-ink);border-radius:18px;padding:16px;text-align:center;font-size:22px;font-weight:700}
+.answer small{display:block;font-size:14px;font-weight:500}
+.customprice{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.customprice input{flex:1;min-width:120px;min-height:48px;border-radius:12px;border:1px solid var(--line);background:var(--surface);padding:0 12px;font-size:18px}
+.showbar{display:flex;gap:8px;flex-wrap:wrap}
+.showbar .act{flex:1;justify-content:center;min-height:50px;font-size:15px}
+.heard{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px 14px;font-size:15px}
+.heard .km{font-size:22px}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(20px + env(safe-area-inset-bottom,0px));background:var(--ink);color:var(--ground);padding:12px 16px;border-radius:14px;font-size:14px;max-width:min(92vw,480px);z-index:20;box-shadow:0 6px 24px rgba(0,0,0,.25)}
+.footer{text-align:center;font-size:13px;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="app" id="app"></div>
+<div id="overlay"></div>
+<div id="toast" class="toast" role="status" hidden></div>
+
+<script>
+(() => {
+  // ---------- Content ----------
+  // Romanization is a simple English-friendly guide, not a formal system. All Khmer is pending native-speaker review.
+  const CATS = [
+    ['all', 'All'], ['saved', 'Saved'], ['basics', 'Basics'], ['around', 'Getting around'],
+    ['shop', 'Shopping & money'], ['food', 'Food & drink'], ['numbers', 'Numbers'], ['help', 'Emergencies']
+  ];
+  const PLACES = [
+    { km: 'សណ្ឋាគារ', rom: 'sonthakear', en: 'the hotel' },
+    { km: 'ព្រលានយន្តហោះ', rom: 'pro-lean yun-hos', en: 'the airport' },
+    { km: 'ផ្សារ', rom: 'phsar', en: 'the market' },
+    { km: 'ផ្សារធំថ្មី', rom: 'phsar thom thmei', en: 'Central Market' },
+    { km: 'អង្គរវត្ត', rom: 'angkor voat', en: 'Angkor Wat' },
+    { km: 'ព្រះបរមរាជវាំង', rom: 'preah borom reachea veang', en: 'the Royal Palace' },
+    { km: 'ចំណតឡានក្រុង', rom: 'chamnat lan krong', en: 'the bus station' },
+    { km: 'ភោជនីយដ្ឋាន', rom: 'phochniyatthan', en: 'a restaurant' },
+    { km: 'មន្ទីរពេទ្យ', rom: 'monti pet', en: 'the hospital' },
+    { km: 'ឱសថស្ថាន', rom: 'osot-sthan', en: 'the pharmacy' },
+    { km: 'ឆ្នេរ', rom: 'chhne', en: 'the beach' },
+    { km: 'បង្គន់', rom: 'bangkon', en: 'the toilet' }
+  ];
+  const KM_DIGITS = '០១២៣៤៥៦៧៨៩';
+  const kmNum = (n) => String(n).replace(/\d/g, (d) => KM_DIGITS[d]);
+  const REPLIES = {
+    yesno: [['បាទ / ចាស', 'baat / chaa', 'Yes'], ['ទេ', 'te', 'No'], ['មិនដឹងទេ', 'min doeng te', "I don't know"]],
+    fine: [['សុខសប្បាយ', 'sok sabay', "I'm fine"], ['ធម្មតា', 'thommada', 'So-so'], ['អរគុណ', 'arkoun', 'Thank you']],
+    directions: [['ទៅត្រង់', 'tov trong', 'Go straight'], ['បត់ឆ្វេង', 'bot chhveng', 'Turn left'], ['បត់ស្តាំ', 'bot sdam', 'Turn right'],
+      ['នៅជិតនេះ', 'nov chit nih', "It's near here"], ['នៅឆ្ងាយ', 'nov chhngay', "It's far"], ['នៅទីនោះ', 'nov ti noh', "It's over there"]],
+    far: [['ជិត', 'chit', 'Near'], ['ឆ្ងាយ', 'chhngay', 'Far'], ['មិនឆ្ងាយទេ', 'min chhngay te', 'Not far'], ['មិនដឹងទេ', 'min doeng te', "I don't know"]],
+    have: [['មាន', 'mean', 'Yes, we have it'], ['អត់មានទេ', 'ot mean te', "We don't have it"], ['ចាំបន្តិច', 'cham bontech', 'Wait a moment']],
+    places: PLACES.map((p) => [p.km, p.rom, p.en.replace(/^the /, '').replace(/^a /, '').replace(/^./, (c) => c.toUpperCase())]),
+    price: [
+      ...[500, 1000, 2000, 5000, 10000].map((n) => [kmNum(n.toLocaleString('en-US')) + ' រៀល', n.toLocaleString('en-US') + ' riel', n.toLocaleString('en-US') + ' riel']),
+      ...[1, 2, 3, 5, 10, 20].map((n) => [kmNum(n) + ' ដុល្លារ', n + ' dollar' + (n > 1 ? 's' : ''), '$' + n])
+    ]
+  };
+  const P = (cat, en, km, rom, extra) => Object.assign({ cat, en, km, rom }, extra || {});
+  const PHRASES = [
+    P('basics', 'Hello', 'សួស្តី', 'suosdei'),
+    P('basics', 'Hello (respectful, to elders or officials)', 'ជំរាបសួរ', 'chum reap suor', { note: 'Say it with palms pressed together at chest height (sampeah).' }),
+    P('basics', 'Goodbye', 'លាហើយ', 'lea haeuy'),
+    P('basics', 'Goodbye (respectful)', 'ជំរាបលា', 'chum reap lea'),
+    P('basics', 'Thank you', 'អរគុណ', 'arkoun'),
+    P('basics', 'Thank you very much', 'អរគុណច្រើន', 'arkoun chraen'),
+    P('basics', 'Yes (said by a man)', 'បាទ', 'baat', { note: 'Men say baat, women say chaa.' }),
+    P('basics', 'Yes (said by a woman)', 'ចាស', 'chaa', { note: 'Women say chaa, men say baat.' }),
+    P('basics', 'No', 'ទេ', 'te'),
+    P('basics', 'Sorry / Excuse me', 'សុំទោស', 'som tos'),
+    P('basics', 'No problem', 'មិនអីទេ', 'min ey te'),
+    P('basics', 'How are you?', 'សុខសប្បាយជាទេ?', 'sok sabay chea te?', { replies: 'fine' }),
+    P('basics', "I'm fine", 'ខ្ញុំសុខសប្បាយ', 'khnhom sok sabay'),
+    P('basics', 'My name is ___', 'ខ្ញុំឈ្មោះ___', 'khnhom chhmuoh ___'),
+    P('basics', "I don't understand", 'ខ្ញុំមិនយល់ទេ', 'khnhom min yol te'),
+    P('basics', 'Do you speak English?', 'អ្នកចេះនិយាយភាសាអង់គ្លេសទេ?', 'neak cheh niyeay pheasa angkles te?', { replies: 'yesno' }),
+    P('basics', 'Please speak slowly', 'សូមនិយាយយឺតៗ', 'som niyeay yeut yeut'),
+
+    P('around', 'Where are you going?', 'ទៅណា?', 'tov na?', { replies: 'places', note: 'Tuk-tuk drivers often ask this. Show it to someone to let them tap where they are going.' }),
+    P('around', 'I am going to ___', 'ខ្ញុំទៅ___', 'khnhom tov ___', { builder: true }),
+    P('around', 'Please take me to ___', 'សូមជូនខ្ញុំទៅ___', 'som choun khnhom tov ___', { builder: true, note: 'Handy for tuk-tuk and taxi drivers.' }),
+    P('around', 'Where is ___?', '___នៅឯណា?', '___ nov ae na?', { builder: true, replies: 'directions' }),
+    P('around', 'Where is the toilet?', 'បង្គន់នៅឯណា?', 'bangkon nov ae na?', { replies: 'directions' }),
+    P('around', 'Is it far?', 'ឆ្ងាយទេ?', 'chhngay te?', { replies: 'far' }),
+    P('around', 'Go straight', 'ទៅត្រង់', 'tov trong'),
+    P('around', 'Turn left', 'បត់ឆ្វេង', 'bot chhveng'),
+    P('around', 'Turn right', 'បត់ស្តាំ', 'bot sdam'),
+    P('around', 'Stop here', 'ឈប់នៅទីនេះ', 'chhob nov ti nih'),
+    P('around', 'Please drive slowly', 'សូមបើកយឺតៗ', 'som baek yeut yeut'),
+
+    P('shop', 'How much?', 'ប៉ុន្មាន?', 'ponman?', { replies: 'price' }),
+    P('shop', 'How much is this?', 'នេះថ្លៃប៉ុន្មាន?', 'nih thlai ponman?', { replies: 'price' }),
+    P('shop', 'Too expensive', 'ថ្លៃពេក', 'thlai pek'),
+    P('shop', 'Can you lower the price?', 'អាចចុះថ្លៃបានទេ?', 'ach choh thlai ban te?', { replies: 'price' }),
+    P('shop', 'Do you have this?', 'មានអាហ្នឹងទេ?', 'mean a-nueng te?', { replies: 'have' }),
+    P('shop', "I'll take it", 'ខ្ញុំយកមួយនេះ', 'khnhom yok muoy nih'),
+    P('shop', "I'm just looking", 'ខ្ញុំគ្រាន់តែមើល', 'khnhom kroan tae meul'),
+
+    P('food', 'Delicious!', 'ឆ្ងាញ់!', 'chhnganh!'),
+    P('food', 'Not spicy, please', 'កុំឲ្យហឹរ', 'kom aoy hoeur'),
+    P('food', 'A little spicy', 'ហឹរបន្តិច', 'hoeur bontech'),
+    P('food', 'Water, please', 'សុំទឹក', 'som tuk'),
+    P('food', 'No ice, please', 'កុំដាក់ទឹកកក', 'kom dak tuk kak'),
+    P('food', 'I am vegetarian', 'ខ្ញុំតមសាច់', 'khnhom tam sach'),
+    P('food', 'The bill, please', 'សុំគិតលុយ', 'som kit luy', { replies: 'price' }),
+
+    P('help', 'Help!', 'ជួយផង!', 'chuoy phong!'),
+    P('help', 'Call the police', 'ហៅប៉ូលីស', 'hav polis'),
+    P('help', 'I need a doctor', 'ខ្ញុំត្រូវការគ្រូពេទ្យ', 'khnhom trov kar kru pet'),
+    P('help', 'Where is the hospital?', 'មន្ទីរពេទ្យនៅឯណា?', 'monti pet nov ae na?', { replies: 'directions' }),
+    P('help', 'I am sick', 'ខ្ញុំឈឺ', 'khnhom chheu'),
+    P('help', 'I am lost', 'ខ្ញុំវង្វេងផ្លូវ', 'khnhom vongveng phlauv')
+  ];
+  [[1, 'មួយ', 'muoy'], [2, 'ពីរ', 'pii'], [3, 'បី', 'bei'], [4, 'បួន', 'buon'], [5, 'ប្រាំ', 'pram'], [6, 'ប្រាំមួយ', 'pram muoy'],
+   [7, 'ប្រាំពីរ', 'pram pii'], [8, 'ប្រាំបី', 'pram bei'], [9, 'ប្រាំបួន', 'pram buon'], [10, 'ដប់', 'dop'], [20, 'ម្ភៃ', 'mphei'],
+   [50, 'ហាសិប', 'ha-sep'], [100, 'មួយរយ', 'muoy roy'], [1000, 'មួយពាន់', 'muoy poan'], [10000, 'មួយម៉ឺន', 'muoy meun']]
+    .forEach(([n, km, rom]) => PHRASES.push(P('numbers', n.toLocaleString('en-US'), km, rom, { numeral: kmNum(n) })));
+  PHRASES.forEach((p, i) => { p.id = 'p' + i; });
+
+  // ---------- State ----------
+  const KEY = 'khmer-phrasebook.v1';
+  let saved = {};
+  try { saved = JSON.parse(localStorage.getItem(KEY) || '{}').saved || {}; } catch (e) { saved = {}; }
+  const persist = () => { try { localStorage.setItem(KEY, JSON.stringify({ saved })); } catch (e) {} };
+  let cat = 'all', query = '', ranked = null, heardNote = '';
+  const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+
+  // ---------- Speech ----------
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  let khmerVoice = null;
+  const synth = window.speechSynthesis;
+  function findVoice() {
+    try { khmerVoice = (synth && synth.getVoices() || []).find((v) => /^km/i.test(v.lang)) || null; } catch (e) { khmerVoice = null; }
+  }
+  if (synth) { findVoice(); try { synth.addEventListener('voiceschanged', () => { const had = !!khmerVoice; findVoice(); if (!!khmerVoice !== had) render(); }); } catch (e) {} }
+  function speak(text) {
+    if (!khmerVoice) { toast('This device has no Khmer voice. Show the Khmer text instead, or read the pronunciation.'); return; }
+    try { synth.cancel(); const u = new SpeechSynthesisUtterance(text.replace(/___/g, '')); u.voice = khmerVoice; u.lang = khmerVoice.lang; u.rate = 0.85; synth.speak(u); }
+    catch (e) { toast('Audio couldn’t play on this device.'); }
+  }
+  function listen(lang, onText, onEnd) {
+    if (!SR) { toast('Voice input isn’t supported in this browser. Try Chrome on Android or a computer.'); onEnd && onEnd(); return null; }
+    const r = new SR();
+    r.lang = lang; r.interimResults = false; r.maxAlternatives = 3;
+    r.onresult = (ev) => { const alts = Array.from(ev.results[0]).map((a) => a.transcript); onText(alts); };
+    r.onerror = (ev) => {
+      const msg = ev.error === 'not-allowed' || ev.error === 'service-not-allowed' ? 'Microphone access is blocked. Allow the microphone for this site, or type instead.'
+        : ev.error === 'language-not-supported' ? 'This browser can’t listen in that language. Ask them to tap an answer instead.'
+        : ev.error === 'no-speech' ? 'I didn’t hear anything. Tap the mic and try again.'
+        : ev.error === 'network' ? 'Voice needs an internet connection.' : 'Voice input stopped. Try again, or type instead.';
+      toast(msg);
+    };
+    r.onend = () => { onEnd && onEnd(); };
+    try { r.start(); } catch (e) { toast('Voice input couldn’t start. Try again.'); onEnd && onEnd(); return null; }
+    return r;
+  }
+
+  // ---------- Matching ----------
+  const STOP = new Set(['a', 'an', 'the', 'is', 'are', 'to', 'please', 'i', 'you', 'do', 'can', 'me', 'my', 'it', 'this', 'how', 'in', 'khmer', 'say']);
+  const words = (s) => String(s).toLowerCase().replace(/[^a-z0-9\s']/g, ' ').split(/\s+/).filter(Boolean);
+  function rankEnglish(text) {
+    const q = words(text); const qk = q.filter((w) => !STOP.has(w));
+    return PHRASES.map((p) => {
+      const pw = words(p.en + ' ' + p.rom);
+      let score = 0;
+      q.forEach((w) => { if (pw.includes(w)) score += STOP.has(w) ? 0.3 : 2; });
+      if (p.en.toLowerCase().replace(/[^a-z ]/g, '').trim() === q.join(' ')) score += 5;
+      if (qk.length && qk.every((w) => pw.includes(w))) score += 2;
+      return { p, score };
+    }).filter((x) => x.score >= 2).sort((a, b) => b.score - a.score).map((x) => x.p);
+  }
+  const squash = (s) => String(s).replace(/[\s?!.,/]|___/g, '');
+  function bigrams(s) { const a = []; for (let i = 0; i < s.length - 1; i++) a.push(s.slice(i, i + 2)); return a; }
+  function dice(a, b) {
+    a = squash(a); b = squash(b); if (!a || !b) return 0;
+    if (a === b) return 1; if (a.includes(b) || b.includes(a)) return 0.9;
+    const x = bigrams(a), y = bigrams(b); if (!x.length || !y.length) return 0;
+    let hit = 0; const pool = y.slice(); x.forEach((g) => { const i = pool.indexOf(g); if (i > -1) { hit++; pool.splice(i, 1); } });
+    return (2 * hit) / (x.length + y.length);
+  }
+
+  // ---------- Views ----------
+  const I = {
+    mic: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg>',
+    play: '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>',
+    show: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>',
+    star: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l2.8 5.7 6.2.9-4.5 4.4 1 6.2L12 17.3 6.5 20.2l1-6.2L3 9.6l6.2-.9z"/></svg>'
+  };
+
+  function visible() {
+    let list = ranked || PHRASES;
+    if (!ranked && query) {
+      const q = query.toLowerCase();
+      list = PHRASES.filter((p) => (p.en + ' ' + p.rom).toLowerCase().includes(q) || p.km.includes(query));
+    }
+    if (cat === 'saved') list = list.filter((p) => saved[p.id]);
+    else if (cat !== 'all') list = list.filter((p) => p.cat === cat);
+    return list;
+  }
+
+  function card(p) {
+    return `<article class="card">
+      <span class="en">${esc(p.en)}</span>
+      <span class="km" lang="km">${p.numeral ? p.numeral + ' · ' : ''}${esc(p.km)}</span>
+      <span class="rom">${esc(p.rom)}</span>
+      ${p.note ? `<span class="note">${esc(p.note)}</span>` : ''}
+      <div class="actions">
+        <button type="button" class="act primary" data-show="${p.id}">${I.show} Show${p.replies ? ' & ask' : ''}</button>
+        ${khmerVoice ? `<button type="button" class="act" data-play="${p.id}">${I.play} Play</button>` : ''}
+        <button type="button" class="act star" data-star="${p.id}" aria-pressed="${!!saved[p.id]}" aria-label="${saved[p.id] ? 'Remove from saved' : 'Save phrase'}">${I.star}${saved[p.id] ? 'Saved' : 'Save'}</button>
+      </div></article>`;
+  }
+
+  function render() {
+    const list = visible();
+    const app = document.getElementById('app');
+    const active = document.activeElement && document.activeElement.id;
+    app.innerHTML = `
+      <header class="brand">
+        <span class="km" lang="km">សួស្តី <span style="font-family:var(--font);font-size:16px;color:var(--muted)">(suosdei, hello)</span></span>
+        <h1>Khmer for Travelers Phrasebook</h1>
+        <p>Tap <strong>Show</strong> to hold a phrase up for a driver, vendor or waiter.</p>
+      </header>
+      <div class="searchrow">
+        <label for="q" style="position:absolute;left:-9999px">Search phrases</label>
+        <input id="q" class="search" type="search" placeholder="Search in English, e.g. how much" value="${esc(query)}" autocomplete="off">
+        ${SR ? `<button type="button" id="micEn" class="iconbtn" aria-label="Say a phrase in English">${I.mic}</button>` : ''}
+      </div>
+      <div class="status" id="status" role="status">${esc(heardNote)}</div>
+      <div class="chips" role="group" aria-label="Categories">
+        ${CATS.map(([k, l]) => `<button type="button" class="chip" data-cat="${k}" aria-pressed="${cat === k}">${l}${k === 'saved' ? ' (' + Object.keys(saved).length + ')' : ''}</button>`).join('')}
+      </div>
+      <div class="list">${list.length ? list.map(card).join('') : `<div class="empty">${cat === 'saved' ? 'No saved phrases yet. Tap Save on any phrase to keep it here.' : 'No phrases match. Try another word, like "hello", "price" or "toilet".'}</div>`}</div>
+      <div class="panel">
+        <strong>Good to know</strong>
+        <span>Pronunciation guides are approximate. Listen to locals and copy their tone.</span>
+        <span>U.S. dollars are widely accepted in Cambodia, with Cambodian riel used for small change. Check the current exchange rate before you go.</span>
+        <span>${khmerVoice ? 'This device can read phrases aloud in Khmer.' : 'This device has no Khmer voice, so phrases show as text. Use Show to let people read them.'}${SR ? ' Tap the microphone to say a phrase in English.' : ''}</span>
+        <span>Khmer translations are being reviewed by native speakers. Spot a mistake? Email rson226@gmail.com.</span>
+      </div>
+      <p class="footer">Your saved phrases stay on this device. © 2026 Robert Son. All rights reserved.</p>`;
+    if (active === 'q') { const q = document.getElementById('q'); q.focus(); q.setSelectionRange(q.value.length, q.value.length); }
+  }
+
+  // ---------- Show mode ----------
+  let showState = null;
+  function phraseText(p, place) {
+    if (!p.builder) return { km: p.km, rom: p.rom, en: p.en };
+    if (!place) return { km: p.km, rom: p.rom, en: p.en };
+    return {
+      km: p.km.replace('___', place.km),
+      rom: p.rom.replace('___', place.rom),
+      en: p.en.replace('___', place.en)
+    };
+  }
+  function renderShow() {
+    const { p, place, answer, heard } = showState;
+    const t = phraseText(p, place);
+    const replies = p.replies ? REPLIES[p.replies] : null;
+    document.getElementById('overlay').innerHTML = `<div class="overlay" role="dialog" aria-modal="true" aria-label="Show phrase">
+      <div class="show">
+        <button type="button" class="act" data-action="closeShow" style="align-self:flex-start">← Back to phrases</button>
+        <div class="showcard">
+          <span class="km" lang="km">${p.numeral ? p.numeral + '<br>' : ''}${esc(t.km)}</span>
+          <span class="rom">${esc(t.rom)}</span>
+          <span class="en">${esc(t.en)}</span>
+        </div>
+        ${p.builder ? `<span class="sectionlabel">Choose a place</span>
+          <div class="replies">${PLACES.map((pl, i) => `<button type="button" class="reply" data-place="${i}" aria-pressed="${place === pl}"><span class="rkm" lang="km">${esc(pl.km)}</span><span class="ren">${esc(pl.en.replace(/^(the|a) /, ''))}</span></button>`).join('')}</div>` : ''}
+        <div class="showbar">
+          ${khmerVoice ? `<button type="button" class="act primary" data-action="playShow">${I.play} Play in Khmer</button>` : ''}
+          ${replies && SR ? `<button type="button" class="act" data-action="listenKm" id="listenKm">${I.mic} Listen to reply (beta)</button>` : ''}
+        </div>
+        ${heard ? `<div class="heard"><span class="sectionlabel">Heard</span><div class="km" lang="km">${esc(heard.text)}</div><div>${heard.match ? 'Best match: <strong>' + esc(heard.match) + '</strong>' : 'No confident match. Ask them to tap an answer below.'}</div></div>` : ''}
+        ${answer ? `<div class="answer" role="status"><span lang="km">${esc(answer.km)}</span><small>${esc(answer.en)}</small></div>` : ''}
+        ${replies ? `<span class="sectionlabel">For the person you’re asking: tap your answer · សូមចុចចម្លើយរបស់អ្នក</span>
+          <div class="replies">${replies.map(([km, rom, en], i) => `<button type="button" class="reply" data-reply="${i}" aria-pressed="${!!answer && answer.i === i}"><span class="rkm" lang="km">${esc(km)}</span><span class="ren">${esc(en)}</span></button>`).join('')}</div>
+          ${p.replies === 'price' ? `<div class="customprice"><label for="priceIn" class="sectionlabel" style="width:100%">Or type the price · វាយតម្លៃ</label>
+            <input id="priceIn" type="number" inputmode="decimal" min="0" placeholder="e.g. 3">
+            <button type="button" class="act primary" data-action="priceUsd">$ dollars</button>
+            <button type="button" class="act primary" data-action="priceRiel">៛ riel</button></div>` : ''}` : ''}
+      </div></div>`;
+  }
+  function openShow(id) {
+    const p = PHRASES.find((x) => x.id === id); if (!p) return;
+    showState = { p, place: null, answer: null, heard: null };
+    renderShow();
+    const b = document.querySelector('#overlay [data-action="closeShow"]'); b && b.focus();
+  }
+
+  // ---------- Toast ----------
+  let toastTimer = null;
+  function toast(msg) { const t = document.getElementById('toast'); t.textContent = msg; t.hidden = false; clearTimeout(toastTimer); toastTimer = setTimeout(() => { t.hidden = true; }, 4500); }
+
+  // ---------- Events ----------
+  let micOn = null;
+  document.addEventListener('click', (ev) => {
+    const b = ev.target.closest('button'); if (!b) return;
+    if (b.dataset.cat) { cat = b.dataset.cat; render(); return; }
+    if (b.dataset.show) { openShow(b.dataset.show); return; }
+    if (b.dataset.play) { const p = PHRASES.find((x) => x.id === b.dataset.play); p && speak(p.km); return; }
+    if (b.dataset.star) { const id = b.dataset.star; if (saved[id]) delete saved[id]; else saved[id] = 1; persist(); render(); return; }
+    if (b.dataset.place !== undefined) { showState.place = PLACES[Number(b.dataset.place)]; renderShow(); return; }
+    if (b.dataset.reply !== undefined) {
+      const i = Number(b.dataset.reply); const r = REPLIES[showState.p.replies][i];
+      showState.answer = { i, km: r[0], en: r[2] }; showState.heard = null; renderShow();
+      const a = document.querySelector('.answer'); a && a.scrollIntoView({ block: 'center', behavior: 'smooth' });
+      return;
+    }
+    if (b.id === 'micEn') {
+      if (micOn) { try { micOn.stop(); } catch (e) {} return; }
+      b.classList.add('listening'); heardNote = 'Listening… say a phrase in English.';
+      document.getElementById('status').textContent = heardNote;
+      micOn = listen('en-US', (alts) => {
+        const text = alts[0] || ''; query = text; ranked = rankEnglish(alts.join(' '));
+        cat = 'all';
+        heardNote = ranked.length ? `Heard “${text}”. Best matches first.` : `Heard “${text}”. No close match. Try fewer words, like “how much”.`;
+        if (!ranked.length) ranked = null;
+        render();
+        if (ranked && ranked.length) { const first = document.querySelector('[data-show]'); first && first.focus(); }
+      }, () => { micOn = null; const m = document.getElementById('micEn'); m && m.classList.remove('listening'); if (heardNote.startsWith('Listening')) { heardNote = ''; const s = document.getElementById('status'); s && (s.textContent = ''); } });
+      return;
+    }
+    const a = b.dataset.action;
+    if (a === 'closeShow') { showState = null; document.getElementById('overlay').innerHTML = ''; try { synth && synth.cancel(); } catch (e) {} return; }
+    if (a === 'playShow') { const t = phraseText(showState.p, showState.place); speak(t.km); return; }
+    if (a === 'priceUsd' || a === 'priceRiel') {
+      const v = Number((document.getElementById('priceIn') || {}).value);
+      if (!(v > 0)) { toast('Type a price first.'); return; }
+      const shown = v.toLocaleString('en-US');
+      showState.answer = a === 'priceUsd' ? { i: -1, km: kmNum(shown) + ' ដុល្លារ', en: '$' + shown } : { i: -1, km: kmNum(shown) + ' រៀល', en: shown + ' riel' };
+      renderShow(); return;
+    }
+    if (a === 'listenKm') {
+      const btn = document.getElementById('listenKm'); btn && btn.classList.add('listening');
+      listen('km-KH', (alts) => {
+        const replies = REPLIES[showState.p.replies];
+        let best = null, bestScore = 0;
+        alts.forEach((t) => replies.forEach((r, i) => { const s = dice(t, r[0]); if (s > bestScore) { bestScore = s; best = { i, r }; } }));
+        showState.heard = { text: alts[0] || '', match: bestScore >= 0.5 ? best.r[2] : null };
+        showState.answer = bestScore >= 0.5 ? { i: best.i, km: best.r[0], en: best.r[2] } : null;
+        renderShow();
+      }, () => { const x = document.getElementById('listenKm'); x && x.classList.remove('listening'); });
+    }
+  });
+  document.addEventListener('input', (ev) => {
+    if (ev.target.id !== 'q') return;
+    query = ev.target.value; ranked = query.trim().split(/\s+/).length > 1 ? rankEnglish(query) : null;
+    if (ranked && !ranked.length) ranked = null;
+    heardNote = ''; render();
+  });
+  document.addEventListener('keydown', (ev) => { if (ev.key === 'Escape' && showState) { showState = null; document.getElementById('overlay').innerHTML = ''; } });
+
+  render();
+})();
+</script>
+</body>
+</html>

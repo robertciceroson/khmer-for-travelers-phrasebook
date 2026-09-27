@@ -210,7 +210,7 @@ button,input{font:inherit;color:inherit}
       ['នៅជិតនេះ', 'nov chit nih', "It's near here"], ['នៅឆ្ងាយ', 'nov chhngay', "It's far"], ['នៅទីនោះ', 'nov ti noh', "It's over there"]],
     far: [['ជិត', 'chit', 'Near'], ['ឆ្ងាយ', 'chhngay', 'Far'], ['មិនឆ្ងាយទេ', 'min chhngay te', 'Not far'], ['មិនដឹងទេ', 'min doeng te', "I don't know"]],
     feelings: FEELINGS_REPLIES,
-    married: [['បាទ / ចាស', 'baat / chaa', 'Yes'], ['ទេ', 'te', 'No'], ['នៅទេ', 'nov te', 'Not yet'], ['មានសង្សារ', 'mean sangsar', 'I have a partner']],
+    married: [['បាទ / ចាស', 'baat / chaa', 'Yes'], ['ទេ', 'te', 'No']],
     kids: [['មាន', 'mean', 'Yes'], ['អត់មានទេ', 'ot mean te', 'No'], ['នៅទេ', 'nov te', 'Not yet']],
     have: [['មាន', 'mean', 'Yes, we have it'], ['អត់មានទេ', 'ot mean te', "We don't have it"], ['ចាំបន្តិច', 'cham bontech', 'Wait a moment']],
     places: PLACES.map((p) => [p.km, p.rom, p.en.replace(/^the /, '').replace(/^a /, '').replace(/^./, (c) => c.toUpperCase())]),
@@ -391,7 +391,7 @@ button,input{font:inherit;color:inherit}
       <span class="rom">${esc(p.rom)}</span>
       ${p.note ? `<span class="note">${esc(p.note)}</span>` : ''}
       ${(p.builder === 'places' && /take me to/i.test(p.en)) || p.builder === 'symptoms' || p.builder === 'people' || p.builder === 'family' || p.builder === 'feelings' || p.builder === 'pets' ? `<div class="quick" role="group" aria-label="${p.builder === 'symptoms' ? 'Symptoms' : p.builder === 'people' ? 'People' : p.builder === 'family' ? 'Family members' : p.builder === 'feelings' ? 'Feelings' : p.builder === 'pets' ? 'Animals' : 'Quick destinations'}">${(p.builder === 'symptoms' ? SYMPTOMS : p.builder === 'people' ? PEOPLE.slice(0, 12) : p.builder === 'family' ? FAMILY : p.builder === 'feelings' ? FEELINGS : p.builder === 'pets' ? PETS : PLACES.slice(0, QUICK_PLACES)).map((pl, i) => `<button type="button" class="qchip" data-quick="${p.id}:${i}"><span lang="km">${esc(pl.km)}</span> ${esc(pl.label || pl.en.replace(/^(the|a) /, '').replace(/^./, (c) => c.toUpperCase()))}</button>`).join('')}</div>` : ''}
-      ${p.replies === 'married' || p.replies === 'kids' ? `<div class="quick" role="group" aria-label="Answers">${REPLIES[p.replies].map(([km, rom, en], i) => `<button type="button" class="qchip" data-qreply="${p.id}:${i}"><span lang="km">${esc(km)}</span> ${esc(en)}</button>`).join('')}</div>` : ''}
+      ${p.replies === 'married' ? `<div class="quick" role="group" aria-label="Answers">${REPLIES[p.replies].map(([km, rom, en], i) => `<button type="button" class="qchip" data-qreply="${p.id}:${i}"><span lang="km">${esc(km)}</span> ${esc(en)}</button>`).join('')}</div>` : ''}
       <div class="actions">
         <button type="button" class="act primary" data-show="${p.id}">${I.show} Show${p.replies ? ' & ask' : ''}</button>
         ${khmerVoice ? `<button type="button" class="act" data-play="${p.id}">${I.play} Play</button>` : ''}

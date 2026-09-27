@@ -6,10 +6,10 @@ This is the **user-testing version**. It runs entirely in the browser as a singl
 
 ## Features
 
-- **82 phrases** across Basics, Family & people, Getting around, Shopping & money, Food & drink, Numbers and Emergencies
+- **94 phrases** across Basics, Family & people, Pronouns (I, you, he, she, we), Getting around, Shopping & money, Food & drink, Numbers and Emergencies
 - **Show mode:** large Khmer text, pronunciation and English on one screen
 - **Tap-to-answer replies:** for questions like "How much?" or "Where is the toilet?", the local person taps an answer in Khmer and the traveler sees it in English (prices in riel or dollars, directions, yes/no, places)
-- **Fill-in builders:** "Please take me to ___" and "Where is ___?" with destinations such as Angkor Wat, the Royal Palace, the airport and the hotel; "This is my ___" with husband, wife, girlfriend/boyfriend, friend, siblings, parents and children
+- **Fill-in builders:** "Please take me to ___" (with one-tap Hotel, House, Restaurant, Cafe, Bar, Hospital and Airport buttons right on the phrase) and "Where is ___?" with destinations such as Angkor Wat, the Royal Palace, the airport and the hotel; "This is my ___" with husband, wife, girlfriend/boyfriend, friend, siblings, parents and children
 - **Search** in English, pronunciation or Khmer, plus **Saved** phrases kept on the device
 - **Voice (where supported):** say a phrase in English to find it; hear phrases in Khmer if the device has a Khmer voice; experimental listening for a spoken Khmer reply
 

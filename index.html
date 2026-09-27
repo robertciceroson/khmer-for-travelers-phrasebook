@@ -211,6 +211,7 @@ button,input{font:inherit;color:inherit}
     far: [['ជិត', 'chit', 'Near'], ['ឆ្ងាយ', 'chhngay', 'Far'], ['មិនឆ្ងាយទេ', 'min chhngay te', 'Not far'], ['មិនដឹងទេ', 'min doeng te', "I don't know"]],
     feelings: FEELINGS_REPLIES,
     married: [['បាទ / ចាស', 'baat / chaa', 'Yes'], ['ទេ', 'te', 'No']],
+    has: [['មាន', 'mean', 'Yes'], ['អត់មានទេ', 'ot mean te', 'No']],
     kids: [['មាន', 'mean', 'Yes'], ['អត់មានទេ', 'ot mean te', 'No'], ['នៅទេ', 'nov te', 'Not yet']],
     have: [['មាន', 'mean', 'Yes, we have it'], ['អត់មានទេ', 'ot mean te', "We don't have it"], ['ចាំបន្តិច', 'cham bontech', 'Wait a moment']],
     places: PLACES.map((p) => [p.km, p.rom, p.en.replace(/^the /, '').replace(/^a /, '').replace(/^./, (c) => c.toUpperCase())]),
@@ -227,9 +228,6 @@ button,input{font:inherit;color:inherit}
     P('basics', 'Goodbye (respectful)', 'ជំរាបលា', 'chum reap lea'),
     P('basics', 'Thank you', 'អរគុណ', 'arkoun'),
     P('basics', 'Thank you very much', 'អរគុណច្រើន', 'arkoun chraen'),
-    P('basics', 'Yes (said by a man)', 'បាទ', 'baat', { note: 'Men say baat, women say chaa.' }),
-    P('basics', 'Yes (said by a woman)', 'ចាស', 'chaa', { note: 'Women say chaa, men say baat.' }),
-    P('basics', 'No', 'ទេ', 'te'),
     P('basics', 'Sorry / Excuse me', 'សុំទោស', 'som tos'),
     P('basics', 'No problem', 'មិនអីទេ', 'min ey te'),
     P('basics', 'How are you?', 'សុខសប្បាយជាទេ?', 'sok sabay chea te?', { replies: 'fine' }),
@@ -246,6 +244,10 @@ button,input{font:inherit;color:inherit}
     P('people', 'Girlfriend / Boyfriend', 'សង្សារ', 'sangsar', { note: 'One word covers both. Khmer doesn\u2019t mark the gender here.' }),
     P('people', 'Friend', 'មិត្តភក្តិ', 'mitt pheak'),
     P('people', 'Are you married?', 'អ្នករៀបការហើយឬនៅ?', 'neak riep kar haeuy reu nov?', { replies: 'married' }),
+    P('people', 'Yes (said by a man)', 'បាទ', 'baat', { note: 'Men say baat, women say chaa.' }),
+    P('people', 'Yes (said by a woman)', 'ចាស', 'chaa', { note: 'Women say chaa, men say baat.' }),
+    P('people', 'No', 'ទេ', 'te'),
+    P('people', 'Do you have a family?', 'អ្នកមានគ្រួសារទេ?', 'neak mean kruosar te?', { replies: 'has' }),
     P('people', 'Do you have children?', 'អ្នកមានកូនទេ?', 'neak mean kaun te?', { replies: 'kids' }),
     P('people', 'Bong (polite way to address someone a bit older)', 'បង', 'bong', { note: 'Cambodians often call a driver, vendor or waiter bong. It\u2019s friendly and respectful.' }),
     P('pronouns', 'I / me', 'ខ្ញុំ', 'khnhom', { note: 'Polite and works in every situation.' }),
@@ -391,7 +393,7 @@ button,input{font:inherit;color:inherit}
       <span class="rom">${esc(p.rom)}</span>
       ${p.note ? `<span class="note">${esc(p.note)}</span>` : ''}
       ${(p.builder === 'places' && /take me to/i.test(p.en)) || p.builder === 'symptoms' || p.builder === 'people' || p.builder === 'family' || p.builder === 'feelings' || p.builder === 'pets' ? `<div class="quick" role="group" aria-label="${p.builder === 'symptoms' ? 'Symptoms' : p.builder === 'people' ? 'People' : p.builder === 'family' ? 'Family members' : p.builder === 'feelings' ? 'Feelings' : p.builder === 'pets' ? 'Animals' : 'Quick destinations'}">${(p.builder === 'symptoms' ? SYMPTOMS : p.builder === 'people' ? PEOPLE.slice(0, 12) : p.builder === 'family' ? FAMILY : p.builder === 'feelings' ? FEELINGS : p.builder === 'pets' ? PETS : PLACES.slice(0, QUICK_PLACES)).map((pl, i) => `<button type="button" class="qchip" data-quick="${p.id}:${i}"><span lang="km">${esc(pl.km)}</span> ${esc(pl.label || pl.en.replace(/^(the|a) /, '').replace(/^./, (c) => c.toUpperCase()))}</button>`).join('')}</div>` : ''}
-      ${p.replies === 'married' ? `<div class="quick" role="group" aria-label="Answers">${REPLIES[p.replies].map(([km, rom, en], i) => `<button type="button" class="qchip" data-qreply="${p.id}:${i}"><span lang="km">${esc(km)}</span> ${esc(en)}</button>`).join('')}</div>` : ''}
+      ${false ? `<div class="quick" role="group" aria-label="Answers">${REPLIES[p.replies].map(([km, rom, en], i) => `<button type="button" class="qchip" data-qreply="${p.id}:${i}"><span lang="km">${esc(km)}</span> ${esc(en)}</button>`).join('')}</div>` : ''}
       <div class="actions">
         <button type="button" class="act primary" data-show="${p.id}">${I.show} Show${p.replies ? ' & ask' : ''}</button>
         ${khmerVoice ? `<button type="button" class="act" data-play="${p.id}">${I.play} Play</button>` : ''}

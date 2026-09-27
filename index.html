@@ -131,22 +131,24 @@ button,input{font:inherit;color:inherit}
   ];
   const QUICK_PLACES = 7;
   const PEOPLE = [
+    { km: 'មិត្តភក្តិ', rom: 'mitt pheak', en: 'friend' },
+    { km: 'សង្សារ', rom: 'sangsar', en: 'boyfriend' },
+    { km: 'សង្សារ', rom: 'sangsar', en: 'girlfriend' },
     { km: 'ប្ដី', rom: 'pdei', en: 'husband' },
     { km: 'ប្រពន្ធ', rom: 'prapun', en: 'wife' },
-    { km: 'សង្សារ', rom: 'sangsar', en: 'girlfriend / boyfriend' },
-    { km: 'មិត្តភក្តិ', rom: 'mitt pheak', en: 'friend' },
-    { km: 'បងប្រុស', rom: 'bong pros', en: 'older brother' },
-    { km: 'ប្អូនប្រុស', rom: 'p\u2019oun pros', en: 'younger brother' },
-    { km: 'បងស្រី', rom: 'bong srei', en: 'older sister' },
-    { km: 'ប្អូនស្រី', rom: 'p\u2019oun srei', en: 'younger sister' },
-    { km: 'ម្ដាយ', rom: 'mdai', en: 'mother' },
-    { km: 'ឪពុក', rom: 'ov pouk', en: 'father' },
+    { km: 'កូន', rom: 'kaun', en: 'child / children' },
+    { km: 'កូនប្រុស', rom: 'kaun pros', en: 'son' },
+    { km: 'កូនស្រី', rom: 'kaun srei', en: 'daughter' },
     { km: 'ពូ', rom: 'pu', en: 'uncle' },
     { km: 'មីង', rom: 'ming', en: 'aunt' },
     { km: 'តា', rom: 'ta', en: 'grandpa' },
     { km: 'យាយ', rom: 'yeay', en: 'grandma' },
-    { km: 'កូនប្រុស', rom: 'kaun pros', en: 'son' },
-    { km: 'កូនស្រី', rom: 'kaun srei', en: 'daughter' }
+    { km: 'ម្ដាយ', rom: 'mdai', en: 'mother' },
+    { km: 'ឪពុក', rom: 'ov pouk', en: 'father' },
+    { km: 'បងប្រុស', rom: 'bong pros', en: 'older brother' },
+    { km: 'ប្អូនប្រុស', rom: 'p\u2019oun pros', en: 'younger brother' },
+    { km: 'បងស្រី', rom: 'bong srei', en: 'older sister' },
+    { km: 'ប្អូនស្រី', rom: 'p\u2019oun srei', en: 'younger sister' }
   ];
   const SYMPTOMS = [
     { km: 'ឈឺចាប់', rom: 'chheu chap', en: 'am in pain', label: 'Pain (general)' },
@@ -190,8 +192,8 @@ button,input{font:inherit;color:inherit}
     P('basics', 'No problem', 'មិនអីទេ', 'min ey te'),
     P('basics', 'How are you?', 'សុខសប្បាយជាទេ?', 'sok sabay chea te?', { replies: 'fine' }),
     P('basics', "I'm fine", 'ខ្ញុំសុខសប្បាយ', 'khnhom sok sabay'),
-    P('basics', "I'm happy", 'ខ្ញុំសប្បាយចិត្ត', 'khnhom sabay chet'),
     P('basics', "I'm not fine", 'ខ្ញុំមិនសុខសប្បាយទេ', 'khnhom min sok sabay te'),
+    P('basics', "I'm happy", 'ខ្ញុំសប្បាយចិត្ត', 'khnhom sabay chet'),
     P('basics', "I'm sad", 'ខ្ញុំពិបាកចិត្ត', 'khnhom pibak chet', { note: 'Literally "my heart is troubled." The everyday way to say you feel sad or upset.' }),
     P('basics', "I'm hungry", 'ខ្ញុំឃ្លាន', 'khnhom khlean'),
     P('basics', "I'm not hungry", 'ខ្ញុំមិនឃ្លានទេ', 'khnhom min khlean te'),
@@ -219,7 +221,6 @@ button,input{font:inherit;color:inherit}
     P('people', 'Daughter', 'កូនស្រី', 'kaun srei'),
     P('people', 'Child / children', 'កូន', 'kaun'),
     P('people', 'Family', 'គ្រួសារ', 'kruosar'),
-    P('people', 'This is my ___', 'នេះជា___ខ្ញុំ', 'nih chea ___ khnhom', { builder: 'people', note: 'Pick a person to introduce, e.g. "This is my wife."' }),
     P('people', 'Are you married?', 'អ្នករៀបការហើយឬនៅ?', 'neak riep kar haeuy reu nov?', { replies: 'married' }),
     P('people', 'Do you have children?', 'អ្នកមានកូនទេ?', 'neak mean kaun te?', { replies: 'kids' }),
     P('people', 'Bong (polite way to address someone a bit older)', 'បង', 'bong', { note: 'Cambodians often call a driver, vendor or waiter bong. It\u2019s friendly and respectful.' }),
@@ -239,6 +240,7 @@ button,input{font:inherit;color:inherit}
     P('pronouns', 'His / Her', 'របស់គាត់', 'robos koat'),
     P('pronouns', 'Our / ours', 'របស់យើង', 'robos yeung'),
     P('pronouns', 'This', 'នេះ', 'nih'),
+    P('pronouns', 'This is my ___', 'នេះជា___ខ្ញុំ', 'nih chea ___ khnhom', { builder: 'people', note: 'Tap who you\u2019re introducing, e.g. "This is my wife."' }),
     P('pronouns', 'That', 'នោះ', 'noh'),
     P('around', 'Where are you going?', 'ទៅណា?', 'tov na?', { replies: 'places', note: 'Tuk-tuk drivers often ask this. Show it to someone to let them tap where they are going.' }),
     P('around', 'I am going to ___', 'ខ្ញុំទៅ___', 'khnhom tov ___', { builder: 'places' }),
@@ -368,7 +370,7 @@ button,input{font:inherit;color:inherit}
       <span class="km" lang="km">${p.numeral ? p.numeral + ' · ' : ''}${esc(p.km)}</span>
       <span class="rom">${esc(p.rom)}</span>
       ${p.note ? `<span class="note">${esc(p.note)}</span>` : ''}
-      ${(p.builder === 'places' && /take me to/i.test(p.en)) || p.builder === 'symptoms' ? `<div class="quick" role="group" aria-label="${p.builder === 'symptoms' ? 'Symptoms' : 'Quick destinations'}">${(p.builder === 'symptoms' ? SYMPTOMS : PLACES.slice(0, QUICK_PLACES)).map((pl, i) => `<button type="button" class="qchip" data-quick="${p.id}:${i}"><span lang="km">${esc(pl.km)}</span> ${esc(pl.label || pl.en.replace(/^(the|a) /, '').replace(/^./, (c) => c.toUpperCase()))}</button>`).join('')}</div>` : ''}
+      ${(p.builder === 'places' && /take me to/i.test(p.en)) || p.builder === 'symptoms' || p.builder === 'people' ? `<div class="quick" role="group" aria-label="${p.builder === 'symptoms' ? 'Symptoms' : p.builder === 'people' ? 'People' : 'Quick destinations'}">${(p.builder === 'symptoms' ? SYMPTOMS : p.builder === 'people' ? PEOPLE.slice(0, 12) : PLACES.slice(0, QUICK_PLACES)).map((pl, i) => `<button type="button" class="qchip" data-quick="${p.id}:${i}"><span lang="km">${esc(pl.km)}</span> ${esc(pl.label || pl.en.replace(/^(the|a) /, '').replace(/^./, (c) => c.toUpperCase()))}</button>`).join('')}</div>` : ''}
       <div class="actions">
         <button type="button" class="act primary" data-show="${p.id}">${I.show} Show${p.replies ? ' & ask' : ''}</button>
         ${khmerVoice ? `<button type="button" class="act" data-play="${p.id}">${I.play} Play</button>` : ''}

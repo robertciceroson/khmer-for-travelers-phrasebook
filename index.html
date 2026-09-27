@@ -3,535 +3,803 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="description" content="Khmer for Travelers Phrasebook: simple Khmer phrases for visitors to Cambodia, with a big-text Show mode and tap-to-answer replies.">
-<meta name="theme-color" content="#1F3C88">
+<meta name="description" content="Quit ROI Tracker: see what quitting smoking or drinking is worth in dollars, hours and health.">
+<meta name="theme-color" content="#0E6650">
 <meta name="author" content="Robert Son">
 <!-- Copyright (c) 2026 Robert Son. All rights reserved. No license is granted to copy, modify or redistribute this code. -->
-<title>Khmer for Travelers Phrasebook</title>
+<title>Quit ROI Tracker</title>
 <style>
 :root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+img{max-width:100%}
 [hidden]{display:none!important}
 body{margin:0}
 </style>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Kantumruy+Pro:wght@400;500;700&family=Moul&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Figtree:wght@400;500;600&display=swap">
 <style>
 :root{
-  --ground:#EDF1F5; --surface:#FFFFFF; --sunk:#E1E7EF; --ink:#15203B; --muted:#4B5873; --line:#D3DBE6;
-  --accent:#1F3C88; --accent-ink:#FFFFFF; --accent-soft:#DCE4F7; --saffron:#E3A018; --saffron-ink:#231A02; --focus:#C8102E;
-  --font:"Kantumruy Pro", "Noto Sans Khmer", "Khmer OS", system-ui, sans-serif;
-  --display:"Moul", "Kantumruy Pro", serif;
+  --ground:#EDF2EF; --surface:#FFFFFF; --sunk:#E2E9E5; --ink:#12201B; --muted:#4F5F58;
+  --line:#CFD9D4; --accent:#0E6650; --accent-ink:#FFFFFF; --accent-soft:#D6EBE3;
+  --slip:#9A4F00; --slip-soft:#F6E6D3; --focus:#1D7FD1;
+  --display:"Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --body:"Figtree", "Segoe UI", system-ui, sans-serif;
 }
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
     color-scheme:dark;
-    --ground:#0E1424; --surface:#172039; --sunk:#1E2946; --ink:#E6ECF7; --muted:#A5B1C9; --line:#2A3656;
-    --accent:#8FA8F0; --accent-ink:#0B1330; --accent-soft:#223463; --saffron:#F2B73A; --saffron-ink:#231A02; --focus:#FF6B81;
+    --ground:#0E1613; --surface:#16211D; --sunk:#1D2A25; --ink:#E4EEE9; --muted:#9DB0A8;
+    --line:#2C3B35; --accent:#4CC29E; --accent-ink:#06231A; --accent-soft:#173A30;
+    --slip:#F0A95A; --slip-soft:#3A2A17; --focus:#7DB9EE;
   }
 }
 :root[data-theme="dark"]{
   color-scheme:dark;
-  --ground:#0E1424; --surface:#172039; --sunk:#1E2946; --ink:#E6ECF7; --muted:#A5B1C9; --line:#2A3656;
-  --accent:#8FA8F0; --accent-ink:#0B1330; --accent-soft:#223463; --saffron:#F2B73A; --saffron-ink:#231A02; --focus:#FF6B81;
+  --ground:#0E1613; --surface:#16211D; --sunk:#1D2A25; --ink:#E4EEE9; --muted:#9DB0A8;
+  --line:#2C3B35; --accent:#4CC29E; --accent-ink:#06231A; --accent-soft:#173A30;
+  --slip:#F0A95A; --slip-soft:#3A2A17; --focus:#7DB9EE;
 }
 html,body{height:100%}
-body{background:var(--ground);color:var(--ink);font-family:var(--font);font-size:16px;line-height:1.5;padding-inline:16px}
+body{background:var(--ground);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.45;padding-inline:16px}
 *{box-sizing:border-box}
-button,input{font:inherit;color:inherit}
+button,input,select,textarea{font:inherit;color:inherit}
 :focus-visible{outline:3px solid var(--focus);outline-offset:2px}
-.app{max-width:560px;margin:0 auto;padding-block:20px 48px;display:flex;flex-direction:column;gap:16px}
-.brand{display:flex;flex-direction:column;gap:2px}
-.brand .km{font-family:var(--display);font-size:30px;line-height:1.5;color:var(--accent)}
-.brand h1{margin:0;font-size:22px;font-weight:700;letter-spacing:-0.01em}
-.brand p{margin:0;color:var(--muted);font-size:15px}
-.searchrow{display:flex;gap:8px}
-.search{flex:1;min-height:50px;border-radius:14px;border:1px solid var(--line);background:var(--surface);padding:0 14px;font-size:16px;min-width:0}
-.iconbtn{flex-shrink:0;width:50px;height:50px;border-radius:14px;border:none;background:var(--accent);color:var(--accent-ink);cursor:pointer;display:grid;place-items:center}
-.iconbtn svg{width:24px;height:24px}
-.iconbtn.listening{background:var(--focus);color:#fff;animation:pulse 1.2s ease-in-out infinite}
-@keyframes pulse{50%{transform:scale(1.06)}}
-@media (prefers-reduced-motion: reduce){.iconbtn.listening{animation:none}}
-.chips{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;margin-inline:-16px;padding-inline:16px;scrollbar-width:none}
-.chips::-webkit-scrollbar{display:none}
-.chip{flex-shrink:0;min-height:44px;padding:0 16px;border-radius:22px;border:1px solid var(--line);background:var(--surface);cursor:pointer;font-size:15px;font-weight:500;white-space:nowrap}
-.chip[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink);font-weight:700}
-.status{font-size:14px;color:var(--muted);min-height:1em}
-.list{display:flex;flex-direction:column;gap:10px}
-.card{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:14px 14px 10px;display:flex;flex-direction:column;gap:2px}
-.card .en{font-weight:700;font-size:16px}
-.card .km{font-size:26px;line-height:1.6;color:var(--accent)}
-.card .rom{font-size:15px;color:var(--muted);font-style:italic}
-.card .note{font-size:13px;color:var(--muted)}
-.actions{display:flex;gap:6px;margin-top:6px;flex-wrap:wrap}
-.act{min-height:44px;padding:0 14px;border-radius:12px;border:1px solid var(--line);background:transparent;cursor:pointer;display:inline-flex;align-items:center;gap:6px;font-size:14px;font-weight:600}
-.act svg{width:18px;height:18px}
-.act.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
-.act.star[aria-pressed="true"]{background:var(--saffron);border-color:var(--saffron);color:var(--saffron-ink)}
-.quick{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
-.qchip{min-height:44px;padding:0 12px;border-radius:22px;border:1px solid var(--accent);background:var(--accent-soft);color:var(--ink);cursor:pointer;font-size:14px;font-weight:600;display:inline-flex;align-items:center;gap:6px}
-.qchip span{font-size:16px;font-weight:500;color:var(--accent)}
-.empty{background:var(--surface);border:1px dashed var(--line);border-radius:18px;padding:18px;color:var(--muted);text-align:center}
-.panel{background:var(--sunk);border-radius:16px;padding:14px 16px;font-size:14px;color:var(--muted);display:flex;flex-direction:column;gap:6px}
-.panel strong{color:var(--ink)}
+.app{max-width:460px;margin:0 auto;padding-block:20px 124px;display:flex;flex-direction:column;gap:16px}
+h1,h2,h3{font-family:var(--display);margin:0;text-wrap:balance;letter-spacing:-0.01em}
+h1{font-size:30px;line-height:1.1;font-weight:700}
+h2{font-size:24px;line-height:1.15;font-weight:700}
+h3{font-size:17px;font-weight:700}
+p{margin:0}
+.eyebrow{font-size:12px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:var(--accent)}
+.muted{color:var(--muted)}
+.small{font-size:13px}
+.num{font-family:var(--display);font-variant-numeric:tabular-nums;font-weight:700}
+.stack{display:flex;flex-direction:column;gap:12px}
+.row{display:flex;gap:12px;align-items:center}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:16px;display:flex;flex-direction:column;gap:10px}
+.btn{min-height:50px;border-radius:14px;border:1px solid transparent;padding:0 18px;font-weight:600;font-size:16px;cursor:pointer;background:var(--accent);color:var(--accent-ink);width:100%}
+.btn.ghost{background:transparent;border-color:var(--line);color:var(--ink);font-weight:500}
+.btn.slip{background:transparent;border-color:var(--slip);color:var(--slip)}
+.btn.small{min-height:44px;width:auto;font-size:14px}
 .linkbtn{background:none;border:none;color:var(--accent);text-decoration:underline;cursor:pointer;min-height:44px;padding:0 4px;font-size:14px}
-.overlay{position:fixed;inset:0;background:var(--ground);z-index:10;overflow-y:auto;padding:calc(16px + env(safe-area-inset-top,0px)) 16px calc(24px + env(safe-area-inset-bottom,0px))}
-.show{max-width:560px;margin:0 auto;display:flex;flex-direction:column;gap:16px}
-.showcard{background:var(--accent);color:var(--accent-ink);border-radius:24px;padding:28px 20px;text-align:center;display:flex;flex-direction:column;gap:8px}
-.showcard .km{font-size:clamp(40px,11vw,64px);line-height:1.45;font-weight:500}
-.showcard .rom{font-size:19px;font-style:italic;opacity:.9}
-.showcard .en{font-size:17px;font-weight:700;opacity:.9}
-.sectionlabel{font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
-.replies{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
-.reply{min-height:64px;border-radius:14px;border:1px solid var(--line);background:var(--surface);cursor:pointer;padding:8px 10px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;text-align:center}
-.reply .rkm{font-size:20px;line-height:1.5}
-.reply .ren{font-size:13px;color:var(--muted)}
-.reply[aria-pressed="true"]{background:var(--saffron);border-color:var(--saffron);color:var(--saffron-ink)}
-.reply[aria-pressed="true"] .ren{color:var(--saffron-ink)}
-.answer{background:var(--saffron);color:var(--saffron-ink);border-radius:18px;padding:16px;text-align:center;font-size:22px;font-weight:700}
-.answer small{display:block;font-size:14px;font-weight:500}
-.customprice{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
-.customprice input{flex:1;min-width:120px;min-height:48px;border-radius:12px;border:1px solid var(--line);background:var(--surface);padding:0 12px;font-size:18px}
-.showbar{display:flex;gap:8px;flex-wrap:wrap}
-.showbar .act{flex:1;justify-content:center;min-height:50px;font-size:15px}
-.heard{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px 14px;font-size:15px}
-.heard .km{font-size:22px}
-.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(20px + env(safe-area-inset-bottom,0px));background:var(--ink);color:var(--ground);padding:12px 16px;border-radius:14px;font-size:14px;max-width:min(92vw,480px);z-index:20;box-shadow:0 6px 24px rgba(0,0,0,.25)}
-.footer{text-align:center;font-size:13px;color:var(--muted)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{min-height:44px;padding:0 16px;border-radius:22px;border:1px solid var(--line);background:var(--surface);cursor:pointer;font-size:15px}
+.chip.radio{display:inline-flex;align-items:center;justify-content:center;min-width:52px;position:relative}
+.chip.radio input{position:absolute;opacity:0;width:1px;height:1px}
+.chip.radio:has(input:focus-visible){outline:3px solid var(--focus);outline-offset:2px}
+.chip.radio:has(input:checked){background:var(--accent);border-color:var(--accent);color:var(--accent-ink);font-weight:600}
+a.btn{display:flex;align-items:center;justify-content:center;text-decoration:none}
+.tel{color:var(--accent);font-weight:700}
+.chip[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink);font-weight:600}
+label.field{display:flex;flex-direction:column;gap:6px;font-weight:600;font-size:14px}
+.field input,.field select,.field textarea{min-height:46px;border-radius:12px;border:1px solid var(--line);background:var(--surface);padding:10px 12px;font-weight:400;font-size:16px;width:100%}
+.field textarea{min-height:84px;resize:vertical}
+.field .hint{font-weight:400;color:var(--muted);font-size:13px}
+.stepper{display:flex;align-items:center;justify-content:space-between;gap:12px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:6px 6px 6px 14px}
+.stepper .ctl{display:flex;align-items:center;gap:10px}
+.stepper button{width:44px;height:44px;border-radius:11px;border:1px solid var(--line);background:var(--sunk);cursor:pointer;font-size:20px}
+.stepper output{min-width:44px;text-align:center;font-weight:700;font-variant-numeric:tabular-nums}
+.hero{display:flex;flex-direction:column;gap:4px;padding-block:6px}
+.hero .big{font-size:clamp(46px,14vw,64px);line-height:1}
+.stat .label{font-size:12px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--muted)}
+.stat .val{font-size:28px}
+.bar{height:12px;border-radius:6px;background:var(--sunk);overflow:hidden}
+.bar > span{display:block;height:100%;background:var(--accent);border-radius:6px;transition:width .4s ease}
+.toast{background:var(--accent-soft);border-radius:14px;padding:12px 14px;font-size:15px}
+.toast.slipnote{background:var(--slip-soft)}
+.ms{display:flex;gap:12px;align-items:flex-start;padding:12px 0;border-bottom:1px solid var(--line)}
+.ms:last-child{border-bottom:none}
+.dot{flex-shrink:0;width:26px;height:26px;border-radius:13px;border:2px solid var(--line);display:grid;place-items:center;font-size:14px;font-weight:700;color:transparent;margin-top:2px}
+.ms.done .dot{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.ledger{display:flex;flex-direction:column}
+.ledger .line{display:flex;justify-content:space-between;gap:12px;padding:12px 0;border-bottom:1px dashed var(--line);font-variant-numeric:tabular-nums}
+.ledger .line:last-child{border-bottom:none}
+.ledger .total{border-top:2px solid var(--ink);border-bottom:none;padding-top:14px;margin-top:4px}
+.ev{display:flex;justify-content:space-between;gap:12px;padding:12px 0;border-bottom:1px solid var(--line)}
+.ev:last-child{border-bottom:none}
+.tag{font-size:12px;font-weight:600;padding:3px 10px;border-radius:999px;background:var(--accent-soft)}
+.tag.slip{background:var(--slip-soft);color:var(--slip)}
+.task{display:flex;gap:10px;align-items:center;padding:8px 0}
+.task .dot{width:22px;height:22px;margin:0}
+.task.done .dot{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.task.done span.t{color:var(--muted);text-decoration:line-through}
+nav.tabs{position:fixed;left:0;right:0;bottom:0;background:var(--surface);border-top:1px solid var(--line);padding:6px max(8px, calc((100% - 460px) / 2)) calc(8px + env(safe-area-inset-bottom,0px));display:grid;grid-template-columns:repeat(5,minmax(0,1fr));z-index:5}
+nav.tabs button{min-height:58px;background:none;border:none;border-top:3px solid transparent;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;font-size:15px;font-weight:700;color:var(--ink);opacity:.72}
+nav.tabs button svg{width:25px;height:25px;stroke-width:2.4}
+nav.tabs button[aria-current="page"]{color:var(--accent);opacity:1;border-top-color:var(--accent)}
+.overlay{position:fixed;inset:0;background:rgba(6,14,11,.55);display:grid;place-items:center;padding:16px;z-index:10}
+.sheet{background:var(--surface);border-radius:22px;padding:24px 20px;max-width:420px;width:100%;display:flex;flex-direction:column;gap:16px;align-items:center;text-align:center}
+.breath{width:150px;height:150px;border-radius:50%;background:var(--accent-soft);display:grid;place-items:center;position:relative}
+.breath::before{content:"";position:absolute;inset:18px;border-radius:50%;background:var(--accent);opacity:.9;animation:breathe 10s ease-in-out infinite}
+.breath span{position:relative;color:var(--accent-ink);font-weight:700;font-size:26px;font-family:var(--display);font-variant-numeric:tabular-nums}
+@keyframes breathe{0%{transform:scale(.55)}40%{transform:scale(1)}100%{transform:scale(.55)}}
+@media (prefers-reduced-motion: reduce){.breath::before{animation:none;transform:scale(.8)}.bar > span{transition:none}}
+.field textarea.copybox{min-height:220px}
+.copybox{width:100%;min-height:220px;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:13px;border-radius:12px;border:1px solid var(--line);background:var(--sunk);padding:10px}
+.banner{background:var(--sunk);border-radius:12px;padding:10px 12px;font-size:13px;color:var(--muted)}
+fieldset{border:none;padding:0;margin:0;display:flex;flex-direction:column;gap:8px}
+legend{font-weight:600;font-size:14px;padding:0;margin-bottom:8px}
 </style>
 </head>
 <body>
-<div class="app" id="app"></div>
+<div class="app" id="app" aria-live="polite"></div>
+<nav class="tabs" id="tabs" aria-label="Main" hidden></nav>
 <div id="overlay"></div>
-<div id="toast" class="toast" role="status" hidden></div>
 
 <script>
 (() => {
-  // ---------- Content ----------
-  // Romanization is a simple English-friendly guide, not a formal system. All Khmer is pending native-speaker review.
-  const CATS = [
-    ['all', 'All'], ['saved', 'Saved'], ['basics', 'Basics'], ['people', 'Family & people'], ['pronouns', 'I, you, he, she'], ['around', 'Getting around'],
-    ['shop', 'Shopping & money'], ['food', 'Food & drink'], ['numbers', 'Numbers'], ['help', 'Emergencies']
+  const KEY = 'quitroi.v1';
+  const FEEDBACK_TO = 'rson226@gmail.com';
+  const DAY = 864e5;
+  // 2026 state average pack prices (World Population Review, Jan 2026)
+  const PRICES = [
+    { id: 'US', name: 'U.S. average', p: 10.15 },
+    { id: 'MO', name: 'Missouri', p: 8.01 },
+    { id: 'CA', name: 'California', p: 11.78 },
+    { id: 'NY', name: 'New York', p: 14.83 },
+    { id: 'custom', name: 'My own price' }
   ];
-  const PLACES = [
-    { km: 'សណ្ឋាគារ', rom: 'sonthakear', en: 'the hotel' },
-    { km: 'ផ្ទះ', rom: 'phteah', en: 'the house' },
-    { km: 'ភោជនីយដ្ឋាន', rom: 'phochniyatthan', en: 'a restaurant' },
-    { km: 'ហាងកាហ្វេ', rom: 'hang kafe', en: 'a cafe' },
-    { km: 'បារ', rom: 'bar', en: 'a bar' },
-    { km: 'មន្ទីរពេទ្យ', rom: 'monti pet', en: 'the hospital' },
-    { km: 'ព្រលានយន្តហោះ', rom: 'pro-lean yun-hos', en: 'the airport' },
-    { km: 'ផ្សារ', rom: 'phsar', en: 'the market' },
-    { km: 'ផ្សារធំថ្មី', rom: 'phsar thom thmei', en: 'Central Market' },
-    { km: 'អង្គរវត្ត', rom: 'angkor voat', en: 'Angkor Wat' },
-    { km: 'ព្រះបរមរាជវាំង', rom: 'preah borom reachea veang', en: 'the Royal Palace' },
-    { km: 'ចំណតឡានក្រុង', rom: 'chamnat lan krong', en: 'the bus station' },
-    { km: 'ឱសថស្ថាន', rom: 'osot-sthan', en: 'the pharmacy' },
-    { km: 'ឆ្នេរ', rom: 'chhne', en: 'the beach' },
-    { km: 'បង្គន់', rom: 'bangkon', en: 'the toilet' }
+  // Smoking milestones, from CDC "Benefits of Quitting Smoking" and American Cancer Society
+  // "Health Benefits of Quitting Smoking Over Time" (both checked Sep 27, 2026). h = hours at the start of each window.
+  const MILESTONES = [
+    { h: 1/3, when: 'Within minutes', text: 'Your heart rate drops.' },
+    { h: 24, when: '24 hours', text: 'Nicotine in your blood drops to zero.' },
+    { h: 72, when: 'A few days', text: 'Carbon monoxide in your blood drops to the level of someone who doesn\u2019t smoke.' },
+    { h: 24*30, when: '1 to 12 months', text: 'Coughing and shortness of breath decrease.' },
+    { h: 24*365, when: '1 to 2 years', text: 'Your risk of heart attack drops sharply.' },
+    { h: 24*365*3, when: '3 to 6 years', text: 'Your added risk of coronary heart disease drops by half.' },
+    { h: 24*365*5, when: '5 to 10 years', text: 'Your added risk of mouth, throat and voice box cancers drops by half, and your risk of stroke decreases.' },
+    { h: 24*365*10, when: '10 to 15 years', text: 'Your added risk of lung cancer drops by half, and your risk of bladder, esophagus and kidney cancers decreases.' },
+    { h: 24*365*15, when: '15 years', text: 'Your risk of coronary heart disease drops close to that of someone who doesn\u2019t smoke.' },
+    { h: 24*365*20, when: '20 years', text: 'Your risk of mouth, throat, voice box and pancreatic cancers drops close to that of someone who doesn\u2019t smoke.' }
   ];
-  const QUICK_PLACES = 7;
-  const PEOPLE = [
-    { km: 'មិត្តភក្តិ', rom: 'mitt pheak', en: 'friend' },
-    { km: 'សង្សារ', rom: 'sangsar', en: 'boyfriend' },
-    { km: 'សង្សារ', rom: 'sangsar', en: 'girlfriend' },
-    { km: 'ប្ដី', rom: 'pdei', en: 'husband' },
-    { km: 'ប្រពន្ធ', rom: 'prapun', en: 'wife' },
-    { km: 'កូន', rom: 'kaun', en: 'child / children' },
-    { km: 'កូនប្រុស', rom: 'kaun pros', en: 'son' },
-    { km: 'កូនស្រី', rom: 'kaun srei', en: 'daughter' },
-    { km: 'ពូ', rom: 'pu', en: 'uncle' },
-    { km: 'មីង', rom: 'ming', en: 'aunt' },
-    { km: 'តា', rom: 'ta', en: 'grandpa' },
-    { km: 'យាយ', rom: 'yeay', en: 'grandma' },
-    { km: 'ម្ដាយ', rom: 'mdai', en: 'mother' },
-    { km: 'ឪពុក', rom: 'ov pouk', en: 'father' },
-    { km: 'បងប្រុស', rom: 'bong pros', en: 'older brother' },
-    { km: 'ប្អូនប្រុស', rom: 'p\u2019oun pros', en: 'younger brother' },
-    { km: 'បងស្រី', rom: 'bong srei', en: 'older sister' },
-    { km: 'ប្អូនស្រី', rom: 'p\u2019oun srei', en: 'younger sister' }
+  const HEALTH_SOURCES = [
+    ['CDC: Benefits of Quitting Smoking', 'https://www.cdc.gov/tobacco/about/benefits-of-quitting.html'],
+    ['American Cancer Society: Health Benefits of Quitting Smoking Over Time', 'https://www.cancer.org/cancer/risk-prevention/tobacco/benefits-of-quitting-smoking-over-time.html']
   ];
-  const SYMPTOMS = [
-    { km: 'ឈឺចាប់', rom: 'chheu chap', en: 'am in pain', label: 'Pain (general)' },
-    { km: 'ឈឺក្បាល', rom: 'chheu kbal', en: 'have a headache', label: 'Headache' },
-    { km: 'ឈឺពោះ', rom: 'chheu poah', en: 'have a stomachache', label: 'Stomachache' },
-    { km: 'រាគ', rom: 'reak', en: 'have diarrhea', label: 'Diarrhea' },
-    { km: 'ឈឺធ្មេញ', rom: 'chheu thmenh', en: 'have a toothache', label: 'Toothache' },
-    { km: 'វិលមុខ', rom: 'vil muk', en: 'feel dizzy', label: 'Dizzy' },
-    { km: 'គ្រុនក្ដៅ', rom: 'krun kdau', en: 'have a fever', label: 'Fever' }
+  const TASKS = [
+    ['setup', 'Set up your habit and quit date'],
+    ['craving', 'Use the craving coach and log a craving'],
+    ['slip', 'Log a slip and see what happens'],
+    ['health', 'Check your health milestones'],
+    ['report', 'Read your weekly ROI statement'],
+    ['skip', 'Skip ahead in time with the tester tools'],
+    ['feedback', 'Send your feedback']
   ];
-  const FAMILY = [
-    { km: 'ប្ដី', rom: 'pdei', en: 'Husband' },
-    { km: 'ប្រពន្ធ', rom: 'prapun', en: 'Wife' },
-    { km: 'កូន', rom: 'kaun', en: 'Child / Children' },
-    { km: 'កូនប្រុស', rom: 'kaun pros', en: 'Son' },
-    { km: 'កូនស្រី', rom: 'kaun srei', en: 'Daughter' },
-    { km: 'ឪពុក', rom: 'ov pouk', en: 'Father' },
-    { km: 'ម្ដាយ', rom: 'mdai', en: 'Mother' },
-    { km: 'បងប្អូនស្រី', rom: 'bong p\u2019oun srei', en: 'Sister' },
-    { km: 'បងប្អូនប្រុស', rom: 'bong p\u2019oun pros', en: 'Brother' },
-    { km: 'ពូ', rom: 'pu', en: 'Uncle' },
-    { km: 'មីង', rom: 'ming', en: 'Aunt' },
-    { km: 'តា', rom: 'ta', en: 'Grandpa' },
-    { km: 'យាយ', rom: 'yeay', en: 'Grandma' }
-  ];
-  const FEELINGS = [
-    { km: 'សប្បាយចិត្ត', rom: 'sabay chet', en: "I'm happy" },
-    { km: 'ពិបាកចិត្ត', rom: 'pibak chet', en: "I'm sad" },
-    { km: 'ឃ្លាន', rom: 'khlean', en: "I'm hungry" },
-    { km: 'ចង់ញ៉ាំបាយ', rom: 'chong nham bay', en: "I want to eat" },
-    { km: 'មិនឃ្លានទេ', rom: 'min khlean te', en: "I'm not hungry" },
-    { km: 'ឆ្អែតហើយ', rom: 'chh\u2019aet haeuy', en: "I'm full" },
-    { km: 'ស្រេកទឹក', rom: 'srek tuk', en: "I'm thirsty" },
-    { km: 'ហត់', rom: 'hot', en: "I'm tired" },
-    { km: 'អស់កម្លាំង', rom: 'os kamlang', en: "I'm exhausted" },
-    { km: 'ងងុយគេង', rom: 'ngnguy keng', en: "I'm sleepy" },
-    { km: 'ចង់សម្រាក', rom: 'chong samrak', en: "I want to rest" },
-    { km: 'ចង់សម្រាកលំហែ', rom: 'chong samrak lumhae', en: "I want to relax" },
-    { km: 'ចង់រាំ', rom: 'chong roam', en: "I want to dance" }
-  ];
-  const BUILDERS = { feelings: { label: 'How I feel', list: FEELINGS }, family: { label: 'Family members', list: FAMILY }, places: { label: 'Choose a place', list: PLACES }, people: { label: 'Choose a person', list: PEOPLE }, symptoms: { label: 'Choose a symptom', list: SYMPTOMS } };
-  const FEELINGS_REPLIES = [['ខ្ញុំសប្បាយចិត្ត', 'khnhom sabay chet', "I'm happy"], ['ខ្ញុំពិបាកចិត្ត', 'khnhom pibak chet', "I'm sad"], ['ខ្ញុំឃ្លាន', 'khnhom khlean', "I'm hungry"], ['ខ្ញុំចង់ញ៉ាំបាយ', 'khnhom chong nham bay', "I want to eat"], ['ខ្ញុំមិនឃ្លានទេ', 'khnhom min khlean te', "I'm not hungry"], ['ខ្ញុំឆ្អែតហើយ', 'khnhom chh\u2019aet haeuy', "I'm full"], ['ខ្ញុំស្រេកទឹក', 'khnhom srek tuk', "I'm thirsty"], ['ខ្ញុំហត់', 'khnhom hot', "I'm tired"], ['ខ្ញុំអស់កម្លាំង', 'khnhom os kamlang', "I'm exhausted"], ['ខ្ញុំងងុយគេង', 'khnhom ngnguy keng', "I'm sleepy"], ['ខ្ញុំចង់សម្រាក', 'khnhom chong samrak', "I want to rest"], ['ខ្ញុំចង់សម្រាកលំហែ', 'khnhom chong samrak lumhae', "I want to relax"], ['ខ្ញុំចង់រាំ', 'khnhom chong roam', "I want to dance"]];
-  const KM_DIGITS = '០១២៣៤៥៦៧៨៩';
-  const kmNum = (n) => String(n).replace(/\d/g, (d) => KM_DIGITS[d]);
-  const REPLIES = {
-    yesno: [['បាទ / ចាស', 'baat / chaa', 'Yes'], ['ទេ', 'te', 'No'], ['មិនដឹងទេ', 'min doeng te', "I don't know"]],
-    fine: [['សុខសប្បាយ', 'sok sabay', "I'm fine"], ['ធម្មតា', 'thommada', 'So-so'], ['អរគុណ', 'arkoun', 'Thank you']],
-    directions: [['ទៅត្រង់', 'tov trong', 'Go straight'], ['បត់ឆ្វេង', 'bot chhveng', 'Turn left'], ['បត់ស្តាំ', 'bot sdam', 'Turn right'],
-      ['នៅជិតនេះ', 'nov chit nih', "It's near here"], ['នៅឆ្ងាយ', 'nov chhngay', "It's far"], ['នៅទីនោះ', 'nov ti noh', "It's over there"]],
-    far: [['ជិត', 'chit', 'Near'], ['ឆ្ងាយ', 'chhngay', 'Far'], ['មិនឆ្ងាយទេ', 'min chhngay te', 'Not far'], ['មិនដឹងទេ', 'min doeng te', "I don't know"]],
-    feelings: FEELINGS_REPLIES,
-    married: [['រៀបការហើយ', 'riep kar haeuy', 'Yes, married'], ['នៅទេ', 'nov te', 'Not yet'], ['មានសង្សារ', 'mean sangsar', 'I have a partner']],
-    kids: [['មាន', 'mean', 'Yes'], ['អត់មានទេ', 'ot mean te', 'No'], ['នៅទេ', 'nov te', 'Not yet']],
-    have: [['មាន', 'mean', 'Yes, we have it'], ['អត់មានទេ', 'ot mean te', "We don't have it"], ['ចាំបន្តិច', 'cham bontech', 'Wait a moment']],
-    places: PLACES.map((p) => [p.km, p.rom, p.en.replace(/^the /, '').replace(/^a /, '').replace(/^./, (c) => c.toUpperCase())]),
-    price: [
-      ...[500, 1000, 2000, 5000, 10000].map((n) => [kmNum(n.toLocaleString('en-US')) + ' រៀល', n.toLocaleString('en-US') + ' riel', n.toLocaleString('en-US') + ' riel']),
-      ...[1, 2, 3, 5, 10, 20].map((n) => [kmNum(n) + ' ដុល្លារ', n + ' dollar' + (n > 1 ? 's' : ''), '$' + n])
-    ]
-  };
-  const P = (cat, en, km, rom, extra) => Object.assign({ cat, en, km, rom }, extra || {});
-  const PHRASES = [
-    P('basics', 'Hello', 'សួស្តី', 'suosdei'),
-    P('basics', 'Hello (respectful, to elders or officials)', 'ជំរាបសួរ', 'chum reap suor', { note: 'Say it with palms pressed together at chest height (sampeah).' }),
-    P('basics', 'Goodbye', 'លាហើយ', 'lea haeuy'),
-    P('basics', 'Goodbye (respectful)', 'ជំរាបលា', 'chum reap lea'),
-    P('basics', 'Thank you', 'អរគុណ', 'arkoun'),
-    P('basics', 'Thank you very much', 'អរគុណច្រើន', 'arkoun chraen'),
-    P('basics', 'Yes (said by a man)', 'បាទ', 'baat', { note: 'Men say baat, women say chaa.' }),
-    P('basics', 'Yes (said by a woman)', 'ចាស', 'chaa', { note: 'Women say chaa, men say baat.' }),
-    P('basics', 'No', 'ទេ', 'te'),
-    P('basics', 'Sorry / Excuse me', 'សុំទោស', 'som tos'),
-    P('basics', 'No problem', 'មិនអីទេ', 'min ey te'),
-    P('basics', 'How are you?', 'សុខសប្បាយជាទេ?', 'sok sabay chea te?', { replies: 'fine' }),
-    P('basics', 'How are you feeling?', 'អ្នកមានអារម្មណ៍យ៉ាងម៉េចដែរ?', 'neak mean arom yang mech dae?', { builder: 'feelings', replies: 'feelings', tmpl: { km: 'ខ្ញុំ___', rom: 'khnhom ___', en: '___' }, keywords: 'happy sad hungry eat full thirsty tired exhausted sleepy rest relax dance feeling', note: 'Tap how you feel to show it. Tap Show & ask to let someone answer you.' }),
-    P('basics', "I'm fine", 'ខ្ញុំសុខសប្បាយ', 'khnhom sok sabay'),
-    P('basics', "I'm not fine", 'ខ្ញុំមិនសុខសប្បាយទេ', 'khnhom min sok sabay te'),
-    P('basics', 'My name is ___', 'ខ្ញុំឈ្មោះ___', 'khnhom chhmuoh ___'),
-    P('basics', "I don't understand", 'ខ្ញុំមិនយល់ទេ', 'khnhom min yol te'),
-    P('basics', 'Do you speak English?', 'អ្នកចេះនិយាយភាសាអង់គ្លេសទេ?', 'neak cheh niyeay pheasa angkles te?', { replies: 'yesno' }),
-    P('basics', 'Please speak slowly', 'សូមនិយាយយឺតៗ', 'som niyeay yeut yeut'),
 
-    P('people', 'Family', 'គ្រួសារ', 'kruosar', { builder: 'family', tmpl: { km: '___', rom: '___', en: '___' }, keywords: 'husband wife child children son daughter father mother sister brother uncle aunt grandpa grandma', note: 'Tap a family member to show the word. Sister and brother are general; the older and younger forms are in the cards below. Uncle (pu), aunt (ming), grandpa (ta) and grandma (yeay) are also polite ways to address strangers.' }),
-    P('people', 'Girlfriend / Boyfriend', 'សង្សារ', 'sangsar', { note: 'One word covers both. Khmer doesn\u2019t mark the gender here.' }),
-    P('people', 'Friend', 'មិត្តភក្តិ', 'mitt pheak'),
-    P('people', 'Older brother', 'បងប្រុស', 'bong pros', { note: 'Khmer names siblings by age: bong is older, p\u2019oun is younger.' }),
-    P('people', 'Younger brother', 'ប្អូនប្រុស', 'p\u2019oun pros'),
-    P('people', 'Older sister', 'បងស្រី', 'bong srei'),
-    P('people', 'Younger sister', 'ប្អូនស្រី', 'p\u2019oun srei'),
-    P('people', 'Are you married?', 'អ្នករៀបការហើយឬនៅ?', 'neak riep kar haeuy reu nov?', { replies: 'married' }),
-    P('people', 'Do you have children?', 'អ្នកមានកូនទេ?', 'neak mean kaun te?', { replies: 'kids' }),
-    P('people', 'Bong (polite way to address someone a bit older)', 'បង', 'bong', { note: 'Cambodians often call a driver, vendor or waiter bong. It\u2019s friendly and respectful.' }),
-    P('people', 'P\u2019oun (friendly way to address someone younger)', 'ប្អូន', 'p\u2019oun'),
-    P('pronouns', 'I / me', 'ខ្ញុំ', 'khnhom', { note: 'Polite and works in every situation.' }),
-    P('pronouns', 'You', 'អ្នក', 'neak', { note: 'Polite, general "you". With someone a bit older, bong sounds warmer.' }),
-    P('pronouns', 'He / She', 'គាត់', 'koat', { note: 'One polite word for both he and she. Khmer doesn\u2019t mark gender here.' }),
-    P('pronouns', 'We / us', 'យើង', 'yeung'),
-    P('pronouns', 'They / them', 'ពួកគេ', 'puok ke'),
-    P('pronouns', 'You (more than one person)', 'ពួកអ្នក', 'puok neak'),
-    P('pronouns', 'My / mine', 'របស់ខ្ញុំ', 'robos khnhom', { note: 'Often shortened: "my wife" is simply prapun khnhom.' }),
-    P('pronouns', 'Your / yours', 'របស់អ្នក', 'robos neak'),
-    P('pronouns', 'His / Her', 'របស់គាត់', 'robos koat'),
-    P('pronouns', 'Our / ours', 'របស់យើង', 'robos yeung'),
-    P('pronouns', 'This', 'នេះ', 'nih'),
-    P('pronouns', 'This is my ___', 'នេះជា___ខ្ញុំ', 'nih chea ___ khnhom', { builder: 'people', note: 'Tap who you\u2019re introducing, e.g. "This is my wife."' }),
-    P('pronouns', 'That', 'នោះ', 'noh'),
-    P('around', 'Where are you going?', 'ទៅណា?', 'tov na?', { replies: 'places', note: 'Tuk-tuk drivers often ask this. Show it to someone to let them tap where they are going.' }),
-    P('around', 'I am going to ___', 'ខ្ញុំទៅ___', 'khnhom tov ___', { builder: 'places' }),
-    P('around', 'Please take me to ___', 'សូមជូនខ្ញុំទៅ___', 'som choun khnhom tov ___', { builder: 'places', note: 'Handy for tuk-tuk and taxi drivers.' }),
-    P('around', 'Where is ___?', '___នៅឯណា?', '___ nov ae na?', { builder: 'places', replies: 'directions' }),
-    P('around', 'Where is the toilet?', 'បង្គន់នៅឯណា?', 'bangkon nov ae na?', { replies: 'directions' }),
-    P('around', 'Is it far?', 'ឆ្ងាយទេ?', 'chhngay te?', { replies: 'far' }),
-    P('around', 'Go straight', 'ទៅត្រង់', 'tov trong'),
-    P('around', 'Turn left', 'បត់ឆ្វេង', 'bot chhveng'),
-    P('around', 'Turn right', 'បត់ស្តាំ', 'bot sdam'),
-    P('around', 'Stop here', 'ឈប់នៅទីនេះ', 'chhob nov ti nih'),
-    P('around', 'Please drive slowly', 'សូមបើកយឺតៗ', 'som baek yeut yeut'),
+  const isoDay = (d) => { const z = new Date(d); z.setMinutes(z.getMinutes() - z.getTimezoneOffset()); return z.toISOString().slice(0, 10); };
+  const fresh = () => ({
+    setup: false, habit: 'cig', priceId: 'US', customPrice: 10, packs: 1, drinks: 3, drinkPrice: 8,
+    quitDate: isoDay(Date.now()), quitTime: new Date().toTimeString().slice(0, 5), extrasMonthly: 0, goalName: 'Vacation', goalCustom: false, goalAmt: 500, investRate: 8, lastBackup: 0,
+    events: [], offsetDays: 0, tasks: {}, tab: 'today', toast: null, fb: null, fbText: ''
+  });
 
-    P('shop', 'How much?', 'ប៉ុន្មាន?', 'ponman?', { replies: 'price' }),
-    P('shop', 'How much is this?', 'នេះថ្លៃប៉ុន្មាន?', 'nih thlai ponman?', { replies: 'price' }),
-    P('shop', 'Too expensive', 'ថ្លៃពេក', 'thlai pek'),
-    P('shop', 'Can you lower the price?', 'អាចចុះថ្លៃបានទេ?', 'ach choh thlai ban te?', { replies: 'price' }),
-    P('shop', 'Do you have this?', 'មានអាហ្នឹងទេ?', 'mean a-nueng te?', { replies: 'have' }),
-    P('shop', "I'll take it", 'ខ្ញុំយកមួយនេះ', 'khnhom yok muoy nih'),
-    P('shop', "I'm just looking", 'ខ្ញុំគ្រាន់តែមើល', 'khnhom kroan tae meul'),
+  let S;
+  try { S = Object.assign(fresh(), JSON.parse(localStorage.getItem(KEY) || '{}')); } catch (e) { S = fresh(); }
+  let storageOk = true;
+  const save = () => { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) { storageOk = false; } };
 
-    P('food', 'Delicious!', 'ឆ្ងាញ់!', 'chhnganh!'),
-    P('food', 'Not spicy, please', 'កុំឲ្យហឹរ', 'kom aoy hoeur'),
-    P('food', 'A little spicy', 'ហឹរបន្តិច', 'hoeur bontech'),
-    P('food', 'Water, please', 'សុំទឹក', 'som tuk'),
-    P('food', 'No ice, please', 'កុំដាក់ទឹកកក', 'kom dak tuk kak'),
-    P('food', 'I am vegetarian', 'ខ្ញុំតមសាច់', 'khnhom tam sach'),
-    P('food', 'The bill, please', 'សុំគិតលុយ', 'som kit luy', { replies: 'price' }),
-
-    P('help', 'Help!', 'ជួយផង!', 'chuoy phong!'),
-    P('help', 'Call the police', 'ហៅប៉ូលីស', 'hav polis'),
-    P('help', 'I need a doctor', 'ខ្ញុំត្រូវការគ្រូពេទ្យ', 'khnhom trov kar kru pet'),
-    P('help', 'Where is the hospital?', 'មន្ទីរពេទ្យនៅឯណា?', 'monti pet nov ae na?', { replies: 'directions' }),
-    P('help', 'I am sick', 'ខ្ញុំឈឺ', 'khnhom chheu', { builder: 'symptoms', tmpl: { km: 'ខ្ញុំ___', rom: 'khnhom ___', en: 'I ___' }, keywords: 'pain headache stomachache stomach ache diarrhea toothache tooth dizzy fever', note: 'Tap a symptom to show it, e.g. "I have a headache."' }),
-    P('help', 'I am lost', 'ខ្ញុំវង្វេងផ្លូវ', 'khnhom vongveng phlauv')
-  ];
-  [[1, 'មួយ', 'muoy'], [2, 'ពីរ', 'pii'], [3, 'បី', 'bei'], [4, 'បួន', 'buon'], [5, 'ប្រាំ', 'pram'], [6, 'ប្រាំមួយ', 'pram muoy'],
-   [7, 'ប្រាំពីរ', 'pram pii'], [8, 'ប្រាំបី', 'pram bei'], [9, 'ប្រាំបួន', 'pram buon'], [10, 'ដប់', 'dop'], [20, 'ម្ភៃ', 'mphei'],
-   [50, 'ហាសិប', 'ha-sep'], [100, 'មួយរយ', 'muoy roy'], [1000, 'មួយពាន់', 'muoy poan'], [10000, 'មួយម៉ឺន', 'muoy meun']]
-    .forEach(([n, km, rom]) => PHRASES.push(P('numbers', n.toLocaleString('en-US'), km, rom, { numeral: kmNum(n) })));
-  PHRASES.forEach((p, i) => { p.id = 'p' + i; });
-
-  // ---------- State ----------
-  const KEY = 'khmer-phrasebook.v1';
-  let saved = {};
-  try { saved = JSON.parse(localStorage.getItem(KEY) || '{}').saved || {}; } catch (e) { saved = {}; }
-  const persist = () => { try { localStorage.setItem(KEY, JSON.stringify({ saved })); } catch (e) {} };
-  let cat = 'all', query = '', ranked = null, heardNote = '';
   const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const money = (n) => '$' + (Math.round(n * 100) / 100).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  const money0 = (n) => '$' + Math.round(n).toLocaleString('en-US');
+  const now = () => Date.now() + S.offsetDays * DAY;
+  const done = (k) => { if (!S.tasks[k]) { S.tasks[k] = true; } };
 
-  // ---------- Speech ----------
-  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-  let khmerVoice = null;
-  const synth = window.speechSynthesis;
-  function findVoice() {
-    try { khmerVoice = (synth && synth.getVoices() || []).find((v) => /^km/i.test(v.lang)) || null; } catch (e) { khmerVoice = null; }
-  }
-  if (synth) { findVoice(); try { synth.addEventListener('voiceschanged', () => { const had = !!khmerVoice; findVoice(); if (!!khmerVoice !== had) render(); }); } catch (e) {} }
-  function speak(text) {
-    if (!khmerVoice) { toast('This device has no Khmer voice. Show the Khmer text instead, or read the pronunciation.'); return; }
-    try { synth.cancel(); const u = new SpeechSynthesisUtterance(text.replace(/___/g, '')); u.voice = khmerVoice; u.lang = khmerVoice.lang; u.rate = 0.85; synth.speak(u); }
-    catch (e) { toast('Audio couldn’t play on this device.'); }
-  }
-  function listen(lang, onText, onEnd) {
-    if (!SR) { toast('Voice input isn’t supported in this browser. Try Chrome on Android or a computer.'); onEnd && onEnd(); return null; }
-    const r = new SR();
-    r.lang = lang; r.interimResults = false; r.maxAlternatives = 3;
-    r.onresult = (ev) => { const alts = Array.from(ev.results[0]).map((a) => a.transcript); onText(alts); };
-    r.onerror = (ev) => {
-      const msg = ev.error === 'not-allowed' || ev.error === 'service-not-allowed' ? 'Microphone access is blocked. Allow the microphone for this site, or type instead.'
-        : ev.error === 'language-not-supported' ? 'This browser can’t listen in that language. Ask them to tap an answer instead.'
-        : ev.error === 'no-speech' ? 'I didn’t hear anything. Tap the mic and try again.'
-        : ev.error === 'network' ? 'Voice needs an internet connection.' : 'Voice input stopped. Try again, or type instead.';
-      toast(msg);
+  function calc() {
+    const cig = S.habit !== 'alc', alc = S.habit !== 'cig';
+    const pr = PRICES.find((x) => x.id === S.priceId);
+    const packPrice = S.priceId === 'custom' ? Number(S.customPrice) || 0 : pr.p;
+    const habitDaily = (cig ? S.packs * packPrice : 0) + (alc ? S.drinks * S.drinkPrice : 0);
+    const daily = habitDaily + (Number(S.extrasMonthly) || 0) * 12 / 365;
+    const quitTs = new Date(S.quitDate + 'T' + (S.quitTime || '00:00') + ':00').getTime();
+    const t = now();
+    const elapsed = Math.max(0, (t - quitTs) / DAY);
+    const slips = S.events.filter((e) => e.type === 'slip' && e.ts >= quitTs);
+    const cravings = S.events.filter((e) => e.type === 'craving' && e.ts >= quitTs);
+    const lastSlip = slips.reduce((m, e) => Math.max(m, e.ts), 0);
+    const streakStart = Math.max(quitTs, lastSlip);
+    const streakHours = Math.max(0, (t - streakStart) / 36e5);
+    const saved = Math.max(0, elapsed * daily - slips.length * habitDaily);
+    const minsPerDay = (cig ? S.packs * 20 * 6 : 0) + (alc ? S.drinks * 15 : 0);
+    const hours = elapsed * minsPerDay / 60;
+    const pct = S.goalAmt > 0 ? Math.min(100, Math.round(saved / S.goalAmt * 100)) : 0;
+    const weekStart = t - 7 * DAY;
+    const weekDays = Math.min(7, elapsed);
+    const weekSlips = slips.filter((e) => e.ts >= weekStart).length;
+    return {
+      cig, alc, packPrice, habitDaily, daily, elapsed, saved, hours, pct, streakHours,
+      streakDays: Math.floor(streakHours / 24), slips, cravings, quitTs, future: quitTs > t,
+      week: {
+        saved: Math.max(0, weekDays * daily - weekSlips * habitDaily),
+        hours: weekDays * minsPerDay / 60,
+        cravings: cravings.filter((e) => e.ts >= weekStart).length,
+        slips: weekSlips
+      }
     };
-    r.onend = () => { onEnd && onEnd(); };
-    try { r.start(); } catch (e) { toast('Voice input couldn’t start. Try again.'); onEnd && onEnd(); return null; }
-    return r;
   }
 
-  // ---------- Matching ----------
-  const STOP = new Set(['a', 'an', 'the', 'is', 'are', 'to', 'please', 'i', 'you', 'do', 'can', 'me', 'my', 'it', 'this', 'how', 'in', 'khmer', 'say']);
-  const words = (s) => String(s).toLowerCase().replace(/[^a-z0-9\s']/g, ' ').split(/\s+/).filter(Boolean);
-  function rankEnglish(text) {
-    const q = words(text); const qk = q.filter((w) => !STOP.has(w));
-    return PHRASES.map((p) => {
-      const pw = words(p.en + ' ' + p.rom + ' ' + (p.keywords || ''));
-      let score = 0;
-      q.forEach((w) => { if (pw.includes(w)) score += STOP.has(w) ? 0.3 : 2; });
-      if (p.en.toLowerCase().replace(/[^a-z ]/g, '').trim() === q.join(' ')) score += 5;
-      if (qk.length && qk.every((w) => pw.includes(w))) score += 2;
-      return { p, score };
-    }).filter((x) => x.score >= 2).sort((a, b) => b.score - a.score).map((x) => x.p);
-  }
-  const squash = (s) => String(s).replace(/[\s?!.,/]|___/g, '');
-  function bigrams(s) { const a = []; for (let i = 0; i < s.length - 1; i++) a.push(s.slice(i, i + 2)); return a; }
-  function dice(a, b) {
-    a = squash(a); b = squash(b); if (!a || !b) return 0;
-    if (a === b) return 1; if (a.includes(b) || b.includes(a)) return 0.9;
-    const x = bigrams(a), y = bigrams(b); if (!x.length || !y.length) return 0;
-    let hit = 0; const pool = y.slice(); x.forEach((g) => { const i = pool.indexOf(g); if (i > -1) { hit++; pool.splice(i, 1); } });
-    return (2 * hit) / (x.length + y.length);
+  // Future value of saving the daily amount, deposited monthly, at an annual return compounded monthly
+  function fv(daily, ratePct, years) {
+    const m = daily * 365 / 12, n = years * 12, r = ratePct / 100 / 12;
+    return r === 0 ? m * n : m * (Math.pow(1 + r, n) - 1) / r;
   }
 
-  // ---------- Views ----------
-  const I = {
-    mic: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg>',
-    play: '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>',
-    show: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>',
-    star: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l2.8 5.7 6.2.9-4.5 4.4 1 6.2L12 17.3 6.5 20.2l1-6.2L3 9.6l6.2-.9z"/></svg>'
+  function goalEta(c) {
+    const left = S.goalAmt - c.saved;
+    if (left <= 0) return 'Goal reached.';
+    if (c.daily <= 0) return '';
+    const days = left / c.daily;
+    const y = Math.floor(days / 365), m = Math.round((days - y * 365) / 30.4);
+    const parts = [];
+    if (y) parts.push(y + (y === 1 ? ' yr' : ' yrs'));
+    if (m) parts.push(m + ' mo');
+    return 'About ' + (parts.join(' ') || 'less than a month') + ' to go at this pace.';
+  }
+
+  function dur(hours) {
+    if (hours < 1) return Math.max(1, Math.round(hours * 60)) + ' min';
+    if (hours < 48) return Math.round(hours) + ' hrs';
+    const d = Math.round(hours / 24);
+    return d < 60 ? d + ' days' : d < 730 ? Math.round(d / 30.4) + ' months' : Math.round(d / 365) + ' years';
+  }
+
+  const icons = {
+    today: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>',
+    health: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l1 1.1L12 21l7.8-7.5 1-1.1a5.5 5.5 0 0 0 0-7.8z"/></svg>',
+    history: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>',
+    report: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 2h9l5 5v15H6z"/><path d="M14 2v6h6M9 13h8M9 17h8"/></svg>',
+    test: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 11l3 3 8-8"/><path d="M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h9"/></svg>'
   };
 
-  function visible() {
-    let list = ranked || PHRASES;
-    if (!ranked && query) {
-      const q = query.toLowerCase();
-      list = PHRASES.filter((p) => (p.en + ' ' + p.rom + ' ' + (p.keywords || '')).toLowerCase().includes(q) || p.km.includes(query));
-    }
-    if (cat === 'saved') list = list.filter((p) => saved[p.id]);
-    else if (cat !== 'all') list = list.filter((p) => p.cat === cat);
-    return list;
+  const stepper = (label, key, val, sub) => `
+    <div class="stepper"><div class="stack" style="gap:2px"><span>${label}</span>${sub ? `<span class="small muted">${sub}</span>` : ''}</div>
+      <div class="ctl"><button type="button" data-step="${key}" data-dir="-1" aria-label="Decrease ${label}">−</button>
+      <output>${val}</output>
+      <button type="button" data-step="${key}" data-dir="1" aria-label="Increase ${label}">+</button></div></div>`;
+
+  const GOAL_PRESETS = ['Vacation', 'Family trip', 'Buying a car', 'Down payment for a home', 'Retirement'];
+  function goalFields() {
+    const preset = !S.goalCustom && GOAL_PRESETS.includes(S.goalName);
+    return `<label class="field" for="goalPick">Saving toward
+        <select id="goalPick">${GOAL_PRESETS.map((g) => `<option value="${g}" ${preset && S.goalName === g ? 'selected' : ''}>${g}</option>`).join('')}
+          <option value="__custom" ${preset ? '' : 'selected'}>Something else (type your own)</option></select></label>
+      ${preset ? '' : `<label class="field" for="goalName">Name your goal<input id="goalName" type="text" maxlength="40" placeholder="For example: Wedding fund" value="${esc(S.goalName)}" data-input="goalName"></label>`}
+      <label class="field" for="goalAmt">Goal amount ($)<input id="goalAmt" type="number" inputmode="decimal" min="1" step="1" value="${esc(S.goalAmt)}" data-input="goalAmt"></label>`;
+  }
+  let goalBackup = null;
+  function goalSheet() {
+    overlay(`<div class="sheet" id="goalSheet" style="text-align:left;align-items:stretch">
+      <h2>Change your savings goal</h2>
+      <p class="muted">Pick what your quit money is going toward. Your savings and streak stay the same.</p>
+      ${goalFields()}
+      <button type="button" class="btn" data-action="goalSave">Save goal</button>
+      <button type="button" class="btn ghost" data-action="goalCancel">Cancel</button></div>`);
   }
 
-  function card(p) {
-    return `<article class="card">
-      <span class="en">${esc(p.en)}</span>
-      <span class="km" lang="km">${p.numeral ? p.numeral + ' · ' : ''}${esc(p.km)}</span>
-      <span class="rom">${esc(p.rom)}</span>
-      ${p.note ? `<span class="note">${esc(p.note)}</span>` : ''}
-      ${(p.builder === 'places' && /take me to/i.test(p.en)) || p.builder === 'symptoms' || p.builder === 'people' || p.builder === 'family' || p.builder === 'feelings' ? `<div class="quick" role="group" aria-label="${p.builder === 'symptoms' ? 'Symptoms' : p.builder === 'people' ? 'People' : p.builder === 'family' ? 'Family members' : p.builder === 'feelings' ? 'Feelings' : 'Quick destinations'}">${(p.builder === 'symptoms' ? SYMPTOMS : p.builder === 'people' ? PEOPLE.slice(0, 12) : p.builder === 'family' ? FAMILY : p.builder === 'feelings' ? FEELINGS : PLACES.slice(0, QUICK_PLACES)).map((pl, i) => `<button type="button" class="qchip" data-quick="${p.id}:${i}"><span lang="km">${esc(pl.km)}</span> ${esc(pl.label || pl.en.replace(/^(the|a) /, '').replace(/^./, (c) => c.toUpperCase()))}</button>`).join('')}</div>` : ''}
-      <div class="actions">
-        <button type="button" class="act primary" data-show="${p.id}">${I.show} Show${p.replies ? ' & ask' : ''}</button>
-        ${khmerVoice ? `<button type="button" class="act" data-play="${p.id}">${I.play} Play</button>` : ''}
-        <button type="button" class="act star" data-star="${p.id}" aria-pressed="${!!saved[p.id]}" aria-label="${saved[p.id] ? 'Remove from saved' : 'Save phrase'}">${I.star}${saved[p.id] ? 'Saved' : 'Save'}</button>
-      </div></article>`;
+  function viewSetup() {
+    const c = calc();
+    return `
+      <div class="stack" style="gap:6px">
+        <span class="eyebrow">Quit ROI · test version</span>
+        <h1>What is quitting worth to you?</h1>
+        <p class="muted">Answer a few questions and see your return in dollars, hours and health. Your answers stay on this device.</p>
+      </div>
+      <fieldset><legend>What are you quitting?</legend>
+        <div class="chips">${[['cig', 'Cigarettes'], ['alc', 'Alcohol'], ['both', 'Both']].map(([k, l]) => `<button type="button" class="chip" data-set="habit" data-val="${k}" aria-pressed="${S.habit === k}">${l}</button>`).join('')}</div>
+      </fieldset>
+      ${c.cig ? `
+        <label class="field" for="price">Your pack price
+          <select id="price" data-input="priceId">${PRICES.map((p) => `<option value="${p.id}" ${S.priceId === p.id ? 'selected' : ''}>${p.name}${p.p ? ' — ' + money(p.p) : ''}</option>`).join('')}</select>
+          <span class="hint">2026 average prices. Choose "My own price" to enter what you pay.</span>
+        </label>
+        ${S.priceId === 'custom' ? `<label class="field" for="customPrice">Price per pack ($)<input id="customPrice" type="number" inputmode="decimal" min="0" step="0.01" value="${esc(S.customPrice)}" data-input="customPrice"></label>` : ''}
+        ${stepper('Packs per day', 'packs', S.packs)}` : ''}
+      ${c.alc ? `${stepper('Drinks per day', 'drinks', S.drinks)}${stepper('Price per drink', 'drinkPrice', '$' + S.drinkPrice)}` : ''}
+      <label class="field" for="quitDate">Quit date
+        <input id="quitDate" type="date" value="${esc(S.quitDate)}" data-input="quitDate">
+        <span class="hint">Pick today, a past date, or a planned date.</span>
+      </label>
+      <label class="field" for="quitTime">Time of your last one
+        <input id="quitTime" type="time" value="${esc(S.quitTime)}" data-input="quitTime">
+        <span class="hint">Health milestones count from this moment.</span>
+      </label>
+      <label class="field" for="extras">Hidden costs per month ($)
+        <input id="extras" type="number" inputmode="decimal" min="0" step="1" value="${esc(S.extrasMonthly)}" data-input="extrasMonthly">
+        <span class="hint">Tobacco insurance surcharge, lighters, rides home, dental cleanings. Leave at 0 if unsure.</span>
+      </label>
+      ${goalFields()}
+      <div class="panel" style="background:var(--accent-soft);border-color:transparent">
+        <span class="small muted">At this pace you keep</span>
+        <span class="num" style="font-size:34px">${money0(c.daily * 365)} a year</span>
+        <span class="small muted">${money(c.daily)} a day</span>
+        <span class="small muted" id="etaLine">${esc(S.goalName)}: ${goalEta(c)}</span>
+      </div>
+      <button type="button" class="btn" data-action="finishSetup">${S.setup ? 'Save changes' : 'Start tracking'}</button>
+      ${S.setup ? '' : '<button type="button" class="linkbtn" data-action="restoreOpen" style="align-self:center">Switching devices? Restore a backup</button>'}
+      ${footer()}`;
   }
+
+  function viewToday() {
+    const c = calc();
+    const next = MILESTONES.find((m) => c.streakHours < m.h);
+    const t = S.toast;
+    return `
+      <div class="row" style="justify-content:space-between">
+        <span class="eyebrow">${c.future ? 'Quit day ahead' : c.cig ? `Day ${c.streakDays + 1} smoke-free` : `Day ${c.streakDays + 1} alcohol-free`}</span>
+        <button type="button" class="btn ghost small" data-action="edit" style="min-height:44px;padding:0 16px">Edit setup</button>
+      </div>
+      <div class="hero">
+        <span class="muted">You've kept</span>
+        <span class="num big">${money(c.saved)}</span>
+        <span class="muted small">${money(c.daily)} a day · ${money0(c.daily * 365)} a year at this pace</span>
+        <span class="small" style="color:var(--accent);font-weight:600">Invested at ${S.investRate}% a year: about ${money0(fv(c.daily, S.investRate, 10))} in 10 years</span>
+      </div>
+      ${t ? `<div class="toast ${t.kind === 'slip' ? 'slipnote' : ''}" role="status">${esc(t.text)}</div>` : ''}
+      ${(!S.lastBackup || now() - S.lastBackup > 7 * DAY) && S.events.length + Math.floor(c.elapsed) >= 1 ? `<div class="banner row" style="justify-content:space-between;flex-wrap:wrap;gap:8px"><span>${S.lastBackup ? 'Your last backup is over a week old.' : 'Your progress is saved only on this device.'}</span><button type="button" class="linkbtn" data-action="backupOpen" style="min-height:32px">Back it up</button></div>` : ''}
+      <div class="grid2">
+        <div class="panel stat"><span class="label">Hours back</span><span class="num val">${Math.round(c.hours)}</span></div>
+        <div class="panel stat"><span class="label">Cravings beaten</span><span class="num val">${c.cravings.length}</span></div>
+      </div>
+      <div class="panel">
+        <div class="row" style="justify-content:space-between;align-items:baseline"><h3>${esc(S.goalName)}</h3><span class="num">${c.pct}%</span></div>
+        <div class="bar" role="progressbar" aria-valuenow="${c.pct}" aria-valuemin="0" aria-valuemax="100" aria-label="Progress toward ${esc(S.goalName)}"><span style="width:${c.pct}%"></span></div>
+        <span class="small muted">${c.pct >= 100 ? 'Goal reached. Time to spend it on yourself.' : money(Math.max(0, S.goalAmt - c.saved)) + ' to go of ' + money0(S.goalAmt) + '. ' + goalEta(c)}</span>
+        <button type="button" class="btn" data-action="goalOpen" style="margin-top:4px">Change my savings goal</button>
+        <span class="small muted" style="text-align:center">Click here to change what you're saving toward. Your savings and streak stay the same.</span>
+      </div>
+      ${c.cig ? `<div class="panel"><span class="stat"><span class="label">Next health milestone</span></span>
+        <span>${next ? `<strong>${next.when}:</strong> ${next.text}` : 'You have reached every milestone listed.'}</span>
+        ${next ? `<span class="small muted">About ${dur(next.h - c.streakHours)} to go</span>` : ''}</div>` : ''}
+      <button type="button" class="btn" data-action="craving">I'm having a craving</button>
+      <button type="button" class="btn slip" data-action="slipAsk">Log a slip</button>`;
+  }
+
+  function viewHealth() {
+    const c = calc();
+    return `
+      <h2>Your body is recovering</h2>
+      <p class="muted">General milestones since your last cigarette. A slip restarts this clock; your savings stay.</p>
+      ${c.cig ? `<div class="panel" style="gap:0">${MILESTONES.map((m) => { const ok = c.streakHours >= m.h; return `<div class="ms ${ok ? 'done' : ''}"><span class="dot" aria-hidden="true">✓</span><div class="stack" style="gap:2px"><span class="small muted"><strong>${m.when}</strong> · ${ok ? 'reached' : 'in ' + dur(m.h - c.streakHours)}</span><span>${m.text}</span></div></div>`; }).join('')}</div>` : ''}
+      ${c.alc ? `<div class="banner">Alcohol recovery milestones (sleep, blood pressure, liver) are coming in a later version.</div>` : ''}
+      <div class="panel" style="background:var(--sunk);border-color:transparent;gap:6px">
+        <h3>Sources</h3>
+        ${HEALTH_SOURCES.map(([t, u]) => `<a href="${u}" target="_blank" rel="noopener" style="font-size:14px">${t}</a>`).join('')}
+        <span class="small muted">Milestones are averages for people who quit smoking. Everyone recovers differently. This is general information, not medical advice. If you drink heavily every day, talk to a doctor before stopping.</span>
+      </div>`;
+  }
+
+  function viewHistory() {
+    const evs = [...S.events].sort((a, b) => b.ts - a.ts);
+    const fmt = (ts) => new Date(ts).toLocaleString('en-US', { weekday: 'short', month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' });
+    return `
+      <h2>History</h2>
+      <p class="muted">Every craving you rode out and every slip, newest first.</p>
+      <div class="panel" style="gap:0">${evs.length ? evs.map((e) => `<div class="ev"><div class="stack" style="gap:2px"><span>${e.type === 'craving' ? 'Craving beaten' : 'Slip logged'}</span><span class="small muted">${fmt(e.ts)}${e.note ? ' · ' + esc(e.note) : ''}</span></div><span class="tag ${e.type === 'slip' ? 'slip' : ''}">${e.type === 'craving' ? 'Craving' : 'Slip'}</span></div>`).join('') : '<p class="muted">Nothing yet. Tap "I\'m having a craving" on Today when one hits.</p>'}</div>
+      <div class="panel" style="background:var(--sunk);border-color:transparent">
+        <h3>Free, confidential support</h3>
+        <span>Quitline (U.S.): <a class="tel" href="tel:18007848669">1-800-QUIT-NOW</a> (1-800-784-8669)</span>
+        <span>SAMHSA National Helpline: <a class="tel" href="tel:18006624357">1-800-662-4357</a></span>
+        <span class="small muted">Veterans can get free quit-smoking support through the VA.</span>
+      </div>
+      <div class="panel">
+        <h3>Your data</h3>
+        <p class="small muted">Everything is saved only in this browser. ${S.lastBackup ? 'Last backup: ' + new Date(S.lastBackup).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) + '.' : 'You haven\'t made a backup yet.'}</p>
+        <button type="button" class="btn" data-action="backupOpen">Back up my progress</button>
+        <button type="button" class="btn ghost" data-action="restoreOpen">Restore a backup</button>
+      </div>
+      ${footer()}`;
+  }
+
+  function howCalc(c) {
+    const minsPerDay = (c.cig ? S.packs * 20 * 6 : 0) + (c.alc ? S.drinks * 15 : 0);
+    const perDay = minsPerDay >= 90 ? (Math.round(minsPerDay / 6) / 10) + ' hours' : Math.round(minsPerDay) + ' minutes';
+    const amount = [c.cig ? `${S.packs} ${S.packs === 1 ? 'pack' : 'packs'}` : '', c.alc ? `${S.drinks} ${S.drinks === 1 ? 'drink' : 'drinks'}` : ''].filter(Boolean).join(' and ');
+    const unit = [c.cig ? 'about 6 minutes per cigarette' : '', c.alc ? 'about 15 minutes per drink' : ''].filter(Boolean).join(' and ');
+    const pr = PRICES.find((x) => x.id === S.priceId);
+    const priceLine = S.priceId === 'custom'
+      ? `Your pack price is the ${money(c.packPrice)} you entered.`
+      : `Your pack price is the 2026 ${pr.id === 'US' ? 'U.S.' : pr.name} average of ${money(c.packPrice)}. To use what you actually pay, tap Edit setup on Today and choose "My own price."`;
+    const items = [
+      `<li><strong>Hours back:</strong> we estimate ${unit}, including stepping away and coming back. At ${amount} a day, that's about ${perDay} a day you get back.</li>`,
+      `<li><strong>Slips:</strong> logging a slip subtracts one day of your usual spending (${money(c.habitDaily)}), because on a slip day you likely bought what you normally would. Your streak and health clock restart, but the rest of your savings stays.</li>`,
+      c.cig ? `<li><strong>Prices:</strong> ${priceLine}</li>` : '',
+      c.alc ? `<li><strong>Drink price:</strong> ${money(S.drinkPrice)} per drink, as you set it.</li>` : ''
+    ].join('');
+    return `<div class="panel" style="background:var(--sunk);border-color:transparent;gap:8px">
+        <h3>How we calculate this</h3>
+        <ul style="margin:0;padding-left:20px;display:flex;flex-direction:column;gap:8px;font-size:14px;line-height:1.5">${items}</ul>
+      </div>`;
+  }
+
+  function viewReport() {
+    const c = calc();
+    const lines = [
+      [c.elapsed < 7 ? 'Money kept since you quit' : 'Money kept this week', money(c.week.saved)],
+      [c.elapsed < 7 ? 'Hours back since you quit' : 'Hours back this week', Math.round(c.week.hours) + ' hrs'],
+      [c.elapsed < 7 ? 'Cravings beaten since you quit' : 'Cravings beaten this week', c.week.cravings],
+      [c.elapsed < 7 ? 'Slips since you quit' : 'Slips this week', c.week.slips],
+      ['Lifetime saved', money(c.saved)],
+      ['Toward ' + S.goalName, c.pct + '%']
+    ];
+    const end = new Date(now()), start = new Date(Math.max(c.quitTs, now() - 6 * DAY));
+    const f = (d) => d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+    return `
+      <div class="stack" style="gap:4px"><span class="eyebrow">Weekly ROI statement</span><h2>${f(start) === f(end) ? f(end) : f(start) + ' – ' + f(end)}</h2></div>
+      <div class="panel"><div class="ledger">
+        ${lines.map(([l, v], i) => i === 0
+          ? `<div class="line"><span style="font-weight:700;color:var(--accent)">${esc(l)}</span><span class="num" style="color:var(--accent)">${v}</span></div>`
+          : `<div class="line"><span>${esc(l)}</span><span class="num" style="font-weight:600">${v}</span></div>`).join('')}
+        <div class="line total"><span><strong>Projected 1-year return</strong></span><span class="num" style="font-size:22px;color:var(--accent)">${money0(c.daily * 365)}</span></div>
+      </div></div>
+      ${howCalc(c)}
+      <div class="stack" style="gap:4px;margin-top:8px"><span class="eyebrow">If you invested it</span><h2>What your savings could grow to</h2></div>
+      ${stepper('Annual return', 'investRate', S.investRate + '%', 'Change the rate to compare')}
+      <div class="panel"><div class="ledger">
+        <div class="line small muted"><span>Years</span><span style="display:flex;gap:16px"><span style="min-width:92px;text-align:right">You put in</span><span style="min-width:104px;text-align:right">Could grow to</span></span></div>
+        ${[1, 5, 10, 20, 30].map((y) => `<div class="line"><span>${y} ${y === 1 ? 'year' : 'years'}</span><span style="display:flex;gap:16px"><span class="muted" style="min-width:92px;text-align:right">${money0(c.daily * 365 * y)}</span><span class="num" style="min-width:104px;text-align:right;${y === 30 ? 'color:var(--accent);font-size:20px' : 'font-weight:600'}">${money0(fv(c.daily, S.investRate, y))}</span></span></div>`).join('')}
+      </div></div>
+      <p class="small muted">Illustration only, not financial advice. Assumes you save ${money(c.daily)} a day, deposit it monthly, and earn a steady ${S.investRate}% a year compounded monthly, before taxes, fees and inflation. Real returns vary according to market volatility and can be negative in some years.</p>`;
+  }
+
+  function viewTest() {
+    const doneCount = TASKS.filter(([k]) => S.tasks[k]).length;
+    if (S.fbText) {
+      return `
+        <h2>Thanks for testing</h2>
+        <p class="muted">${FEEDBACK_TO ? `Tap Email my feedback, or copy it and send it to <strong>${esc(FEEDBACK_TO)}</strong>.` : 'Copy your feedback and send it to the person who invited you to test.'}</p>
+        <label class="field" for="fbout">Your feedback<textarea id="fbout" class="copybox" readonly>${esc(S.fbText)}</textarea></label>
+        ${FEEDBACK_TO ? `<a class="btn" href="mailto:${FEEDBACK_TO}?subject=${encodeURIComponent('Quit ROI Tracker feedback')}&body=${encodeURIComponent(S.fbText)}">Email my feedback</a>` : ''}
+        <button type="button" class="btn ${FEEDBACK_TO ? 'ghost' : ''}" data-action="copyFb">Copy feedback</button>
+        <span id="copyMsg" class="small muted" role="status"></span>
+        <button type="button" class="btn ghost" data-action="editFb">Edit my answers</button>`;
+    }
+    const fb = S.fb || {};
+    return `
+      <div class="stack" style="gap:4px"><span class="eyebrow">For testers</span><h2>Try these, then tell us how it went</h2></div>
+      <div class="panel" style="gap:0">
+        <span class="small muted">${doneCount} of ${TASKS.length} done</span>
+        ${TASKS.map(([k, l]) => `<div class="task ${S.tasks[k] ? 'done' : ''}"><span class="dot" aria-hidden="true">✓</span><span class="t">${l}</span><span class="visually-hidden" style="position:absolute;left:-9999px">${S.tasks[k] ? 'done' : 'not done'}</span></div>`).join('')}
+      </div>
+      <div class="panel">
+        <h3>Skip ahead in time</h3>
+        <p class="small muted">See how savings and milestones grow without waiting. ${S.offsetDays ? `Currently ${S.offsetDays} days ahead.` : ''}</p>
+        <div class="chips">
+          <button type="button" class="chip" data-skip="1">+1 day</button>
+          <button type="button" class="chip" data-skip="7">+1 week</button>
+          <button type="button" class="chip" data-skip="30">+1 month</button>
+          <button type="button" class="chip" data-skip="0">Back to today</button>
+        </div>
+      </div>
+      <form class="panel" id="fbForm" novalidate>
+        <h3>Your feedback</h3>
+        <fieldset><legend>How useful would this app be to you?</legend>
+          <div class="chips">${[1, 2, 3, 4, 5].map((n) => `<label class="chip radio"><input type="radio" name="rating" value="${n}" ${String(fb.rating) === String(n) ? 'checked' : ''}>${n}</label>`).join('')}</div>
+          <span class="small muted">1 = not useful, 5 = very useful</span>
+        </fieldset>
+        <label class="field" for="fbLike">What did you find most motivating?<textarea id="fbLike" name="like">${esc(fb.like)}</textarea></label>
+        <label class="field" for="fbConfuse">What was confusing or hard to use?<textarea id="fbConfuse" name="confuse">${esc(fb.confuse)}</textarea></label>
+        <label class="field" for="fbMissing">What's missing that would make you use it daily?<textarea id="fbMissing" name="missing">${esc(fb.missing)}</textarea></label>
+        <label class="field" for="fbPay">Would you pay for the full version?
+          <select id="fbPay" name="pay">${['', 'No, only if free', 'Yes, $1–3 per month', 'Yes, $4–6 per month', 'Yes, a one-time purchase'].map((o) => `<option value="${o}" ${fb.pay === o ? 'selected' : ''}>${o || 'Choose one'}</option>`).join('')}</select></label>
+        <button type="submit" class="btn">Prepare my feedback</button>
+      </form>
+      <button type="button" class="btn ghost" data-action="resetAsk">Start over and clear my data</button>
+      ${storageOk ? '' : '<div class="banner">This browser is not saving your data, so it will reset when you close the page.</div>'}
+      ${footer()}`;
+  }
+
+  // ---------- Backup and restore ----------
+  const toB64 = (str) => btoa(unescape(encodeURIComponent(str)));
+  const fromB64 = (b64) => decodeURIComponent(escape(atob(b64.replace(/\s+/g, ''))));
+  function backupJson() {
+    const data = Object.assign({}, S, { toast: null, fbText: '', tab: 'today' });
+    return JSON.stringify({ app: 'quit-roi-tracker', v: 1, exportedAt: new Date().toISOString(), data });
+  }
+  // Inside claude.ai the page must save files through the downloads capability; on a normal website a plain download works.
+  const inClaude = !!(window.claude && window.claude.use);
+  let downloadsApi = null;
+  if (inClaude) { Promise.resolve(window.claude.use('downloads')).then((d) => { downloadsApi = d; }).catch(() => {}); }
+  function backupCode() { return 'QROI1.' + toB64(backupJson()); }
+  function parseBackup(text) {
+    let t = String(text || '').trim();
+    if (!t) throw new Error('empty');
+    if (t.startsWith('QROI1.')) t = fromB64(t.slice(6));
+    const obj = JSON.parse(t);
+    if (!obj || obj.app !== 'quit-roi-tracker' || !obj.data || typeof obj.data !== 'object') throw new Error('not ours');
+    return obj;
+  }
+  function applyBackup(obj) {
+    const d = obj.data;
+    S = Object.assign(fresh(), d, { toast: null, fbText: '', tab: 'today', setup: true });
+    if (!Array.isArray(S.events)) S.events = [];
+    S.toast = { kind: 'win', text: 'Backup restored from ' + new Date(obj.exportedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) + '. Your progress is back.' };
+  }
+
+  function backupSheet(msg) {
+    overlay(`<div class="sheet" style="text-align:left;align-items:stretch">
+      <h2>Back up your progress</h2>
+      <p class="muted">Your progress is saved only in this browser. Keep a backup so you can restore it if you clear your browser or switch phones.</p>
+      <button type="button" class="btn" data-action="saveBackupFile">Save backup file</button>
+      <button type="button" class="btn ghost" data-action="copyBackupCode">Copy backup code</button>
+      <span class="small muted">The code is a long line of text you can paste into a note or email to yourself.</span>
+      <span id="backupMsg" class="small" role="status">${msg || ''}</span>
+      <button type="button" class="linkbtn" data-action="closeCoach" style="align-self:center">Done</button></div>`);
+  }
+  function restoreSheet(err) {
+    overlay(`<div class="sheet" style="text-align:left;align-items:stretch">
+      <h2>Restore a backup</h2>
+      <p class="muted">Restoring replaces the progress saved in this browser.</p>
+      <label class="field" for="restoreFile">Choose a backup file
+        <input id="restoreFile" type="file" accept=".json,application/json,text/plain"></label>
+      <label class="field" for="restoreCode">Or paste your backup code
+        <textarea id="restoreCode" placeholder="QROI1.…" style="min-height:90px"></textarea></label>
+      ${err ? `<div class="toast slipnote" role="alert">${esc(err)}</div>` : ''}
+      <button type="button" class="btn" data-action="doRestore">Restore</button>
+      <button type="button" class="btn ghost" data-action="closeCoach">Cancel</button></div>`);
+  }
+
+  // ---------- Privacy policy and terms ----------
+  let page = /^#(privacy|terms)$/.test(location.hash) ? location.hash.slice(1) : null;
+  const EFFECTIVE = 'September 27, 2026';
+  const CONTACT = FEEDBACK_TO || 'the app owner';
+  function footer() {
+    return `<div class="row small muted" style="justify-content:center;gap:4px;flex-wrap:wrap">
+      <button type="button" class="linkbtn" data-action="openPage" data-page="privacy">Privacy policy</button><span aria-hidden="true">·</span>
+      <button type="button" class="linkbtn" data-action="openPage" data-page="terms">Terms of use</button></div>
+      <p class="small muted" style="text-align:center">© 2026 Robert Son. All rights reserved.</p>`;
+  }
+  const sec = (h, body) => `<section class="stack" style="gap:6px"><h3>${h}</h3>${body}</section>`;
+  const para = (t) => `<p style="font-size:15px;line-height:1.55">${t}</p>`;
+  const list = (items) => `<ul style="margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px;font-size:15px;line-height:1.5">${items.map((i) => `<li>${i}</li>`).join('')}</ul>`;
+  const pageHead = (title) => `<button type="button" class="linkbtn" data-action="closePage" style="align-self:flex-start;padding:0">← Back to the app</button>
+      <div class="stack" style="gap:4px"><h1>${title}</h1><span class="small muted">Effective ${EFFECTIVE}</span></div>`;
+
+  function viewPrivacy() {
+    return pageHead('Privacy policy') + `<div class="panel" style="gap:18px">
+      ${para('Quit ROI Tracker (the "app") is a test version run by Robert Son. This policy explains what happens to the information you enter. The short version: your data stays on your device, and we never see it unless you choose to send it to us.')}
+      ${sec('What you enter', list([
+        'What you are quitting, how much you usually use, your prices, quit date and time, hidden costs, savings goal and investment return rate.',
+        'Cravings and slips you log, including any trigger notes you type.',
+        'Your answers to the tester feedback form.'
+      ]))}
+      ${sec('Where it is stored', para('Everything is stored only in your web browser’s local storage on the device you are using. There are no accounts, and the app does not send your data to any server we run. If you clear your browser data, use a private window or switch devices, your data will not carry over unless you restore a backup.'))}
+      ${sec('What we can see', para('Nothing, unless you choose to share it. When you tap Email my feedback or send your copied feedback, we receive what you send: your feedback answers, the features you tried, the habit you tracked, and your craving and slip counts. It does not include your prices, dates, notes or savings.'))}
+      ${sec('Backups', para('Backup files and backup codes contain all of your app data. They are created on your device and go only where you save or send them. Treat them like any personal record.'))}
+      ${sec('Services the app uses', list([
+        'The app is hosted on GitHub Pages. GitHub may log basic technical information, such as your IP address, when your browser loads the app. See GitHub’s privacy statement for details.',
+        'Fonts load from Google Fonts, which may receive your IP address and browser details when the page loads.',
+        'The app uses no advertising, no analytics and no tracking cookies, and we never sell or share your data.'
+      ]))}
+      ${sec('Health information', para('The app shows general health information and is not a healthcare provider. What you enter is not a medical record and is not covered by HIPAA.'))}
+      ${sec('Age', para('The app is intended for adults 18 and older, and for alcohol tracking, adults of legal drinking age where they live.'))}
+      ${sec('Your choices', list([
+        'Delete everything at any time: Test tab, then Start over and clear my data, or clear this site’s data in your browser settings.',
+        'Ask us to delete feedback you emailed by writing to ' + esc(CONTACT) + '.'
+      ]))}
+      ${sec('Changes and contact', para('If this policy changes, we will update the effective date above. Questions: ' + esc(CONTACT) + '.'))}
+    </div>` + footer();
+  }
+
+  function viewTerms() {
+    return pageHead('Terms of use') + `<div class="panel" style="gap:18px">
+      ${para('By using Quit ROI Tracker (the "app"), you agree to these terms. If you do not agree, please do not use the app.')}
+      ${sec('A test version', para('The app is an early test version provided free of charge, as is and as available. Features may change or stop working, and data may be lost. Keep a backup of anything you want to keep.'))}
+      ${sec('Not medical advice', para('Health milestones are general averages from public health sources and may not apply to you. The app does not diagnose, treat or replace care from a doctor or other qualified professional. Stopping alcohol suddenly after heavy daily drinking can be dangerous: talk to a doctor first. In an emergency, call 911.'))}
+      ${sec('Not financial advice', para('Savings, projections and investment figures are estimates and illustrations based on the numbers you enter and the rate you choose. They are not financial, investment or tax advice, and real returns vary according to market volatility and can be negative in some years.'))}
+      ${sec('Your responsibilities', list([
+        'Use the app only if you are 18 or older, and for alcohol tracking, of legal drinking age where you live.',
+        'You are responsible for the information you enter and for decisions you make using the app.',
+        'Do not misuse the app, try to break it or use it for anything unlawful.'
+      ]))}
+      ${sec('Support resources', para('Quitline: 1-800-QUIT-NOW (1-800-784-8669). SAMHSA National Helpline: 1-800-662-4357. These services are run by others; we are not affiliated with them.'))}
+      ${sec('Ownership', para('The app, including its code, design, text and calculations, is © 2026 Robert Son. All rights reserved. You may use the app for your own personal, non-commercial purposes. You may not copy, modify, redistribute, resell or build a competing product from any part of it without written permission.'))}
+      ${sec('Limitation of liability', para('To the fullest extent allowed by law, the app’s owner is not liable for any indirect, incidental or consequential damages, or for any loss of data, arising from your use of the app.'))}
+      ${sec('Changes and contact', para('We may update these terms and will change the effective date when we do. These terms are governed by the laws of the Commonwealth of Virginia. Questions: ' + esc(CONTACT) + '.'))}
+    </div>` + footer();
+  }
+  const PAGES = { privacy: viewPrivacy, terms: viewTerms };
+
+  const VIEWS = { today: viewToday, health: viewHealth, history: viewHistory, report: viewReport, test: viewTest };
 
   function render() {
-    const list = visible();
     const app = document.getElementById('app');
-    const active = document.activeElement && document.activeElement.id;
-    app.innerHTML = `
-      <header class="brand">
-        <span class="km" lang="km">សួស្តី <span style="font-family:var(--font);font-size:16px;color:var(--muted)">(suosdei, hello)</span></span>
-        <h1>Khmer for Travelers Phrasebook</h1>
-        <p>Tap <strong>Show</strong> to hold a phrase up for a driver, vendor or waiter.</p>
-      </header>
-      <div class="searchrow">
-        <label for="q" style="position:absolute;left:-9999px">Search phrases</label>
-        <input id="q" class="search" type="search" placeholder="Search in English, e.g. how much" value="${esc(query)}" autocomplete="off">
-        ${SR ? `<button type="button" id="micEn" class="iconbtn" aria-label="Say a phrase in English">${I.mic}</button>` : ''}
-      </div>
-      <div class="status" id="status" role="status">${esc(heardNote)}</div>
-      <div class="chips" role="group" aria-label="Categories">
-        ${CATS.map(([k, l]) => `<button type="button" class="chip" data-cat="${k}" aria-pressed="${cat === k}">${l}${k === 'saved' ? ' (' + Object.keys(saved).length + ')' : ''}</button>`).join('')}
-      </div>
-      <div class="list">${list.length ? list.map(card).join('') : `<div class="empty">${cat === 'saved' ? 'No saved phrases yet. Tap Save on any phrase to keep it here.' : 'No phrases match. Try another word, like "hello", "price" or "toilet".'}</div>`}</div>
-      <div class="panel">
-        <strong>Good to know</strong>
-        <span>Pronunciation guides are approximate. Listen to locals and copy their tone.</span>
-        <span>U.S. dollars are widely accepted in Cambodia, with Cambodian riel used for small change. Check the current exchange rate before you go.</span>
-        <span>${khmerVoice ? 'This device can read phrases aloud in Khmer.' : 'This device has no Khmer voice, so phrases show as text. Use Show to let people read them.'}${SR ? ' Tap the microphone to say a phrase in English.' : ''}</span>
-        <span>Khmer translations are being reviewed by native speakers. Spot a mistake? Email rson226@gmail.com.</span>
-      </div>
-      <p class="footer">Your saved phrases stay on this device. © 2026 Robert Son. All rights reserved.</p>`;
-    if (active === 'q') { const q = document.getElementById('q'); q.focus(); q.setSelectionRange(q.value.length, q.value.length); }
-  }
-
-  // ---------- Show mode ----------
-  let showState = null;
-  function phraseText(p, place) {
-    if (!p.builder) return { km: p.km, rom: p.rom, en: p.en };
-    if (!place) return { km: p.km, rom: p.rom, en: p.en };
-    const t = p.tmpl || p;
-    return {
-      km: t.km.replace('___', place.km),
-      rom: t.rom.replace('___', place.rom),
-      en: t.en.replace('___', place.en)
-    };
-  }
-  function renderShow() {
-    const { p, place, answer, heard } = showState;
-    const t = phraseText(p, place);
-    const replies = p.replies ? REPLIES[p.replies] : null;
-    document.getElementById('overlay').innerHTML = `<div class="overlay" role="dialog" aria-modal="true" aria-label="Show phrase">
-      <div class="show">
-        <button type="button" class="act" data-action="closeShow" style="align-self:flex-start">← Back to phrases</button>
-        <div class="showcard">
-          <span class="km" lang="km">${p.numeral ? p.numeral + '<br>' : ''}${esc(t.km)}</span>
-          <span class="rom">${esc(t.rom)}</span>
-          <span class="en">${esc(t.en)}</span>
-        </div>
-        ${p.builder ? `<span class="sectionlabel">${BUILDERS[p.builder].label}</span>
-          <div class="replies">${BUILDERS[p.builder].list.map((pl, i) => `<button type="button" class="reply" data-place="${i}" aria-pressed="${place === pl}"><span class="rkm" lang="km">${esc(pl.km)}</span><span class="ren">${esc(pl.label || pl.en.replace(/^(the|a) /, ''))}</span></button>`).join('')}</div>` : ''}
-        <div class="showbar">
-          ${khmerVoice ? `<button type="button" class="act primary" data-action="playShow">${I.play} Play in Khmer</button>` : ''}
-          ${replies && SR ? `<button type="button" class="act" data-action="listenKm" id="listenKm">${I.mic} Listen to reply (beta)</button>` : ''}
-        </div>
-        ${heard ? `<div class="heard"><span class="sectionlabel">Heard</span><div class="km" lang="km">${esc(heard.text)}</div><div>${heard.match ? 'Best match: <strong>' + esc(heard.match) + '</strong>' : 'No confident match. Ask them to tap an answer below.'}</div></div>` : ''}
-        ${answer ? `<div class="answer" role="status"><span lang="km">${esc(answer.km)}</span><small>${esc(answer.en)}</small></div>` : ''}
-        ${replies ? `<span class="sectionlabel">For the person you’re asking: tap your answer · សូមចុចចម្លើយរបស់អ្នក</span>
-          <div class="replies">${replies.map(([km, rom, en], i) => `<button type="button" class="reply" data-reply="${i}" aria-pressed="${!!answer && answer.i === i}"><span class="rkm" lang="km">${esc(km)}</span><span class="ren">${esc(en)}</span></button>`).join('')}</div>
-          ${p.replies === 'price' ? `<div class="customprice"><label for="priceIn" class="sectionlabel" style="width:100%">Or type the price · វាយតម្លៃ</label>
-            <input id="priceIn" type="number" inputmode="decimal" min="0" placeholder="e.g. 3">
-            <button type="button" class="act primary" data-action="priceUsd">$ dollars</button>
-            <button type="button" class="act primary" data-action="priceRiel">៛ riel</button></div>` : ''}` : ''}
-      </div></div>`;
-  }
-  function openShow(id) {
-    const p = PHRASES.find((x) => x.id === id); if (!p) return;
-    showState = { p, place: null, answer: null, heard: null };
-    renderShow();
-    const b = document.querySelector('#overlay [data-action="closeShow"]'); b && b.focus();
-  }
-
-  // ---------- Toast ----------
-  let toastTimer = null;
-  function toast(msg) { const t = document.getElementById('toast'); t.textContent = msg; t.hidden = false; clearTimeout(toastTimer); toastTimer = setTimeout(() => { t.hidden = true; }, 4500); }
-
-  // ---------- Events ----------
-  let micOn = null;
-  document.addEventListener('click', (ev) => {
-    const b = ev.target.closest('button'); if (!b) return;
-    if (b.dataset.cat) { cat = b.dataset.cat; render(); return; }
-    if (b.dataset.show) { openShow(b.dataset.show); return; }
-    if (b.dataset.quick) { const [id, i] = b.dataset.quick.split(':'); openShow(id); showState.place = BUILDERS[showState.p.builder].list[Number(i)]; renderShow(); return; }
-    if (b.dataset.play) { const p = PHRASES.find((x) => x.id === b.dataset.play); p && speak(p.km); return; }
-    if (b.dataset.star) { const id = b.dataset.star; if (saved[id]) delete saved[id]; else saved[id] = 1; persist(); render(); return; }
-    if (b.dataset.place !== undefined) { showState.place = BUILDERS[showState.p.builder].list[Number(b.dataset.place)]; renderShow(); return; }
-    if (b.dataset.reply !== undefined) {
-      const i = Number(b.dataset.reply); const r = REPLIES[showState.p.replies][i];
-      showState.answer = { i, km: r[0], en: r[2] }; showState.heard = null; renderShow();
-      const a = document.querySelector('.answer'); a && a.scrollIntoView({ block: 'center', behavior: 'smooth' });
-      return;
+    const tabs = document.getElementById('tabs');
+    if (page && PAGES[page]) {
+      app.innerHTML = PAGES[page]();
+      tabs.hidden = true;
+    } else if (!S.setup || S.tab === 'setup') {
+      app.innerHTML = viewSetup();
+      tabs.hidden = true;
+    } else {
+      if (S.tab === 'health') done('health');
+      if (S.tab === 'report') done('report');
+      app.innerHTML = (S.offsetDays ? `<div class="banner" role="note">Tester mode: viewing ${S.offsetDays} day${S.offsetDays > 1 ? 's' : ''} ahead. <button type="button" class="linkbtn" data-skip="0">Back to today</button></div>` : '') + VIEWS[S.tab]();
+      tabs.hidden = false;
+      tabs.innerHTML = [['today', 'Today'], ['health', 'Health'], ['history', 'History'], ['report', 'Report'], ['test', 'Test']]
+        .map(([k, l]) => `<button type="button" data-tab="${k}" ${S.tab === k ? 'aria-current="page"' : ''}>${icons[k]}<span>${l}</span></button>`).join('');
     }
-    if (b.id === 'micEn') {
-      if (micOn) { try { micOn.stop(); } catch (e) {} return; }
-      b.classList.add('listening'); heardNote = 'Listening… say a phrase in English.';
-      document.getElementById('status').textContent = heardNote;
-      micOn = listen('en-US', (alts) => {
-        const text = alts[0] || ''; query = text; ranked = rankEnglish(alts.join(' '));
-        cat = 'all';
-        heardNote = ranked.length ? `Heard “${text}”. Best matches first.` : `Heard “${text}”. No close match. Try fewer words, like “how much”.`;
-        if (!ranked.length) ranked = null;
-        render();
-        if (ranked && ranked.length) { const first = document.querySelector('[data-show]'); first && first.focus(); }
-      }, () => { micOn = null; const m = document.getElementById('micEn'); m && m.classList.remove('listening'); if (heardNote.startsWith('Listening')) { heardNote = ''; const s = document.getElementById('status'); s && (s.textContent = ''); } });
-      return;
+    save();
+  }
+
+  function overlay(html) { const o = document.getElementById('overlay'); o.innerHTML = html ? `<div class="overlay" role="dialog" aria-modal="true">${html}</div>` : ''; if (html) { const f = o.querySelector('button'); f && f.focus(); } }
+
+  let timer = null;
+  function openCoach() {
+    let left = 60;
+    const draw = () => overlay(`<div class="sheet">
+        <span class="eyebrow">Craving coach</span>
+        <h2>Breathe with the circle</h2>
+        <div class="breath" aria-hidden="true"><span id="cd">${left}</span></div>
+        <p class="muted">In for 4, out for 6. Most cravings fade within a few minutes. This one would cost you ${money(calc().habitDaily)} today.</p>
+        <button type="button" class="btn" data-action="beat">I beat it</button>
+        <button type="button" class="btn slip" data-action="slipFromCoach">I slipped</button>
+        <button type="button" class="linkbtn" data-action="closeCoach">Close</button></div>`);
+    draw();
+    clearInterval(timer);
+    timer = setInterval(() => { left = Math.max(0, left - 1); const el = document.getElementById('cd'); if (el) el.textContent = left; if (!left) clearInterval(timer); }, 1000);
+  }
+
+  function slipAsk() {
+    overlay(`<div class="sheet">
+      <h2>Log a slip?</h2>
+      <p class="muted">Your streak restarts, but everything you've saved stays. One slip is a data point, not a failure.</p>
+      <label class="field" for="slipNote" style="width:100%;text-align:left">What triggered it? (optional)<input id="slipNote" type="text" maxlength="80" placeholder="Stress at work, a party…"></label>
+      <button type="button" class="btn slip" data-action="slipConfirm">Log the slip</button>
+      <button type="button" class="btn ghost" data-action="closeCoach">Cancel</button></div>`);
+  }
+
+  function addEvent(type, note) {
+    S.events.push({ type, ts: now(), note: note || '' });
+    if (S.events.length > 500) S.events = S.events.slice(-500);
+  }
+
+  document.addEventListener('click', async (ev) => {
+    const b = ev.target.closest('button');
+    if (!b) return;
+    if (b.dataset.tab) { S.tab = b.dataset.tab; S.toast = null; render(); window.scrollTo(0, 0); return; }
+    if (b.dataset.set) { S[b.dataset.set] = b.dataset.val; render(); return; }
+    if (b.dataset.step) {
+      const k = b.dataset.step, d = Number(b.dataset.dir);
+      const lim = { packs: [0.5, 4, 0.5], drinks: [1, 20, 1], drinkPrice: [1, 30, 1], investRate: [0, 12, 1] }[k];
+      S[k] = Math.min(lim[1], Math.max(lim[0], Math.round((S[k] + d * lim[2]) * 10) / 10));
+      render(); return;
+    }
+    if (b.dataset.skip !== undefined) {
+      const n = Number(b.dataset.skip);
+      S.offsetDays = n === 0 ? 0 : S.offsetDays + n;
+      if (n) done('skip');
+      S.toast = null; render(); return;
     }
     const a = b.dataset.action;
-    if (a === 'closeShow') { showState = null; document.getElementById('overlay').innerHTML = ''; try { synth && synth.cancel(); } catch (e) {} return; }
-    if (a === 'playShow') { const t = phraseText(showState.p, showState.place); speak(t.km); return; }
-    if (a === 'priceUsd' || a === 'priceRiel') {
-      const v = Number((document.getElementById('priceIn') || {}).value);
-      if (!(v > 0)) { toast('Type a price first.'); return; }
-      const shown = v.toLocaleString('en-US');
-      showState.answer = a === 'priceUsd' ? { i: -1, km: kmNum(shown) + ' ដុល្លារ', en: '$' + shown } : { i: -1, km: kmNum(shown) + ' រៀល', en: shown + ' riel' };
-      renderShow(); return;
+    if (a === 'finishSetup') {
+      if (!S.quitDate) { alertField('quitDate', 'Choose a quit date.'); return; }
+      if (!String(S.goalName || '').trim()) S.goalName = 'My goal';
+      S.setup = true; S.tab = 'today'; done('setup'); render(); window.scrollTo(0, 0);
+    } else if (a === 'edit') { S.tab = 'setup'; render(); window.scrollTo(0, 0); }
+    else if (a === 'craving') { openCoach(); }
+    else if (a === 'beat') {
+      clearInterval(timer); overlay(''); addEvent('craving'); done('craving');
+      const c = calc();
+      S.toast = { kind: 'win', text: `Craving beaten. That's ${c.cravings.length} so far, and ${money(c.habitDaily)} stays toward ${S.goalName}.` };
+      S.tab = 'today'; render();
+    } else if (a === 'slipFromCoach' || a === 'slipAsk') { clearInterval(timer); slipAsk(); }
+    else if (a === 'slipConfirm') {
+      const note = (document.getElementById('slipNote') || {}).value || '';
+      overlay(''); addEvent('slip', note.trim()); done('slip');
+      const c = calc();
+      S.toast = { kind: 'slip', text: `Slip logged. Your streak restarts today, and you're still ${money(c.saved)} ahead overall. Tomorrow counts.` };
+      S.tab = 'today'; render();
+    } else if (a === 'closeCoach') { clearInterval(timer); overlay(''); }
+    else if (a === 'copyFb') {
+      const box = document.getElementById('fbout'); const msg = document.getElementById('copyMsg');
+      try { await navigator.clipboard.writeText(S.fbText); msg.textContent = 'Copied.'; }
+      catch (e) { box.focus(); box.select(); msg.textContent = 'Select the text above and copy it.'; }
+    } else if (a === 'editFb') { S.fbText = ''; render(); }
+    else if (a === 'resetAsk') {
+      overlay(`<div class="sheet"><h2>Clear everything?</h2><p class="muted">This deletes your setup, history and feedback on this device.</p>
+        <button type="button" class="btn slip" data-action="resetYes">Clear my data</button>
+        <button type="button" class="btn ghost" data-action="closeCoach">Keep my data</button></div>`);
+    } else if (a === 'resetYes') { overlay(''); S = fresh(); render(); window.scrollTo(0, 0); }
+    else if (a === 'backupOpen') { backupSheet(); }
+    else if (a === 'goalOpen') { goalBackup = { goalName: S.goalName, goalAmt: S.goalAmt, goalCustom: S.goalCustom }; goalSheet(); }
+    else if (a === 'goalCancel') { if (goalBackup) Object.assign(S, goalBackup); goalBackup = null; overlay(''); render(); }
+    else if (a === 'goalSave') {
+      if (!String(S.goalName || '').trim()) S.goalName = 'My goal';
+      if (!(Number(S.goalAmt) > 0)) S.goalAmt = 500;
+      goalBackup = null; overlay('');
+      S.toast = { kind: 'win', text: 'Goal updated: ' + S.goalName + ', ' + money0(S.goalAmt) + '.' };
+      render();
     }
-    if (a === 'listenKm') {
-      const btn = document.getElementById('listenKm'); btn && btn.classList.add('listening');
-      listen('km-KH', (alts) => {
-        const replies = REPLIES[showState.p.replies];
-        let best = null, bestScore = 0;
-        alts.forEach((t) => replies.forEach((r, i) => { const s = dice(t, r[0]); if (s > bestScore) { bestScore = s; best = { i, r }; } }));
-        showState.heard = { text: alts[0] || '', match: bestScore >= 0.5 ? best.r[2] : null };
-        showState.answer = bestScore >= 0.5 ? { i: best.i, km: best.r[0], en: best.r[2] } : null;
-        renderShow();
-      }, () => { const x = document.getElementById('listenKm'); x && x.classList.remove('listening'); });
-    }
+    else if (a === 'restoreOpen') { restoreSheet(); }
+    else if (a === 'saveBackupFile') {
+      const m = document.getElementById('backupMsg');
+      const filename = 'quit-roi-backup-' + isoDay(Date.now()) + '.json';
+      if (inClaude) {
+        if (!downloadsApi) { if (m) m.textContent = 'Saving files isn\'t available here. Use Copy backup code instead.'; return; }
+        try { await downloadsApi.save({ filename, data: backupJson() }); S.lastBackup = Date.now(); save(); if (m) m.textContent = 'Backup file saved.'; }
+        catch (e) { if (m) m.textContent = e && e.code === 'declined' ? 'Save cancelled.' : 'The file couldn\'t be saved here. Use Copy backup code instead.'; }
+        return;
+      }
+      try {
+        const blob = new Blob([backupJson()], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url; link.download = filename;
+        document.body.appendChild(link); link.click(); link.remove();
+        setTimeout(() => URL.revokeObjectURL(url), 4000);
+        S.lastBackup = Date.now(); save();
+        if (m) m.textContent = 'Backup file saved to your downloads.';
+      } catch (e) { if (m) m.textContent = 'This browser blocked the download. Use Copy backup code instead.'; }
+    } else if (a === 'copyBackupCode') {
+      const code = backupCode(); const m = document.getElementById('backupMsg');
+      try { await navigator.clipboard.writeText(code); S.lastBackup = Date.now(); save(); if (m) m.textContent = 'Backup code copied. Paste it somewhere safe, like a note or an email to yourself.'; }
+      catch (e) {
+        if (m) { m.innerHTML = 'Select and copy this code:<textarea class="copybox" readonly style="min-height:90px;margin-top:6px"></textarea>'; const ta = m.querySelector('textarea'); ta.value = code; ta.focus(); ta.select(); S.lastBackup = Date.now(); save(); }
+      }
+    } else if (a === 'doRestore') {
+      const fileEl = document.getElementById('restoreFile'); const codeEl = document.getElementById('restoreCode');
+      const file = fileEl && fileEl.files && fileEl.files[0];
+      try {
+        const text = file ? await file.text() : (codeEl ? codeEl.value : '');
+        const obj = parseBackup(text);
+        applyBackup(obj); overlay(''); render(); window.scrollTo(0, 0);
+      } catch (e) { restoreSheet(file ? 'That file isn\'t a Quit ROI Tracker backup. Choose the .json file you saved from this app.' : 'That code didn\'t work. Paste the whole code, starting with QROI1.'); }
+    } else if (a === 'openPage') { page = b.dataset.page; render(); window.scrollTo(0, 0); }
+    else if (a === 'closePage') { page = null; try { history.replaceState(null, '', location.pathname + location.search); } catch (e) {} render(); window.scrollTo(0, 0); }
   });
+
+  function alertField(id, text) { const el = document.getElementById(id); if (el) { el.setAttribute('aria-invalid', 'true'); el.focus(); } }
+
   document.addEventListener('input', (ev) => {
-    if (ev.target.id !== 'q') return;
-    query = ev.target.value; if (query.trim() && cat !== 'saved') cat = 'all'; ranked = query.trim().split(/\s+/).length > 1 ? rankEnglish(query) : null;
-    if (ranked && !ranked.length) ranked = null;
-    heardNote = ''; render();
+    const k = ev.target.dataset.input;
+    if (!k) return;
+    let v = ev.target.value;
+    if (['customPrice', 'extrasMonthly', 'goalAmt'].includes(k)) v = Math.max(0, Number(v) || 0);
+    S[k] = v;
+    save();
+    if (k === 'priceId') render();
+    else {
+      const c = calc(); const p = document.querySelector('.panel .num');
+      if (p && (!S.setup || S.tab === 'setup')) { p.textContent = money0(c.daily * 365) + ' a year'; const s = p.nextElementSibling; if (s) s.textContent = money(c.daily) + ' a day'; const e = document.getElementById('etaLine'); if (e) e.textContent = S.goalName + ': ' + goalEta(c); }
+    }
   });
-  document.addEventListener('keydown', (ev) => { if (ev.key === 'Escape' && showState) { showState = null; document.getElementById('overlay').innerHTML = ''; } });
+  document.addEventListener('change', (ev) => {
+    if (ev.target.dataset.input === 'priceId') { render(); return; }
+    if (ev.target.id === 'goalPick') {
+      const v = ev.target.value;
+      if (v === '__custom') { S.goalCustom = true; if (GOAL_PRESETS.includes(S.goalName)) S.goalName = ''; }
+      else { S.goalCustom = false; S.goalName = v; }
+      save();
+      if (document.getElementById('goalSheet')) goalSheet(); else render();
+      const g = document.getElementById(v === '__custom' ? 'goalName' : 'goalPick'); if (g) g.focus();
+    }
+  });
+
+  document.addEventListener('submit', (ev) => {
+    if (ev.target.id !== 'fbForm') return;
+    ev.preventDefault();
+    const f = new FormData(ev.target);
+    S.fb = { rating: f.get('rating') || '', like: f.get('like') || '', confuse: f.get('confuse') || '', missing: f.get('missing') || '', pay: f.get('pay') || '' };
+    const c = calc();
+    const habit = { cig: 'Cigarettes', alc: 'Alcohol', both: 'Cigarettes and alcohol' }[S.habit];
+    S.fbText = [
+      'QUIT ROI TRACKER — TESTER FEEDBACK',
+      'Date: ' + new Date().toLocaleDateString('en-US'),
+      'Usefulness (1-5): ' + (S.fb.rating || 'not answered'),
+      'Most motivating: ' + (S.fb.like || '-'),
+      'Confusing or hard: ' + (S.fb.confuse || '-'),
+      'Missing: ' + (S.fb.missing || '-'),
+      'Would pay: ' + (S.fb.pay || 'not answered'),
+      '',
+      'Features tried: ' + (TASKS.filter(([k]) => S.tasks[k]).map(([, l]) => l).join('; ') || 'none'),
+      'Habit tracked: ' + habit,
+      'Cravings logged: ' + c.cravings.length + ' · Slips logged: ' + c.slips.length
+    ].join('\n');
+    done('feedback');
+    render(); window.scrollTo(0, 0);
+  });
+
+  document.addEventListener('keydown', (ev) => { if (ev.key === 'Escape' && document.querySelector('.overlay')) { clearInterval(timer); overlay(''); } });
 
   render();
 })();

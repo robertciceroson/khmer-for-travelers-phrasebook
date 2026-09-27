@@ -110,7 +110,7 @@ button,input{font:inherit;color:inherit}
   // Romanization is a simple English-friendly guide, not a formal system. All Khmer is pending native-speaker review.
   const CATS = [
     ['all', 'All'], ['saved', 'Saved'], ['basics', 'Basics'], ['people', 'Family & people'], ['pronouns', 'I, you, he, she'], ['around', 'Getting around'],
-    ['shop', 'Shopping & money'], ['food', 'Food & drink'], ['numbers', 'Numbers'], ['help', 'Emergencies']
+    ['shop', 'Shopping & money'], ['food', 'Food & drink'], ['weather', 'Weather'], ['numbers', 'Numbers'], ['help', 'Emergencies']
   ];
   const PLACES = [
     { km: 'សណ្ឋាគារ', rom: 'sonthakear', en: 'the hotel' },
@@ -197,7 +197,9 @@ button,input{font:inherit;color:inherit}
   const PETS = [
     { km: 'ឆ្កែ', rom: 'chhkae', en: 'Dog' },
     { km: 'ឆ្មា', rom: 'chhma', en: 'Cat' },
-    { km: 'ស្វា', rom: 'sva', en: 'Monkey' }
+    { km: 'ស្វា', rom: 'sva', en: 'Monkey' },
+    { km: 'សត្វស្លាប', rom: 'sat slab', en: 'Bird' },
+    { km: 'ត្រី', rom: 'trey', en: 'Fish' }
   ];
   const BUILDERS = { pets: { label: 'Animals', list: PETS }, feelings: { label: 'How I feel', list: FEELINGS }, family: { label: 'Family members', list: FAMILY }, places: { label: 'Choose a place', list: PLACES }, people: { label: 'Choose a person', list: PEOPLE }, symptoms: { label: 'Choose a symptom', list: SYMPTOMS } };
   const FEELINGS_REPLIES = [['ខ្ញុំសប្បាយចិត្ត', 'khnhom sabay chet', "I'm happy"], ['ខ្ញុំពិបាកចិត្ត', 'khnhom pibak chet', "I'm sad"], ['ខ្ញុំឃ្លាន', 'khnhom khlean', "I'm hungry"], ['ខ្ញុំចង់ញ៉ាំបាយ', 'khnhom chong nham bay', "I want to eat"], ['ខ្ញុំមិនឃ្លានទេ', 'khnhom min khlean te', "I'm not hungry"], ['ខ្ញុំឆ្អែតហើយ', 'khnhom chh\u2019aet haeuy', "I'm full"], ['ខ្ញុំស្រេកទឹក', 'khnhom srek tuk', "I'm thirsty"], ['ខ្ញុំហត់', 'khnhom hot', "I'm tired"], ['ខ្ញុំអស់កម្លាំង', 'khnhom os kamlang', "I'm exhausted"], ['ខ្ញុំងងុយគេង', 'khnhom ngnguy keng', "I'm sleepy"], ['ខ្ញុំចង់សម្រាក', 'khnhom chong samrak', "I want to rest"], ['ខ្ញុំចង់សម្រាកលំហែ', 'khnhom chong samrak lumhae', "I want to relax"], ['ខ្ញុំចង់រាំ', 'khnhom chong roam', "I want to dance"]];
@@ -240,7 +242,7 @@ button,input{font:inherit;color:inherit}
     P('basics', 'Please speak slowly', 'សូមនិយាយយឺតៗ', 'som niyeay yeut yeut'),
 
     P('people', 'Family', 'គ្រួសារ', 'kruosar', { builder: 'family', tmpl: { km: '___', rom: '___', en: '___' }, keywords: 'husband wife child children son daughter father mother sister brother older younger sibling poun uncle aunt grandpa grandma', note: 'Tap a family member to show the word. Sister and brother are general. Khmer names siblings by age: bong is older, p\u2019oun is younger. P\u2019oun is also a friendly way to address someone younger, and uncle (pu), aunt (ming), grandpa (ta) and grandma (yeay) are polite ways to address strangers.' }),
-    P('people', 'Pets', 'សត្វចិញ្ចឹម', 'sat chenhchem', { builder: 'pets', tmpl: { km: '___', rom: '___', en: '___' }, keywords: 'pet pets animal dog cat monkey', note: 'Tap an animal to show the word.' }),
+    P('people', 'Pets', 'សត្វចិញ្ចឹម', 'sat chenhchem', { builder: 'pets', tmpl: { km: '___', rom: '___', en: '___' }, keywords: 'pet pets animal dog cat monkey bird fish', note: 'Tap an animal to show the word.' }),
     P('people', 'Girlfriend / Boyfriend', 'សង្សារ', 'sangsar', { note: 'One word covers both. Khmer doesn\u2019t mark the gender here.' }),
     P('people', 'Friend', 'មិត្តភក្តិ', 'mitt pheak'),
     P('people', 'Are you married?', 'អ្នករៀបការហើយឬនៅ?', 'neak riep kar haeuy reu nov?', { replies: 'married' }),
@@ -291,6 +293,11 @@ button,input{font:inherit;color:inherit}
     P('food', 'No ice, please', 'កុំដាក់ទឹកកក', 'kom dak tuk kak'),
     P('food', 'I am vegetarian', 'ខ្ញុំតមសាច់', 'khnhom tam sach'),
     P('food', 'The bill, please', 'សុំគិតលុយ', 'som kit luy', { replies: 'price' }),
+    P('weather', 'Hot day', 'ថ្ងៃក្តៅ', 'thngai kdau', { keywords: 'weather hot heat warm' }),
+    P('weather', 'Sunny day', 'ថ្ងៃមេឃស្រឡះ', 'thngai mekh srolah', { keywords: 'weather sunny sun clear sky', note: 'Literally "a clear-sky day".' }),
+    P('weather', 'Rainy day', 'ថ្ងៃភ្លៀង', 'thngai phlieng', { keywords: 'weather rain rainy wet' }),
+    P('weather', 'Cloudy day', 'ថ្ងៃមេឃស្រទំ', 'thngai mekh srotum', { keywords: 'weather cloudy clouds overcast grey gray' }),
+    P('weather', 'Umbrella', 'ឆ័ត្រ', 'chhat', { keywords: 'weather umbrella rain parasol sun shade' }),
 
     P('help', 'Help!', 'ជួយផង!', 'chuoy phong!'),
     P('help', 'Call the police', 'ហៅប៉ូលីស', 'hav polis'),

@@ -141,10 +141,23 @@ button,input{font:inherit;color:inherit}
     { km: 'ប្អូនស្រី', rom: 'p\u2019oun srei', en: 'younger sister' },
     { km: 'ម្ដាយ', rom: 'mdai', en: 'mother' },
     { km: 'ឪពុក', rom: 'ov pouk', en: 'father' },
+    { km: 'ពូ', rom: 'pu', en: 'uncle' },
+    { km: 'មីង', rom: 'ming', en: 'aunt' },
+    { km: 'តា', rom: 'ta', en: 'grandpa' },
+    { km: 'យាយ', rom: 'yeay', en: 'grandma' },
     { km: 'កូនប្រុស', rom: 'kaun pros', en: 'son' },
     { km: 'កូនស្រី', rom: 'kaun srei', en: 'daughter' }
   ];
-  const BUILDERS = { places: { label: 'Choose a place', list: PLACES }, people: { label: 'Choose a person', list: PEOPLE } };
+  const SYMPTOMS = [
+    { km: 'ឈឺចាប់', rom: 'chheu chap', en: 'am in pain', label: 'Pain (general)' },
+    { km: 'ឈឺក្បាល', rom: 'chheu kbal', en: 'have a headache', label: 'Headache' },
+    { km: 'ឈឺពោះ', rom: 'chheu poah', en: 'have a stomachache', label: 'Stomachache' },
+    { km: 'រាគ', rom: 'reak', en: 'have diarrhea', label: 'Diarrhea' },
+    { km: 'ឈឺធ្មេញ', rom: 'chheu thmenh', en: 'have a toothache', label: 'Toothache' },
+    { km: 'វិលមុខ', rom: 'vil muk', en: 'feel dizzy', label: 'Dizzy' },
+    { km: 'គ្រុនក្ដៅ', rom: 'krun kdau', en: 'have a fever', label: 'Fever' }
+  ];
+  const BUILDERS = { places: { label: 'Choose a place', list: PLACES }, people: { label: 'Choose a person', list: PEOPLE }, symptoms: { label: 'Choose a symptom', list: SYMPTOMS } };
   const KM_DIGITS = '០១២៣៤៥៦៧៨៩';
   const kmNum = (n) => String(n).replace(/\d/g, (d) => KM_DIGITS[d]);
   const REPLIES = {
@@ -177,6 +190,16 @@ button,input{font:inherit;color:inherit}
     P('basics', 'No problem', 'មិនអីទេ', 'min ey te'),
     P('basics', 'How are you?', 'សុខសប្បាយជាទេ?', 'sok sabay chea te?', { replies: 'fine' }),
     P('basics', "I'm fine", 'ខ្ញុំសុខសប្បាយ', 'khnhom sok sabay'),
+    P('basics', "I'm happy", 'ខ្ញុំសប្បាយចិត្ត', 'khnhom sabay chet'),
+    P('basics', "I'm not fine", 'ខ្ញុំមិនសុខសប្បាយទេ', 'khnhom min sok sabay te'),
+    P('basics', "I'm sad", 'ខ្ញុំពិបាកចិត្ត', 'khnhom pibak chet', { note: 'Literally "my heart is troubled." The everyday way to say you feel sad or upset.' }),
+    P('basics', "I'm hungry", 'ខ្ញុំឃ្លាន', 'khnhom khlean'),
+    P('basics', "I'm not hungry", 'ខ្ញុំមិនឃ្លានទេ', 'khnhom min khlean te'),
+    P('basics', "I'm thirsty", 'ខ្ញុំស្រេកទឹក', 'khnhom srek tuk'),
+    P('basics', "I'm full", 'ខ្ញុំឆ្អែតហើយ', 'khnhom chh\u2019aet haeuy', { note: 'Handy when a host keeps offering more food.' }),
+    P('basics', "I'm tired", 'ខ្ញុំហត់', 'khnhom hot'),
+    P('basics', "I'm sleepy", 'ខ្ញុំងងុយគេង', 'khnhom ngnguy keng'),
+    P('basics', "I'm exhausted", 'ខ្ញុំអស់កម្លាំង', 'khnhom os kamlang', { note: 'Literally "I\u2019m out of strength."' }),
     P('basics', 'My name is ___', 'ខ្ញុំឈ្មោះ___', 'khnhom chhmuoh ___'),
     P('basics', "I don't understand", 'ខ្ញុំមិនយល់ទេ', 'khnhom min yol te'),
     P('basics', 'Do you speak English?', 'អ្នកចេះនិយាយភាសាអង់គ្លេសទេ?', 'neak cheh niyeay pheasa angkles te?', { replies: 'yesno' }),
@@ -206,6 +229,10 @@ button,input{font:inherit;color:inherit}
     P('pronouns', 'He / She', 'គាត់', 'koat', { note: 'One polite word for both he and she. Khmer doesn\u2019t mark gender here.' }),
     P('pronouns', 'We / us', 'យើង', 'yeung'),
     P('pronouns', 'They / them', 'ពួកគេ', 'puok ke'),
+    P('pronouns', 'Uncle', 'ពូ', 'pu', { note: 'Pu is an uncle younger than your parents, and a friendly way to address a middle-aged man. An uncle older than your parents is om pros (អ៊ំប្រុស).' }),
+    P('pronouns', 'Aunt', 'មីង', 'ming', { note: 'Ming is an aunt younger than your parents, and a friendly way to address a middle-aged woman. An aunt older than your parents is om srei (អ៊ំស្រី).' }),
+    P('pronouns', 'Grandpa', 'តា', 'ta', { note: 'Also a respectful way to address an elderly man.' }),
+    P('pronouns', 'Grandma', 'យាយ', 'yeay', { note: 'Also a respectful way to address an elderly woman.' }),
     P('pronouns', 'You (more than one person)', 'ពួកអ្នក', 'puok neak'),
     P('pronouns', 'My / mine', 'របស់ខ្ញុំ', 'robos khnhom', { note: 'Often shortened: "my wife" is simply prapun khnhom.' }),
     P('pronouns', 'Your / yours', 'របស់អ្នក', 'robos neak'),
@@ -245,7 +272,7 @@ button,input{font:inherit;color:inherit}
     P('help', 'Call the police', 'ហៅប៉ូលីស', 'hav polis'),
     P('help', 'I need a doctor', 'ខ្ញុំត្រូវការគ្រូពេទ្យ', 'khnhom trov kar kru pet'),
     P('help', 'Where is the hospital?', 'មន្ទីរពេទ្យនៅឯណា?', 'monti pet nov ae na?', { replies: 'directions' }),
-    P('help', 'I am sick', 'ខ្ញុំឈឺ', 'khnhom chheu'),
+    P('help', 'I am sick', 'ខ្ញុំឈឺ', 'khnhom chheu', { builder: 'symptoms', tmpl: { km: 'ខ្ញុំ___', rom: 'khnhom ___', en: 'I ___' }, keywords: 'pain headache stomachache stomach ache diarrhea toothache tooth dizzy fever', note: 'Tap a symptom to show it, e.g. "I have a headache."' }),
     P('help', 'I am lost', 'ខ្ញុំវង្វេងផ្លូវ', 'khnhom vongveng phlauv')
   ];
   [[1, 'មួយ', 'muoy'], [2, 'ពីរ', 'pii'], [3, 'បី', 'bei'], [4, 'បួន', 'buon'], [5, 'ប្រាំ', 'pram'], [6, 'ប្រាំមួយ', 'pram muoy'],
@@ -298,7 +325,7 @@ button,input{font:inherit;color:inherit}
   function rankEnglish(text) {
     const q = words(text); const qk = q.filter((w) => !STOP.has(w));
     return PHRASES.map((p) => {
-      const pw = words(p.en + ' ' + p.rom);
+      const pw = words(p.en + ' ' + p.rom + ' ' + (p.keywords || ''));
       let score = 0;
       q.forEach((w) => { if (pw.includes(w)) score += STOP.has(w) ? 0.3 : 2; });
       if (p.en.toLowerCase().replace(/[^a-z ]/g, '').trim() === q.join(' ')) score += 5;
@@ -328,7 +355,7 @@ button,input{font:inherit;color:inherit}
     let list = ranked || PHRASES;
     if (!ranked && query) {
       const q = query.toLowerCase();
-      list = PHRASES.filter((p) => (p.en + ' ' + p.rom).toLowerCase().includes(q) || p.km.includes(query));
+      list = PHRASES.filter((p) => (p.en + ' ' + p.rom + ' ' + (p.keywords || '')).toLowerCase().includes(q) || p.km.includes(query));
     }
     if (cat === 'saved') list = list.filter((p) => saved[p.id]);
     else if (cat !== 'all') list = list.filter((p) => p.cat === cat);
@@ -341,7 +368,7 @@ button,input{font:inherit;color:inherit}
       <span class="km" lang="km">${p.numeral ? p.numeral + ' · ' : ''}${esc(p.km)}</span>
       <span class="rom">${esc(p.rom)}</span>
       ${p.note ? `<span class="note">${esc(p.note)}</span>` : ''}
-      ${p.builder === 'places' && /take me to/i.test(p.en) ? `<div class="quick" role="group" aria-label="Quick destinations">${PLACES.slice(0, QUICK_PLACES).map((pl, i) => `<button type="button" class="qchip" data-quick="${p.id}:${i}"><span lang="km">${esc(pl.km)}</span> ${esc(pl.en.replace(/^(the|a) /, '').replace(/^./, (c) => c.toUpperCase()))}</button>`).join('')}</div>` : ''}
+      ${(p.builder === 'places' && /take me to/i.test(p.en)) || p.builder === 'symptoms' ? `<div class="quick" role="group" aria-label="${p.builder === 'symptoms' ? 'Symptoms' : 'Quick destinations'}">${(p.builder === 'symptoms' ? SYMPTOMS : PLACES.slice(0, QUICK_PLACES)).map((pl, i) => `<button type="button" class="qchip" data-quick="${p.id}:${i}"><span lang="km">${esc(pl.km)}</span> ${esc(pl.label || pl.en.replace(/^(the|a) /, '').replace(/^./, (c) => c.toUpperCase()))}</button>`).join('')}</div>` : ''}
       <div class="actions">
         <button type="button" class="act primary" data-show="${p.id}">${I.show} Show${p.replies ? ' & ask' : ''}</button>
         ${khmerVoice ? `<button type="button" class="act" data-play="${p.id}">${I.play} Play</button>` : ''}
@@ -385,10 +412,11 @@ button,input{font:inherit;color:inherit}
   function phraseText(p, place) {
     if (!p.builder) return { km: p.km, rom: p.rom, en: p.en };
     if (!place) return { km: p.km, rom: p.rom, en: p.en };
+    const t = p.tmpl || p;
     return {
-      km: p.km.replace('___', place.km),
-      rom: p.rom.replace('___', place.rom),
-      en: p.en.replace('___', place.en)
+      km: t.km.replace('___', place.km),
+      rom: t.rom.replace('___', place.rom),
+      en: t.en.replace('___', place.en)
     };
   }
   function renderShow() {
@@ -404,7 +432,7 @@ button,input{font:inherit;color:inherit}
           <span class="en">${esc(t.en)}</span>
         </div>
         ${p.builder ? `<span class="sectionlabel">${BUILDERS[p.builder].label}</span>
-          <div class="replies">${BUILDERS[p.builder].list.map((pl, i) => `<button type="button" class="reply" data-place="${i}" aria-pressed="${place === pl}"><span class="rkm" lang="km">${esc(pl.km)}</span><span class="ren">${esc(pl.en.replace(/^(the|a) /, ''))}</span></button>`).join('')}</div>` : ''}
+          <div class="replies">${BUILDERS[p.builder].list.map((pl, i) => `<button type="button" class="reply" data-place="${i}" aria-pressed="${place === pl}"><span class="rkm" lang="km">${esc(pl.km)}</span><span class="ren">${esc(pl.label || pl.en.replace(/^(the|a) /, ''))}</span></button>`).join('')}</div>` : ''}
         <div class="showbar">
           ${khmerVoice ? `<button type="button" class="act primary" data-action="playShow">${I.play} Play in Khmer</button>` : ''}
           ${replies && SR ? `<button type="button" class="act" data-action="listenKm" id="listenKm">${I.mic} Listen to reply (beta)</button>` : ''}
@@ -436,7 +464,7 @@ button,input{font:inherit;color:inherit}
     const b = ev.target.closest('button'); if (!b) return;
     if (b.dataset.cat) { cat = b.dataset.cat; render(); return; }
     if (b.dataset.show) { openShow(b.dataset.show); return; }
-    if (b.dataset.quick) { const [id, i] = b.dataset.quick.split(':'); openShow(id); showState.place = PLACES[Number(i)]; renderShow(); return; }
+    if (b.dataset.quick) { const [id, i] = b.dataset.quick.split(':'); openShow(id); showState.place = BUILDERS[showState.p.builder].list[Number(i)]; renderShow(); return; }
     if (b.dataset.play) { const p = PHRASES.find((x) => x.id === b.dataset.play); p && speak(p.km); return; }
     if (b.dataset.star) { const id = b.dataset.star; if (saved[id]) delete saved[id]; else saved[id] = 1; persist(); render(); return; }
     if (b.dataset.place !== undefined) { showState.place = BUILDERS[showState.p.builder].list[Number(b.dataset.place)]; renderShow(); return; }

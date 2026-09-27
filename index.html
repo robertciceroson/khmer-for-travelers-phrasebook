@@ -159,7 +159,22 @@ button,input{font:inherit;color:inherit}
     { km: 'វិលមុខ', rom: 'vil muk', en: 'feel dizzy', label: 'Dizzy' },
     { km: 'គ្រុនក្ដៅ', rom: 'krun kdau', en: 'have a fever', label: 'Fever' }
   ];
-  const BUILDERS = { places: { label: 'Choose a place', list: PLACES }, people: { label: 'Choose a person', list: PEOPLE }, symptoms: { label: 'Choose a symptom', list: SYMPTOMS } };
+  const FAMILY = [
+    { km: 'ប្ដី', rom: 'pdei', en: 'Husband' },
+    { km: 'ប្រពន្ធ', rom: 'prapun', en: 'Wife' },
+    { km: 'កូន', rom: 'kaun', en: 'Child / Children' },
+    { km: 'កូនប្រុស', rom: 'kaun pros', en: 'Son' },
+    { km: 'កូនស្រី', rom: 'kaun srei', en: 'Daughter' },
+    { km: 'ឪពុក', rom: 'ov pouk', en: 'Father' },
+    { km: 'ម្ដាយ', rom: 'mdai', en: 'Mother' },
+    { km: 'បងប្អូនស្រី', rom: 'bong p\u2019oun srei', en: 'Sister' },
+    { km: 'បងប្អូនប្រុស', rom: 'bong p\u2019oun pros', en: 'Brother' },
+    { km: 'ពូ', rom: 'pu', en: 'Uncle' },
+    { km: 'មីង', rom: 'ming', en: 'Aunt' },
+    { km: 'តា', rom: 'ta', en: 'Grandpa' },
+    { km: 'យាយ', rom: 'yeay', en: 'Grandma' }
+  ];
+  const BUILDERS = { family: { label: 'Family members', list: FAMILY }, places: { label: 'Choose a place', list: PLACES }, people: { label: 'Choose a person', list: PEOPLE }, symptoms: { label: 'Choose a symptom', list: SYMPTOMS } };
   const KM_DIGITS = '០១២៣៤៥៦៧៨៩';
   const kmNum = (n) => String(n).replace(/\d/g, (d) => KM_DIGITS[d]);
   const REPLIES = {
@@ -207,6 +222,7 @@ button,input{font:inherit;color:inherit}
     P('basics', 'Do you speak English?', 'អ្នកចេះនិយាយភាសាអង់គ្លេសទេ?', 'neak cheh niyeay pheasa angkles te?', { replies: 'yesno' }),
     P('basics', 'Please speak slowly', 'សូមនិយាយយឺតៗ', 'som niyeay yeut yeut'),
 
+    P('people', 'Family', 'គ្រួសារ', 'kruosar', { builder: 'family', tmpl: { km: '___', rom: '___', en: '___' }, keywords: 'husband wife child children son daughter father mother sister brother uncle aunt grandpa grandma', note: 'Tap a family member to show the word. Sister and brother here are general; Khmer also has older and younger forms (see the cards below).' }),
     P('people', 'Husband', 'ប្ដី', 'pdei'),
     P('people', 'Wife', 'ប្រពន្ធ', 'prapun'),
     P('people', 'Girlfriend / Boyfriend', 'សង្សារ', 'sangsar', { note: 'One word covers both. Khmer doesn\u2019t mark the gender here.' }),
@@ -220,7 +236,6 @@ button,input{font:inherit;color:inherit}
     P('people', 'Son', 'កូនប្រុស', 'kaun pros'),
     P('people', 'Daughter', 'កូនស្រី', 'kaun srei'),
     P('people', 'Child / children', 'កូន', 'kaun'),
-    P('people', 'Family', 'គ្រួសារ', 'kruosar'),
     P('people', 'Are you married?', 'អ្នករៀបការហើយឬនៅ?', 'neak riep kar haeuy reu nov?', { replies: 'married' }),
     P('people', 'Do you have children?', 'អ្នកមានកូនទេ?', 'neak mean kaun te?', { replies: 'kids' }),
     P('people', 'Bong (polite way to address someone a bit older)', 'បង', 'bong', { note: 'Cambodians often call a driver, vendor or waiter bong. It\u2019s friendly and respectful.' }),
@@ -370,7 +385,7 @@ button,input{font:inherit;color:inherit}
       <span class="km" lang="km">${p.numeral ? p.numeral + ' · ' : ''}${esc(p.km)}</span>
       <span class="rom">${esc(p.rom)}</span>
       ${p.note ? `<span class="note">${esc(p.note)}</span>` : ''}
-      ${(p.builder === 'places' && /take me to/i.test(p.en)) || p.builder === 'symptoms' || p.builder === 'people' ? `<div class="quick" role="group" aria-label="${p.builder === 'symptoms' ? 'Symptoms' : p.builder === 'people' ? 'People' : 'Quick destinations'}">${(p.builder === 'symptoms' ? SYMPTOMS : p.builder === 'people' ? PEOPLE.slice(0, 12) : PLACES.slice(0, QUICK_PLACES)).map((pl, i) => `<button type="button" class="qchip" data-quick="${p.id}:${i}"><span lang="km">${esc(pl.km)}</span> ${esc(pl.label || pl.en.replace(/^(the|a) /, '').replace(/^./, (c) => c.toUpperCase()))}</button>`).join('')}</div>` : ''}
+      ${(p.builder === 'places' && /take me to/i.test(p.en)) || p.builder === 'symptoms' || p.builder === 'people' || p.builder === 'family' ? `<div class="quick" role="group" aria-label="${p.builder === 'symptoms' ? 'Symptoms' : p.builder === 'people' ? 'People' : p.builder === 'family' ? 'Family members' : 'Quick destinations'}">${(p.builder === 'symptoms' ? SYMPTOMS : p.builder === 'people' ? PEOPLE.slice(0, 12) : p.builder === 'family' ? FAMILY : PLACES.slice(0, QUICK_PLACES)).map((pl, i) => `<button type="button" class="qchip" data-quick="${p.id}:${i}"><span lang="km">${esc(pl.km)}</span> ${esc(pl.label || pl.en.replace(/^(the|a) /, '').replace(/^./, (c) => c.toUpperCase()))}</button>`).join('')}</div>` : ''}
       <div class="actions">
         <button type="button" class="act primary" data-show="${p.id}">${I.show} Show${p.replies ? ' & ask' : ''}</button>
         ${khmerVoice ? `<button type="button" class="act" data-play="${p.id}">${I.play} Play</button>` : ''}

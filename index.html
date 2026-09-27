@@ -174,7 +174,23 @@ button,input{font:inherit;color:inherit}
     { km: 'តា', rom: 'ta', en: 'Grandpa' },
     { km: 'យាយ', rom: 'yeay', en: 'Grandma' }
   ];
-  const BUILDERS = { family: { label: 'Family members', list: FAMILY }, places: { label: 'Choose a place', list: PLACES }, people: { label: 'Choose a person', list: PEOPLE }, symptoms: { label: 'Choose a symptom', list: SYMPTOMS } };
+  const FEELINGS = [
+    { km: 'សប្បាយចិត្ត', rom: 'sabay chet', en: "I'm happy" },
+    { km: 'ពិបាកចិត្ត', rom: 'pibak chet', en: "I'm sad" },
+    { km: 'ឃ្លាន', rom: 'khlean', en: "I'm hungry" },
+    { km: 'ចង់ញ៉ាំបាយ', rom: 'chong nham bay', en: "I want to eat" },
+    { km: 'មិនឃ្លានទេ', rom: 'min khlean te', en: "I'm not hungry" },
+    { km: 'ឆ្អែតហើយ', rom: 'chh\u2019aet haeuy', en: "I'm full" },
+    { km: 'ស្រេកទឹក', rom: 'srek tuk', en: "I'm thirsty" },
+    { km: 'ហត់', rom: 'hot', en: "I'm tired" },
+    { km: 'អស់កម្លាំង', rom: 'os kamlang', en: "I'm exhausted" },
+    { km: 'ងងុយគេង', rom: 'ngnguy keng', en: "I'm sleepy" },
+    { km: 'ចង់សម្រាក', rom: 'chong samrak', en: "I want to rest" },
+    { km: 'ចង់សម្រាកលំហែ', rom: 'chong samrak lumhae', en: "I want to relax" },
+    { km: 'ចង់រាំ', rom: 'chong roam', en: "I want to dance" }
+  ];
+  const BUILDERS = { feelings: { label: 'How I feel', list: FEELINGS }, family: { label: 'Family members', list: FAMILY }, places: { label: 'Choose a place', list: PLACES }, people: { label: 'Choose a person', list: PEOPLE }, symptoms: { label: 'Choose a symptom', list: SYMPTOMS } };
+  const FEELINGS_REPLIES = [['ខ្ញុំសប្បាយចិត្ត', 'khnhom sabay chet', "I'm happy"], ['ខ្ញុំពិបាកចិត្ត', 'khnhom pibak chet', "I'm sad"], ['ខ្ញុំឃ្លាន', 'khnhom khlean', "I'm hungry"], ['ខ្ញុំចង់ញ៉ាំបាយ', 'khnhom chong nham bay', "I want to eat"], ['ខ្ញុំមិនឃ្លានទេ', 'khnhom min khlean te', "I'm not hungry"], ['ខ្ញុំឆ្អែតហើយ', 'khnhom chh\u2019aet haeuy', "I'm full"], ['ខ្ញុំស្រេកទឹក', 'khnhom srek tuk', "I'm thirsty"], ['ខ្ញុំហត់', 'khnhom hot', "I'm tired"], ['ខ្ញុំអស់កម្លាំង', 'khnhom os kamlang', "I'm exhausted"], ['ខ្ញុំងងុយគេង', 'khnhom ngnguy keng', "I'm sleepy"], ['ខ្ញុំចង់សម្រាក', 'khnhom chong samrak', "I want to rest"], ['ខ្ញុំចង់សម្រាកលំហែ', 'khnhom chong samrak lumhae', "I want to relax"], ['ខ្ញុំចង់រាំ', 'khnhom chong roam', "I want to dance"]];
   const KM_DIGITS = '០១២៣៤៥៦៧៨៩';
   const kmNum = (n) => String(n).replace(/\d/g, (d) => KM_DIGITS[d]);
   const REPLIES = {
@@ -183,6 +199,7 @@ button,input{font:inherit;color:inherit}
     directions: [['ទៅត្រង់', 'tov trong', 'Go straight'], ['បត់ឆ្វេង', 'bot chhveng', 'Turn left'], ['បត់ស្តាំ', 'bot sdam', 'Turn right'],
       ['នៅជិតនេះ', 'nov chit nih', "It's near here"], ['នៅឆ្ងាយ', 'nov chhngay', "It's far"], ['នៅទីនោះ', 'nov ti noh', "It's over there"]],
     far: [['ជិត', 'chit', 'Near'], ['ឆ្ងាយ', 'chhngay', 'Far'], ['មិនឆ្ងាយទេ', 'min chhngay te', 'Not far'], ['មិនដឹងទេ', 'min doeng te', "I don't know"]],
+    feelings: FEELINGS_REPLIES,
     married: [['រៀបការហើយ', 'riep kar haeuy', 'Yes, married'], ['នៅទេ', 'nov te', 'Not yet'], ['មានសង្សារ', 'mean sangsar', 'I have a partner']],
     kids: [['មាន', 'mean', 'Yes'], ['អត់មានទេ', 'ot mean te', 'No'], ['នៅទេ', 'nov te', 'Not yet']],
     have: [['មាន', 'mean', 'Yes, we have it'], ['អត់មានទេ', 'ot mean te', "We don't have it"], ['ចាំបន្តិច', 'cham bontech', 'Wait a moment']],
@@ -206,36 +223,21 @@ button,input{font:inherit;color:inherit}
     P('basics', 'Sorry / Excuse me', 'សុំទោស', 'som tos'),
     P('basics', 'No problem', 'មិនអីទេ', 'min ey te'),
     P('basics', 'How are you?', 'សុខសប្បាយជាទេ?', 'sok sabay chea te?', { replies: 'fine' }),
+    P('basics', 'How are you feeling?', 'អ្នកមានអារម្មណ៍យ៉ាងម៉េចដែរ?', 'neak mean arom yang mech dae?', { builder: 'feelings', replies: 'feelings', tmpl: { km: 'ខ្ញុំ___', rom: 'khnhom ___', en: '___' }, keywords: 'happy sad hungry eat full thirsty tired exhausted sleepy rest relax dance feeling', note: 'Tap how you feel to show it. Tap Show & ask to let someone answer you.' }),
     P('basics', "I'm fine", 'ខ្ញុំសុខសប្បាយ', 'khnhom sok sabay'),
     P('basics', "I'm not fine", 'ខ្ញុំមិនសុខសប្បាយទេ', 'khnhom min sok sabay te'),
-    P('basics', "I'm happy", 'ខ្ញុំសប្បាយចិត្ត', 'khnhom sabay chet'),
-    P('basics', "I'm sad", 'ខ្ញុំពិបាកចិត្ត', 'khnhom pibak chet', { note: 'Literally "my heart is troubled." The everyday way to say you feel sad or upset.' }),
-    P('basics', "I'm hungry", 'ខ្ញុំឃ្លាន', 'khnhom khlean'),
-    P('basics', "I'm not hungry", 'ខ្ញុំមិនឃ្លានទេ', 'khnhom min khlean te'),
-    P('basics', "I'm thirsty", 'ខ្ញុំស្រេកទឹក', 'khnhom srek tuk'),
-    P('basics', "I'm full", 'ខ្ញុំឆ្អែតហើយ', 'khnhom chh\u2019aet haeuy', { note: 'Handy when a host keeps offering more food.' }),
-    P('basics', "I'm tired", 'ខ្ញុំហត់', 'khnhom hot'),
-    P('basics', "I'm sleepy", 'ខ្ញុំងងុយគេង', 'khnhom ngnguy keng'),
-    P('basics', "I'm exhausted", 'ខ្ញុំអស់កម្លាំង', 'khnhom os kamlang', { note: 'Literally "I\u2019m out of strength."' }),
     P('basics', 'My name is ___', 'ខ្ញុំឈ្មោះ___', 'khnhom chhmuoh ___'),
     P('basics', "I don't understand", 'ខ្ញុំមិនយល់ទេ', 'khnhom min yol te'),
     P('basics', 'Do you speak English?', 'អ្នកចេះនិយាយភាសាអង់គ្លេសទេ?', 'neak cheh niyeay pheasa angkles te?', { replies: 'yesno' }),
     P('basics', 'Please speak slowly', 'សូមនិយាយយឺតៗ', 'som niyeay yeut yeut'),
 
-    P('people', 'Family', 'គ្រួសារ', 'kruosar', { builder: 'family', tmpl: { km: '___', rom: '___', en: '___' }, keywords: 'husband wife child children son daughter father mother sister brother uncle aunt grandpa grandma', note: 'Tap a family member to show the word. Sister and brother here are general; Khmer also has older and younger forms (see the cards below).' }),
-    P('people', 'Husband', 'ប្ដី', 'pdei'),
-    P('people', 'Wife', 'ប្រពន្ធ', 'prapun'),
+    P('people', 'Family', 'គ្រួសារ', 'kruosar', { builder: 'family', tmpl: { km: '___', rom: '___', en: '___' }, keywords: 'husband wife child children son daughter father mother sister brother uncle aunt grandpa grandma', note: 'Tap a family member to show the word. Sister and brother are general; the older and younger forms are in the cards below. Uncle (pu), aunt (ming), grandpa (ta) and grandma (yeay) are also polite ways to address strangers.' }),
     P('people', 'Girlfriend / Boyfriend', 'សង្សារ', 'sangsar', { note: 'One word covers both. Khmer doesn\u2019t mark the gender here.' }),
     P('people', 'Friend', 'មិត្តភក្តិ', 'mitt pheak'),
     P('people', 'Older brother', 'បងប្រុស', 'bong pros', { note: 'Khmer names siblings by age: bong is older, p\u2019oun is younger.' }),
     P('people', 'Younger brother', 'ប្អូនប្រុស', 'p\u2019oun pros'),
     P('people', 'Older sister', 'បងស្រី', 'bong srei'),
     P('people', 'Younger sister', 'ប្អូនស្រី', 'p\u2019oun srei'),
-    P('people', 'Mother', 'ម្ដាយ', 'mdai'),
-    P('people', 'Father', 'ឪពុក', 'ov pouk'),
-    P('people', 'Son', 'កូនប្រុស', 'kaun pros'),
-    P('people', 'Daughter', 'កូនស្រី', 'kaun srei'),
-    P('people', 'Child / children', 'កូន', 'kaun'),
     P('people', 'Are you married?', 'អ្នករៀបការហើយឬនៅ?', 'neak riep kar haeuy reu nov?', { replies: 'married' }),
     P('people', 'Do you have children?', 'អ្នកមានកូនទេ?', 'neak mean kaun te?', { replies: 'kids' }),
     P('people', 'Bong (polite way to address someone a bit older)', 'បង', 'bong', { note: 'Cambodians often call a driver, vendor or waiter bong. It\u2019s friendly and respectful.' }),
@@ -245,10 +247,6 @@ button,input{font:inherit;color:inherit}
     P('pronouns', 'He / She', 'គាត់', 'koat', { note: 'One polite word for both he and she. Khmer doesn\u2019t mark gender here.' }),
     P('pronouns', 'We / us', 'យើង', 'yeung'),
     P('pronouns', 'They / them', 'ពួកគេ', 'puok ke'),
-    P('pronouns', 'Uncle', 'ពូ', 'pu', { note: 'Pu is an uncle younger than your parents, and a friendly way to address a middle-aged man. An uncle older than your parents is om pros (អ៊ំប្រុស).' }),
-    P('pronouns', 'Aunt', 'មីង', 'ming', { note: 'Ming is an aunt younger than your parents, and a friendly way to address a middle-aged woman. An aunt older than your parents is om srei (អ៊ំស្រី).' }),
-    P('pronouns', 'Grandpa', 'តា', 'ta', { note: 'Also a respectful way to address an elderly man.' }),
-    P('pronouns', 'Grandma', 'យាយ', 'yeay', { note: 'Also a respectful way to address an elderly woman.' }),
     P('pronouns', 'You (more than one person)', 'ពួកអ្នក', 'puok neak'),
     P('pronouns', 'My / mine', 'របស់ខ្ញុំ', 'robos khnhom', { note: 'Often shortened: "my wife" is simply prapun khnhom.' }),
     P('pronouns', 'Your / yours', 'របស់អ្នក', 'robos neak'),
@@ -385,7 +383,7 @@ button,input{font:inherit;color:inherit}
       <span class="km" lang="km">${p.numeral ? p.numeral + ' · ' : ''}${esc(p.km)}</span>
       <span class="rom">${esc(p.rom)}</span>
       ${p.note ? `<span class="note">${esc(p.note)}</span>` : ''}
-      ${(p.builder === 'places' && /take me to/i.test(p.en)) || p.builder === 'symptoms' || p.builder === 'people' || p.builder === 'family' ? `<div class="quick" role="group" aria-label="${p.builder === 'symptoms' ? 'Symptoms' : p.builder === 'people' ? 'People' : p.builder === 'family' ? 'Family members' : 'Quick destinations'}">${(p.builder === 'symptoms' ? SYMPTOMS : p.builder === 'people' ? PEOPLE.slice(0, 12) : p.builder === 'family' ? FAMILY : PLACES.slice(0, QUICK_PLACES)).map((pl, i) => `<button type="button" class="qchip" data-quick="${p.id}:${i}"><span lang="km">${esc(pl.km)}</span> ${esc(pl.label || pl.en.replace(/^(the|a) /, '').replace(/^./, (c) => c.toUpperCase()))}</button>`).join('')}</div>` : ''}
+      ${(p.builder === 'places' && /take me to/i.test(p.en)) || p.builder === 'symptoms' || p.builder === 'people' || p.builder === 'family' || p.builder === 'feelings' ? `<div class="quick" role="group" aria-label="${p.builder === 'symptoms' ? 'Symptoms' : p.builder === 'people' ? 'People' : p.builder === 'family' ? 'Family members' : p.builder === 'feelings' ? 'Feelings' : 'Quick destinations'}">${(p.builder === 'symptoms' ? SYMPTOMS : p.builder === 'people' ? PEOPLE.slice(0, 12) : p.builder === 'family' ? FAMILY : p.builder === 'feelings' ? FEELINGS : PLACES.slice(0, QUICK_PLACES)).map((pl, i) => `<button type="button" class="qchip" data-quick="${p.id}:${i}"><span lang="km">${esc(pl.km)}</span> ${esc(pl.label || pl.en.replace(/^(the|a) /, '').replace(/^./, (c) => c.toUpperCase()))}</button>`).join('')}</div>` : ''}
       <div class="actions">
         <button type="button" class="act primary" data-show="${p.id}">${I.show} Show${p.replies ? ' & ask' : ''}</button>
         ${khmerVoice ? `<button type="button" class="act" data-play="${p.id}">${I.play} Play</button>` : ''}

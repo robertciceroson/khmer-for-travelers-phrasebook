@@ -7,7 +7,7 @@ This is the **user-testing version**. It runs entirely in the browser as a singl
 ## Features
 
 - **92 phrase cards** across Basics, Family & people, Pronouns (I, you, he, she, we), Getting around, Shopping & money, Food & drink, Weather, Numbers and Emergencies
-- **How are you feeling?** one card with 13 one-tap feelings (happy, sad, hungry, want to eat, not hungry, full, thirsty, tired, exhausted, sleepy, want to rest, want to relax, want to dance), which a local can also tap to answer
+- **How are you feeling?** one card with 14 one-tap feelings (happy, not happy, sad, hungry, want to eat, not hungry, full, thirsty, tired, exhausted, sleepy, want to rest, want to relax, want to dance), which a local can also tap to answer
 - **Family at a glance:** the "Family" card lists one-tap buttons for husband, wife, child/children, son, daughter, father, mother, sister, brother, older and younger brother and sister, p'oun, uncle, aunt, grandpa and grandma
 - **Pets:** one card with Dog, Cat, Monkey, Bird and Fish buttons
 - **Show mode:** large Khmer text, pronunciation and English on one screen

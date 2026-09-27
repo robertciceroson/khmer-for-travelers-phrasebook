@@ -6,10 +6,10 @@ This is the **user-testing version**. It runs entirely in the browser as a singl
 
 ## Features
 
-- **63 phrases** across Basics, Getting around, Shopping & money, Food & drink, Numbers and Emergencies
+- **82 phrases** across Basics, Family & people, Getting around, Shopping & money, Food & drink, Numbers and Emergencies
 - **Show mode:** large Khmer text, pronunciation and English on one screen
 - **Tap-to-answer replies:** for questions like "How much?" or "Where is the toilet?", the local person taps an answer in Khmer and the traveler sees it in English (prices in riel or dollars, directions, yes/no, places)
-- **Place builder:** "Please take me to ___" and "Where is ___?" with common destinations such as Angkor Wat, the Royal Palace, the airport and the hotel
+- **Fill-in builders:** "Please take me to ___" and "Where is ___?" with destinations such as Angkor Wat, the Royal Palace, the airport and the hotel; "This is my ___" with husband, wife, girlfriend/boyfriend, friend, siblings, parents and children
 - **Search** in English, pronunciation or Khmer, plus **Saved** phrases kept on the device
 - **Voice (where supported):** say a phrase in English to find it; hear phrases in Khmer if the device has a Khmer voice; experimental listening for a spoken Khmer reply
 
@@ -35,6 +35,7 @@ The microphone works on the hosted site (for example GitHub Pages), not inside t
 - Pronunciation guides are approximate, English-friendly spellings, not a formal romanization system.
 - Khmer translations are pending review by native speakers before public launch.
 - Men say *baat* and women say *chaa* for "yes".
+- Khmer names siblings by age (*bong* = older, *p'oun* = younger), and *bong* is also a polite way to address someone slightly older, such as a driver or vendor.
 - U.S. dollars are widely accepted in Cambodia, with riel used for small change.
 
 ## License

@@ -106,7 +106,7 @@ button,input{font:inherit;color:inherit}
   // ---------- Content ----------
   // Romanization is a simple English-friendly guide, not a formal system. All Khmer is pending native-speaker review.
   const CATS = [
-    ['all', 'All'], ['saved', 'Saved'], ['basics', 'Basics'], ['around', 'Getting around'],
+    ['all', 'All'], ['saved', 'Saved'], ['basics', 'Basics'], ['people', 'Family & people'], ['around', 'Getting around'],
     ['shop', 'Shopping & money'], ['food', 'Food & drink'], ['numbers', 'Numbers'], ['help', 'Emergencies']
   ];
   const PLACES = [
@@ -123,6 +123,21 @@ button,input{font:inherit;color:inherit}
     { km: 'ឆ្នេរ', rom: 'chhne', en: 'the beach' },
     { km: 'បង្គន់', rom: 'bangkon', en: 'the toilet' }
   ];
+  const PEOPLE = [
+    { km: 'ប្ដី', rom: 'pdei', en: 'husband' },
+    { km: 'ប្រពន្ធ', rom: 'prapun', en: 'wife' },
+    { km: 'សង្សារ', rom: 'sangsar', en: 'girlfriend / boyfriend' },
+    { km: 'មិត្តភក្តិ', rom: 'mitt pheak', en: 'friend' },
+    { km: 'បងប្រុស', rom: 'bong pros', en: 'older brother' },
+    { km: 'ប្អូនប្រុស', rom: 'p\u2019oun pros', en: 'younger brother' },
+    { km: 'បងស្រី', rom: 'bong srei', en: 'older sister' },
+    { km: 'ប្អូនស្រី', rom: 'p\u2019oun srei', en: 'younger sister' },
+    { km: 'ម្ដាយ', rom: 'mdai', en: 'mother' },
+    { km: 'ឪពុក', rom: 'ov pouk', en: 'father' },
+    { km: 'កូនប្រុស', rom: 'kaun pros', en: 'son' },
+    { km: 'កូនស្រី', rom: 'kaun srei', en: 'daughter' }
+  ];
+  const BUILDERS = { places: { label: 'Choose a place', list: PLACES }, people: { label: 'Choose a person', list: PEOPLE } };
   const KM_DIGITS = '០១២៣៤៥៦៧៨៩';
   const kmNum = (n) => String(n).replace(/\d/g, (d) => KM_DIGITS[d]);
   const REPLIES = {
@@ -131,6 +146,8 @@ button,input{font:inherit;color:inherit}
     directions: [['ទៅត្រង់', 'tov trong', 'Go straight'], ['បត់ឆ្វេង', 'bot chhveng', 'Turn left'], ['បត់ស្តាំ', 'bot sdam', 'Turn right'],
       ['នៅជិតនេះ', 'nov chit nih', "It's near here"], ['នៅឆ្ងាយ', 'nov chhngay', "It's far"], ['នៅទីនោះ', 'nov ti noh', "It's over there"]],
     far: [['ជិត', 'chit', 'Near'], ['ឆ្ងាយ', 'chhngay', 'Far'], ['មិនឆ្ងាយទេ', 'min chhngay te', 'Not far'], ['មិនដឹងទេ', 'min doeng te', "I don't know"]],
+    married: [['រៀបការហើយ', 'riep kar haeuy', 'Yes, married'], ['នៅទេ', 'nov te', 'Not yet'], ['មានសង្សារ', 'mean sangsar', 'I have a partner']],
+    kids: [['មាន', 'mean', 'Yes'], ['អត់មានទេ', 'ot mean te', 'No'], ['នៅទេ', 'nov te', 'Not yet']],
     have: [['មាន', 'mean', 'Yes, we have it'], ['អត់មានទេ', 'ot mean te', "We don't have it"], ['ចាំបន្តិច', 'cham bontech', 'Wait a moment']],
     places: PLACES.map((p) => [p.km, p.rom, p.en.replace(/^the /, '').replace(/^a /, '').replace(/^./, (c) => c.toUpperCase())]),
     price: [
@@ -158,10 +175,29 @@ button,input{font:inherit;color:inherit}
     P('basics', 'Do you speak English?', 'អ្នកចេះនិយាយភាសាអង់គ្លេសទេ?', 'neak cheh niyeay pheasa angkles te?', { replies: 'yesno' }),
     P('basics', 'Please speak slowly', 'សូមនិយាយយឺតៗ', 'som niyeay yeut yeut'),
 
+    P('people', 'Husband', 'ប្ដី', 'pdei'),
+    P('people', 'Wife', 'ប្រពន្ធ', 'prapun'),
+    P('people', 'Girlfriend / Boyfriend', 'សង្សារ', 'sangsar', { note: 'One word covers both. Khmer doesn\u2019t mark the gender here.' }),
+    P('people', 'Friend', 'មិត្តភក្តិ', 'mitt pheak'),
+    P('people', 'Older brother', 'បងប្រុស', 'bong pros', { note: 'Khmer names siblings by age: bong is older, p\u2019oun is younger.' }),
+    P('people', 'Younger brother', 'ប្អូនប្រុស', 'p\u2019oun pros'),
+    P('people', 'Older sister', 'បងស្រី', 'bong srei'),
+    P('people', 'Younger sister', 'ប្អូនស្រី', 'p\u2019oun srei'),
+    P('people', 'Mother', 'ម្ដាយ', 'mdai'),
+    P('people', 'Father', 'ឪពុក', 'ov pouk'),
+    P('people', 'Son', 'កូនប្រុស', 'kaun pros'),
+    P('people', 'Daughter', 'កូនស្រី', 'kaun srei'),
+    P('people', 'Child / children', 'កូន', 'kaun'),
+    P('people', 'Family', 'គ្រួសារ', 'kruosar'),
+    P('people', 'This is my ___', 'នេះជា___ខ្ញុំ', 'nih chea ___ khnhom', { builder: 'people', note: 'Pick a person to introduce, e.g. "This is my wife."' }),
+    P('people', 'Are you married?', 'អ្នករៀបការហើយឬនៅ?', 'neak riep kar haeuy reu nov?', { replies: 'married' }),
+    P('people', 'Do you have children?', 'អ្នកមានកូនទេ?', 'neak mean kaun te?', { replies: 'kids' }),
+    P('people', 'Bong (polite way to address someone a bit older)', 'បង', 'bong', { note: 'Cambodians often call a driver, vendor or waiter bong. It\u2019s friendly and respectful.' }),
+    P('people', 'P\u2019oun (friendly way to address someone younger)', 'ប្អូន', 'p\u2019oun'),
     P('around', 'Where are you going?', 'ទៅណា?', 'tov na?', { replies: 'places', note: 'Tuk-tuk drivers often ask this. Show it to someone to let them tap where they are going.' }),
-    P('around', 'I am going to ___', 'ខ្ញុំទៅ___', 'khnhom tov ___', { builder: true }),
-    P('around', 'Please take me to ___', 'សូមជូនខ្ញុំទៅ___', 'som choun khnhom tov ___', { builder: true, note: 'Handy for tuk-tuk and taxi drivers.' }),
-    P('around', 'Where is ___?', '___នៅឯណា?', '___ nov ae na?', { builder: true, replies: 'directions' }),
+    P('around', 'I am going to ___', 'ខ្ញុំទៅ___', 'khnhom tov ___', { builder: 'places' }),
+    P('around', 'Please take me to ___', 'សូមជូនខ្ញុំទៅ___', 'som choun khnhom tov ___', { builder: 'places', note: 'Handy for tuk-tuk and taxi drivers.' }),
+    P('around', 'Where is ___?', '___នៅឯណា?', '___ nov ae na?', { builder: 'places', replies: 'directions' }),
     P('around', 'Where is the toilet?', 'បង្គន់នៅឯណា?', 'bangkon nov ae na?', { replies: 'directions' }),
     P('around', 'Is it far?', 'ឆ្ងាយទេ?', 'chhngay te?', { replies: 'far' }),
     P('around', 'Go straight', 'ទៅត្រង់', 'tov trong'),
@@ -347,8 +383,8 @@ button,input{font:inherit;color:inherit}
           <span class="rom">${esc(t.rom)}</span>
           <span class="en">${esc(t.en)}</span>
         </div>
-        ${p.builder ? `<span class="sectionlabel">Choose a place</span>
-          <div class="replies">${PLACES.map((pl, i) => `<button type="button" class="reply" data-place="${i}" aria-pressed="${place === pl}"><span class="rkm" lang="km">${esc(pl.km)}</span><span class="ren">${esc(pl.en.replace(/^(the|a) /, ''))}</span></button>`).join('')}</div>` : ''}
+        ${p.builder ? `<span class="sectionlabel">${BUILDERS[p.builder].label}</span>
+          <div class="replies">${BUILDERS[p.builder].list.map((pl, i) => `<button type="button" class="reply" data-place="${i}" aria-pressed="${place === pl}"><span class="rkm" lang="km">${esc(pl.km)}</span><span class="ren">${esc(pl.en.replace(/^(the|a) /, ''))}</span></button>`).join('')}</div>` : ''}
         <div class="showbar">
           ${khmerVoice ? `<button type="button" class="act primary" data-action="playShow">${I.play} Play in Khmer</button>` : ''}
           ${replies && SR ? `<button type="button" class="act" data-action="listenKm" id="listenKm">${I.mic} Listen to reply (beta)</button>` : ''}
@@ -382,7 +418,7 @@ button,input{font:inherit;color:inherit}
     if (b.dataset.show) { openShow(b.dataset.show); return; }
     if (b.dataset.play) { const p = PHRASES.find((x) => x.id === b.dataset.play); p && speak(p.km); return; }
     if (b.dataset.star) { const id = b.dataset.star; if (saved[id]) delete saved[id]; else saved[id] = 1; persist(); render(); return; }
-    if (b.dataset.place !== undefined) { showState.place = PLACES[Number(b.dataset.place)]; renderShow(); return; }
+    if (b.dataset.place !== undefined) { showState.place = BUILDERS[showState.p.builder].list[Number(b.dataset.place)]; renderShow(); return; }
     if (b.dataset.reply !== undefined) {
       const i = Number(b.dataset.reply); const r = REPLIES[showState.p.replies][i];
       showState.answer = { i, km: r[0], en: r[2] }; showState.heard = null; renderShow();
@@ -427,7 +463,7 @@ button,input{font:inherit;color:inherit}
   });
   document.addEventListener('input', (ev) => {
     if (ev.target.id !== 'q') return;
-    query = ev.target.value; ranked = query.trim().split(/\s+/).length > 1 ? rankEnglish(query) : null;
+    query = ev.target.value; if (query.trim() && cat !== 'saved') cat = 'all'; ranked = query.trim().split(/\s+/).length > 1 ? rankEnglish(query) : null;
     if (ranked && !ranked.length) ranked = null;
     heardNote = ''; render();
   });

@@ -15,6 +15,7 @@ It runs entirely in the browser, with no server, build step or account, and it c
 - **Tap-to-answer replies:** for questions like "How much?" or "Where is the toilet?", the local person taps an answer in Khmer and the traveler sees it in English (prices in riel or dollars, directions, yes/no, places)
 - **Fill-in builders:** "Please take me to ___" (with one-tap Hotel, House, Restaurant, Cafe, Bar, Hospital and Airport buttons right on the phrase) and "Where is ___?" with destinations such as Angkor Wat, the Royal Palace, the airport and the hotel; "This is my ___" (in the I, you, he, she tab) with one-tap friend, boyfriend, girlfriend, husband, wife, child/children, son, daughter, uncle, aunt, grandpa and grandma, plus parents and siblings in the full list; "I am sick" with one-tap symptoms: pain, headache, stomachache, diarrhea, toothache, dizzy and fever
 - **Search** in English, pronunciation or Khmer, plus **Saved** phrases kept on the device
+- **Native-speaker audio:** recorded by a native Khmer speaker for Hello (respectful), Thank you, How much?, Where is the toilet? and Please take me to the hotel; plays on every phone and offline
 - **Voice (where supported):** say a phrase in English to find it; hear phrases in Khmer if the device has a Khmer voice; experimental listening for a spoken Khmer reply
 
 ## Voice support
@@ -43,6 +44,7 @@ The microphone works on the hosted site (for example GitHub Pages), not inside t
 | `sw.js` | Offline cache |
 | `fonts/` | Kantumruy Pro and Moul (SIL Open Font License 1.1) |
 | `icons/` | App icons, including 1024 × 1024 for the App Store |
+| `audio/` | Native-speaker recordings (AAC, .m4a) |
 
 ## Deploy to GitHub Pages
 

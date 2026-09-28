@@ -120,7 +120,7 @@ button,input{font:inherit;color:inherit}
     ['shop', 'Shopping & money'], ['food', 'Food & drink'], ['weather', 'Weather'], ['numbers', 'Numbers'], ['help', 'Emergencies']
   ];
   const PLACES = [
-    { km: 'សណ្ឋាគារ', rom: 'sonthakear', en: 'the hotel' },
+    { km: 'អូតែល', rom: 'ohtel', en: 'the hotel' },
     { km: 'ផ្ទះ', rom: 'phteah', en: 'the house' },
     { km: 'ភោជនីយដ្ឋាន', rom: 'phochniyatthan', en: 'a restaurant' },
     { km: 'ហាងកាហ្វេ', rom: 'hang kafe', en: 'a cafe' },
@@ -134,7 +134,7 @@ button,input{font:inherit;color:inherit}
     { km: 'ចំណតឡានក្រុង', rom: 'chamnat lan krong', en: 'the bus station' },
     { km: 'ឱសថស្ថាន', rom: 'osot-sthan', en: 'the pharmacy' },
     { km: 'ឆ្នេរ', rom: 'chhne', en: 'the beach' },
-    { km: 'បង្គន់', rom: 'bangkon', en: 'the toilet' }
+    { km: 'បន្ទប់ទឹក', rom: 'bontup tuk', en: 'the toilet' }
   ];
   const QUICK_PLACES = 7;
   const PEOPLE = [
@@ -284,7 +284,7 @@ button,input{font:inherit;color:inherit}
     P('around', 'I am going to ___', 'ខ្ញុំទៅ___', 'khnhom tov ___', { builder: 'places' }),
     P('around', 'Please take me to ___', 'សូមជូនខ្ញុំទៅ___', 'som choun khnhom tov ___', { builder: 'places', note: 'Handy for tuk-tuk and taxi drivers.' }),
     P('around', 'Where is ___?', '___នៅឯណា?', '___ nov ae na?', { builder: 'places', replies: 'directions' }),
-    P('around', 'Where is the toilet?', 'បង្គន់នៅឯណា?', 'bangkon nov ae na?', { replies: 'directions' }),
+    P('around', 'Where is the toilet?', 'បន្ទប់ទឹកនៅឯណា?', 'bontup tuk nov ae na?', { replies: 'directions' }),
     P('around', 'Is it far?', 'ឆ្ងាយទេ?', 'chhngay te?', { replies: 'far' }),
     P('around', 'Go straight', 'ទៅត្រង់', 'tov trong'),
     P('around', 'Turn left', 'បត់ឆ្វេង', 'bot chhveng'),
@@ -343,7 +343,12 @@ button,input{font:inherit;color:inherit}
     try { khmerVoice = (synth && synth.getVoices() || []).find((v) => /^km/i.test(v.lang)) || null; } catch (e) { khmerVoice = null; }
   }
   if (synth) { findVoice(); try { synth.addEventListener('voiceschanged', () => { const had = !!khmerVoice; findVoice(); if (!!khmerVoice !== had) render(); }); } catch (e) {} }
+  // Native-speaker recordings, keyed by the exact Khmer text they say.
+  const AUDIO = { 'ជំរាបសួរ': 'audio/001.m4a', 'អរគុណ': 'audio/002.m4a', 'ប៉ុន្មាន?': 'audio/003.m4a', 'បន្ទប់ទឹកនៅឯណា?': 'audio/004.m4a', 'សូមជូនខ្ញុំទៅអូតែល': 'audio/005.m4a' };
+  const canPlay = (km) => !!khmerVoice || !!AUDIO[km];
+  let clip = null;
   function speak(text) {
+    if (AUDIO[text]) { try { synth && synth.cancel(); if (clip) clip.pause(); clip = new Audio(AUDIO[text]); clip.play().catch(() => toast('Audio couldn’t play on this device.')); } catch (e) { toast('Audio couldn’t play on this device.'); } return; }
     if (!khmerVoice) { toast('This device has no Khmer voice. Show the Khmer text instead, or read the pronunciation.'); return; }
     try { synth.cancel(); const u = new SpeechSynthesisUtterance(text.replace(/___/g, '')); u.voice = khmerVoice; u.lang = khmerVoice.lang; u.rate = 0.85; synth.speak(u); }
     catch (e) { toast('Audio couldn’t play on this device.'); }
@@ -418,7 +423,7 @@ button,input{font:inherit;color:inherit}
       ${false ? `<div class="quick" role="group" aria-label="Answers">${REPLIES[p.replies].map(([km, rom, en], i) => `<button type="button" class="qchip" data-qreply="${p.id}:${i}"><span lang="km">${esc(km)}</span> ${esc(en)}</button>`).join('')}</div>` : ''}
       <div class="actions">
         <button type="button" class="act primary" data-show="${p.id}">${I.show} Show${p.replies ? ' & ask' : ''}</button>
-        ${khmerVoice ? `<button type="button" class="act" data-play="${p.id}">${I.play} Play</button>` : ''}
+        ${canPlay(p.km) ? `<button type="button" class="act" data-play="${p.id}">${I.play} Play</button>` : ''}
         <button type="button" class="act star" data-star="${p.id}" aria-pressed="${!!saved[p.id]}" aria-label="${saved[p.id] ? 'Remove from saved' : 'Save phrase'}">${I.star}${saved[p.id] ? 'Saved' : 'Save'}</button>
       </div></article>`;
   }
@@ -481,7 +486,7 @@ button,input{font:inherit;color:inherit}
         ${p.builder ? `<span class="sectionlabel">${BUILDERS[p.builder].label}</span>
           <div class="replies">${BUILDERS[p.builder].list.map((pl, i) => `<button type="button" class="reply" data-place="${i}" aria-pressed="${place === pl}"><span class="rkm" lang="km">${esc(pl.km)}</span><span class="ren">${esc(pl.label || pl.en.replace(/^(the|a) /, ''))}</span></button>`).join('')}</div>` : ''}
         <div class="showbar">
-          ${khmerVoice ? `<button type="button" class="act primary" data-action="playShow">${I.play} Play in Khmer</button>` : ''}
+          ${canPlay(phraseText(showState.p, showState.place).km) ? `<button type="button" class="act primary" data-action="playShow">${I.play} Play in Khmer</button>` : ''}
           ${replies && SR ? `<button type="button" class="act" data-action="listenKm" id="listenKm">${I.mic} Listen to reply (beta)</button>` : ''}
         </div>
         ${heard ? `<div class="heard"><span class="sectionlabel">Heard</span><div class="km" lang="km">${esc(heard.text)}</div><div>${heard.match ? 'Best match: <strong>' + esc(heard.match) + '</strong>' : 'No confident match. Ask them to tap an answer below.'}</div></div>` : ''}

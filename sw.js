@@ -1,12 +1,12 @@
 // Khmer for Travelers Phrasebook: offline cache. (c) 2026 Robert Son.
-const VERSION = 'kftp-v2';
+const VERSION = 'kftp-v3';
 const FILES = [
   './', './index.html', './privacy.html', './manifest.webmanifest', './fonts/fonts.css',
   './fonts/kantumruy-pro-khmer-400-normal.woff2', './fonts/kantumruy-pro-khmer-500-normal.woff2', './fonts/kantumruy-pro-khmer-700-normal.woff2',
   './fonts/kantumruy-pro-latin-400-normal.woff2', './fonts/kantumruy-pro-latin-500-normal.woff2', './fonts/kantumruy-pro-latin-700-normal.woff2',
   './fonts/moul-khmer-400-normal.woff2', './fonts/moul-latin-400-normal.woff2',
   './icons/icon-192.png', './icons/icon-512.png', './icons/apple-touch-icon.png', './icons/favicon-32.png',
-  './audio/001.m4a', './audio/002.m4a', './audio/003.m4a', './audio/004.m4a', './audio/005.m4a'
+  './audio/001.m4a', './audio/002.m4a', './audio/003.m4a', './audio/004.m4a', './audio/005.m4a', './audio/049.m4a', './audio/050.m4a', './audio/051.m4a', './audio/052.m4a', './audio/053.m4a', './audio/054.m4a', './audio/055.m4a', './audio/056.m4a', './audio/057.m4a', './audio/058.m4a', './audio/059.m4a', './audio/060.m4a', './audio/061.m4a', './audio/062.m4a', './audio/063.m4a', './audio/064.m4a', './audio/065.m4a', './audio/066.m4a', './audio/067.m4a', './audio/068.m4a', './audio/069.m4a', './audio/070.m4a', './audio/071.m4a'
 ];
 self.addEventListener('install', (e) => {
   e.waitUntil(caches.open(VERSION).then((c) => c.addAll(FILES)).then(() => self.skipWaiting()));

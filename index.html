@@ -125,7 +125,7 @@ button,input{font:inherit;color:inherit}
     { km: 'ភោជនីយដ្ឋាន', rom: 'phochniyatthan', en: 'a restaurant' },
     { km: 'ហាងកាហ្វេ', rom: 'hang kafe', en: 'a cafe' },
     { km: 'បារ', rom: 'bar', en: 'a bar' },
-    { km: 'មន្ទីរពេទ្យ', rom: 'monti pet', en: 'the hospital' },
+    { km: 'មន្ទីរពេទ្យ', rom: 'monti p\u2019hache', en: 'the hospital' },
     { km: 'ព្រលានយន្តហោះ', rom: 'pro-lean yun-hos', en: 'the airport' },
     { km: 'ផ្សារ', rom: 'phsar', en: 'the market' },
     { km: 'ផ្សារធំថ្មី', rom: 'phsar thom thmei', en: 'Central Market' },
@@ -230,7 +230,7 @@ button,input{font:inherit;color:inherit}
     married: [['បាទ / ចាស', 'baat / chaa', 'Yes'], ['ទេ', 'te', 'No']],
     has: [['មាន', 'mean', 'Yes'], ['អត់មានទេ', 'ot mean te', 'No']],
     kids: [['មាន', 'mean', 'Yes'], ['អត់មានទេ', 'ot mean te', 'No'], ['នៅទេ', 'nov te', 'Not yet']],
-    have: [['មាន', 'mean', 'Yes, we have it'], ['អត់មានទេ', 'ot mean te', "We don't have it"], ['ចាំបន្តិច', 'cham bontech', 'Wait a moment']],
+    have: [['មាន', 'mean', 'Yes, we have it'], ['អត់មានទេ', 'ot mean te', "We don't have it"], ['ចាំតិច', 'cham tit', 'Wait a bit / moment / second']],
     places: PLACES.map((p) => [p.km, p.rom, p.en.replace(/^the /, '').replace(/^a /, '').replace(/^./, (c) => c.toUpperCase())]),
     price: [
       ...[500, 1000, 2000, 5000, 10000].map((n) => [kmNum(n.toLocaleString('en-US')) + ' រៀល', n.toLocaleString('en-US') + ' riel', n.toLocaleString('en-US') + ' riel']),
@@ -283,8 +283,8 @@ button,input{font:inherit;color:inherit}
     P('around', 'Where are you going?', 'ទៅណា?', 'tov na?', { replies: 'places', note: 'Tuk-tuk drivers often ask this. Show it to someone to let them tap where they are going.' }),
     P('around', 'I am going to ___', 'ខ្ញុំទៅ___', 'khnhom tov ___', { builder: 'places' }),
     P('around', 'Please take me to ___', 'សូមជូនខ្ញុំទៅ___', 'som choun khnhom tov ___', { builder: 'places', note: 'Handy for tuk-tuk and taxi drivers.' }),
-    P('around', 'Where is ___?', '___នៅឯណា?', '___ nov ae na?', { builder: 'places', replies: 'directions' }),
-    P('around', 'Where is the toilet?', 'បន្ទប់ទឹកនៅឯណា?', 'bontup tuk nov ae na?', { replies: 'directions' }),
+    P('around', 'Where is ___?', '___នៅឯណា?', '___ nhua ae na?', { builder: 'places', replies: 'directions' }),
+    P('around', 'Where is the toilet?', 'បន្ទប់ទឹកនៅឯណា?', 'bontup tuk nhua ae na?', { replies: 'directions' }),
     P('around', 'Is it far?', 'ឆ្ងាយទេ?', 'chhngay te?', { replies: 'far' }),
     P('around', 'Go straight', 'ទៅត្រង់', 'tov trong'),
     P('around', 'Turn left', 'បត់ឆ្វេង', 'bot chhveng'),
@@ -298,24 +298,24 @@ button,input{font:inherit;color:inherit}
     P('shop', 'Cheap', 'ថោក', 'thaok'),
     P('shop', 'Can you lower the price?', 'អាចចុះថ្លៃបានទេ?', 'ach choh thlai ban te?', { replies: 'price' }),
     P('shop', 'Do you have this?', 'មានអាហ្នឹងទេ?', 'mean a-nueng te?', { replies: 'have' }),
-    P('shop', "I'll take it", 'ខ្ញុំយកមួយនេះ', 'khnhom yok muoy nih'),
+    P('shop', 'I will take this (point to the item)', 'ខ្ញុំយកមួយនេះ', 'khnhom yok muoy nih', { keywords: "take it i'll take buy this one" }),
     P('shop', "I'm just looking", 'ខ្ញុំគ្រាន់តែមើល', 'khnhom kroan tae meul'),
 
     P('food', 'Delicious!', 'ឆ្ងាញ់!', 'chhnganh!'),
     P('food', 'Not spicy, please', 'កុំឲ្យហឹរ', 'kom aoy hoeur'),
-    P('food', 'A little spicy', 'ហឹរបន្តិច', 'hoeur bontech'),
+    P('food', 'A little spicy', 'ហឹរតិចៗ', 'hoeur tit-tit'),
     P('food', 'Water, please', 'សុំទឹក', 'som tuk'),
     P('food', 'No ice, please', 'កុំដាក់ទឹកកក', 'kom dak tuk kak'),
-    P('food', 'I am vegetarian', 'ខ្ញុំតមសាច់', 'khnhom tam sach'),
+    P('food', 'I don\u2019t eat meat / I am a vegetarian', 'ខ្ញុំតមសាច់', 'khnhom dom schech'),
     P('food', 'The bill, please', 'សុំគិតលុយ', 'som kit luy', { replies: 'price' }),
-    P('weather', 'Weather', 'អាកាសធាតុ', 'akasa theatu', { keywords: 'weather climate' }),
-    P('weather', 'What\u2019s the weather like?', 'អាកាសធាតុយ៉ាងម៉េចដែរ?', 'akasa theatu yang mech dae?', { builder: 'weather', tmpl: { km: '___', rom: '___', en: '___' }, keywords: 'weather hot heat warm sunny sun clear cool cold cloudy clouds overcast rain rainy wet', note: 'Tap a kind of day to show it.' }),
+    P('weather', 'Weather', 'អាកាសធាតុ', 'akasa-tiad', { keywords: 'weather climate' }),
+    P('weather', 'What\u2019s the weather like?', 'អាកាសធាតុយ៉ាងម៉េចដែរ?', 'akasa thiat yan mhet theau?', { builder: 'weather', tmpl: { km: '___', rom: '___', en: '___' }, keywords: 'weather hot heat warm sunny sun clear cool cold cloudy clouds overcast rain rainy wet', note: 'Tap a kind of day to show it.' }),
     P('weather', 'Umbrella', 'ឆ័ត្រ', 'chhat', { keywords: 'weather umbrella rain parasol sun shade' }),
 
     P('help', 'Help!', 'ជួយផង!', 'chuoy phong!'),
-    P('help', 'Call the police', 'ហៅប៉ូលីស', 'hav polis'),
-    P('help', 'I need a doctor', 'ខ្ញុំត្រូវការគ្រូពេទ្យ', 'khnhom trov kar kru pet'),
-    P('help', 'Where is the hospital?', 'មន្ទីរពេទ្យនៅឯណា?', 'monti pet nov ae na?', { replies: 'directions' }),
+    P('help', 'Call the police', 'ហៅប៉ូលីស', 'hoaw police'),
+    P('help', 'I need a doctor', 'ខ្ញុំត្រូវការគ្រូពេទ្យ', 'khnhom troau kar doctor (kru p\u2019hache)'),
+    P('help', 'Where is the hospital?', 'មន្ទីរពេទ្យនៅឯណា?', 'monti p\u2019hache nhua ae na?', { replies: 'directions' }),
     P('help', 'I am sick', 'ខ្ញុំឈឺ', 'khnhom chheu', { builder: 'symptoms', tmpl: { km: 'ខ្ញុំ___', rom: 'khnhom ___', en: 'I ___' }, keywords: 'pain headache stomachache stomach ache diarrhea toothache tooth dizzy fever', note: 'Tap a symptom to show it, e.g. "I have a headache."' }),
     P('help', 'I am lost', 'ខ្ញុំវង្វេងផ្លូវ', 'khnhom vongveng phlauv')
   ];
@@ -344,7 +344,7 @@ button,input{font:inherit;color:inherit}
   }
   if (synth) { findVoice(); try { synth.addEventListener('voiceschanged', () => { const had = !!khmerVoice; findVoice(); if (!!khmerVoice !== had) render(); }); } catch (e) {} }
   // Native-speaker recordings, keyed by the exact Khmer text they say.
-  const AUDIO = { 'ជំរាបសួរ': 'audio/001.m4a', 'អរគុណ': 'audio/002.m4a', 'ប៉ុន្មាន?': 'audio/003.m4a', 'បន្ទប់ទឹកនៅឯណា?': 'audio/004.m4a', 'សូមជូនខ្ញុំទៅអូតែល': 'audio/005.m4a' };
+  const AUDIO = { 'ជំរាបសួរ': 'audio/001.m4a', 'អរគុណ': 'audio/002.m4a', 'ប៉ុន្មាន?': 'audio/003.m4a', 'បន្ទប់ទឹកនៅឯណា?': 'audio/004.m4a', 'សូមជូនខ្ញុំទៅអូតែល': 'audio/005.m4a', 'នេះថ្លៃប៉ុន្មាន?': 'audio/049.m4a', 'ថ្លៃពេក': 'audio/050.m4a', 'ថោក': 'audio/051.m4a', 'អាចចុះថ្លៃបានទេ?': 'audio/052.m4a', 'មានអាហ្នឹងទេ?': 'audio/053.m4a', 'ខ្ញុំយកមួយនេះ': 'audio/054.m4a', 'ខ្ញុំគ្រាន់តែមើល': 'audio/055.m4a', 'ឆ្ងាញ់!': 'audio/056.m4a', 'កុំឲ្យហឹរ': 'audio/057.m4a', 'ហឹរតិចៗ': 'audio/058.m4a', 'សុំទឹក': 'audio/059.m4a', 'កុំដាក់ទឹកកក': 'audio/060.m4a', 'ខ្ញុំតមសាច់': 'audio/061.m4a', 'សុំគិតលុយ': 'audio/062.m4a', 'អាកាសធាតុ': 'audio/063.m4a', 'អាកាសធាតុយ៉ាងម៉េចដែរ?': 'audio/064.m4a', 'ឆ័ត្រ': 'audio/065.m4a', 'ជួយផង!': 'audio/066.m4a', 'ហៅប៉ូលីស': 'audio/067.m4a', 'ខ្ញុំត្រូវការគ្រូពេទ្យ': 'audio/068.m4a', 'មន្ទីរពេទ្យនៅឯណា?': 'audio/069.m4a', 'ខ្ញុំឈឺ': 'audio/070.m4a', 'ខ្ញុំវង្វេងផ្លូវ': 'audio/071.m4a' };
   const canPlay = (km) => !!khmerVoice || !!AUDIO[km];
   let clip = null;
   function speak(text) {

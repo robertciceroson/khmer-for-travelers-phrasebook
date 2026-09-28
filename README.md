@@ -2,7 +2,7 @@
 
 Simple Khmer phrases for travelers in Cambodia. Each phrase shows English, Khmer script and an easy pronunciation guide, with a big-text **Show** mode to hold up for a driver, vendor or waiter.
 
-This is the **user-testing version**. It runs entirely in the browser as a single `index.html` file, with no server, build step or account.
+It runs entirely in the browser, with no server, build step or account, and it can be installed on a phone's home screen and used offline. It is being prepared for Google Play and the App Store.
 
 ## Features
 
@@ -27,17 +27,34 @@ This is the **user-testing version**. It runs entirely in the browser as a singl
 
 The microphone works on the hosted site (for example GitHub Pages), not inside the claude.ai preview.
 
+## Install and offline use
+
+- On a phone, open the site and choose **Add to Home Screen** (iPhone: Share menu; Android: browser menu or the install prompt).
+- After the first visit, the whole app, including the Khmer fonts, is saved on the device and works with no signal.
+- Fonts are self-hosted, so the app makes no requests to other sites.
+
+## Files
+
+| File | Purpose |
+|---|---|
+| `index.html` | The app |
+| `privacy.html` | Privacy policy (also the store privacy URL) |
+| `manifest.webmanifest` | App name, colors and icons for installing |
+| `sw.js` | Offline cache |
+| `fonts/` | Kantumruy Pro and Moul (SIL Open Font License 1.1) |
+| `icons/` | App icons, including 1024 × 1024 for the App Store |
+
 ## Deploy to GitHub Pages
 
 1. Create a public repository named `khmer-for-travelers-phrasebook`.
-2. Upload `index.html`, `README.md` and `LICENSE` to the repository root.
+2. Upload every file and both folders (`fonts`, `icons`) to the repository root.
 3. Go to **Settings → Pages**, choose **Deploy from a branch**, `main`, `/ (root)`, and **Save**.
 4. After a minute or two the site is live at `https://robertciceroson.github.io/khmer-for-travelers-phrasebook/`.
 
 ## Content notes
 
 - Pronunciation guides are approximate, English-friendly spellings, not a formal romanization system.
-- Khmer translations are pending review by native speakers before public launch.
+- Khmer translations were written and reviewed by a native Khmer speaker.
 - Men say *baat* and women say *chaa* for "yes".
 - Khmer names siblings by age (*bong* = older, *p'oun* = younger), and *bong* is also a polite way to address someone slightly older, such as a driver or vendor.
 - U.S. dollars are widely accepted in Cambodia, with riel used for small change.

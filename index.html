@@ -13,8 +13,14 @@
 [hidden]{display:none!important}
 body{margin:0}
 </style>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Kantumruy+Pro:wght@400;500;700&family=Moul&display=swap">
+<link rel="stylesheet" href="fonts/fonts.css">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Khmer Phrases">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
 <style>
 :root{
   --ground:#EDF1F5; --surface:#FFFFFF; --sunk:#E1E7EF; --ink:#15203B; --muted:#4B5873; --line:#D3DBE6;
@@ -97,6 +103,7 @@ button,input{font:inherit;color:inherit}
 .heard .km{font-size:22px}
 .toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(20px + env(safe-area-inset-bottom,0px));background:var(--ink);color:var(--ground);padding:12px 16px;border-radius:14px;font-size:14px;max-width:min(92vw,480px);z-index:20;box-shadow:0 6px 24px rgba(0,0,0,.25)}
 .footer{text-align:center;font-size:13px;color:var(--muted)}
+.footer a{color:inherit}
 </style>
 </head>
 <body>
@@ -443,7 +450,7 @@ button,input{font:inherit;color:inherit}
         <span>${khmerVoice ? 'This device can read phrases aloud in Khmer.' : 'This device has no Khmer voice, so phrases show as text. Use Show to let people read them.'}${SR ? ' Tap the microphone to say a phrase in English.' : ''}</span>
         <span>Khmer translations are being reviewed by native speakers. Spot a mistake? Email rson226@gmail.com.</span>
       </div>
-      <p class="footer">Your saved phrases stay on this device. © 2026 Robert Son. All rights reserved.</p>`;
+      <p class="footer">Your saved phrases stay on this device. <a href="privacy.html">Privacy policy</a> · © 2026 Robert Son. All rights reserved.</p>`;
     if (active === 'q') { const q = document.getElementById('q'); q.focus(); q.setSelectionRange(q.value.length, q.value.length); }
   }
 
@@ -562,5 +569,6 @@ button,input{font:inherit;color:inherit}
   render();
 })();
 </script>
+<script>if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) { window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {})); }</script>
 </body>
 </html>

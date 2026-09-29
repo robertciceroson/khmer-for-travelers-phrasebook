@@ -1,5 +1,5 @@
 // Khmer for Travelers Phrasebook: offline cache. (c) 2026 Robert Son.
-const VERSION = 'kftp-v31';
+const VERSION = 'kftp-v32';
 const FILES = [
   './', './index.html', './privacy.html', './manifest.webmanifest', './fonts/fonts.css',
   './fonts/kantumruy-pro-khmer-400-normal.woff2', './fonts/kantumruy-pro-khmer-500-normal.woff2', './fonts/kantumruy-pro-khmer-700-normal.woff2',

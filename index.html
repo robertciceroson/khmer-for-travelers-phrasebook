@@ -222,7 +222,7 @@ button,input{font:inherit;color:inherit}
   const kmNum = (n) => String(n).replace(/\d/g, (d) => KM_DIGITS[d]);
   const REPLIES = {
     yesno: [['បាទ / ចាស', 'baat / chaa', 'Yes'], ['ទេ', 'te', 'No'], ['មិនដឹងទេ', 'min doeng te', "I don't know"]],
-    fine: [['សុខសប្បាយ', 'sok sabay', "I'm fine"], ['ធម្មតា', 'thommada', 'So-so'], ['អរគុណ', 'arkoun', 'Thank you']],
+    fine: [['សុខសប្បាយ', 'sok-sah-bye', "I'm fine"], ['ធម្មតា', 'thommada', 'So-so'], ['អរគុណ', 'arkoun', 'Thank you']],
     directions: [['ទៅត្រង់', 't\u2019au trong', 'Go straight'], ['បត់ឆ្វេង', 'bot chhveng', 'Turn left'], ['បត់ស្តាំ', 'bot sdam', 'Turn right'],
       ['នៅជិតនេះ', 'nov chit nih', "It's near here"], ['នៅឆ្ងាយ', 'nov chhngay', "It's far"], ['នៅទីនោះ', 'nov ti noh', "It's over there"]],
     far: [['ជិត', 'chit', 'Near'], ['ឆ្ងាយ', 'chhngay', 'Far'], ['មិនឆ្ងាយទេ', 'min chhngay te', 'Not far'], ['មិនដឹងទេ', 'min doeng te', "I don't know"]],
@@ -249,8 +249,8 @@ button,input{font:inherit;color:inherit}
     P('basics', 'No problem', 'មិនអីទេ', 'min ey te'),
     P('basics', 'How are you?', 'សុខសប្បាយជាទេ?', 'sok-sah-bye cheaa te?', { replies: 'fine' }),
     P('basics', 'How are you feeling?', 'អ្នកមានអារម្មណ៍យ៉ាងម៉េចដែរ?', 'neak meaan arom yang mech dae?', { builder: 'feelings', tmpl: { km: 'ខ្ញុំ___', rom: 'khnhom ___', en: '___' }, keywords: 'happy sad hungry eat full thirsty tired exhausted sleepy rest relax dance feeling', note: 'Tap how you feel to show it.' }),
-    P('basics', "I'm fine", 'ខ្ញុំសុខសប្បាយ', 'khnhom sok sabei'),
-    P('basics', "I'm not fine", 'ខ្ញុំមិនសុខសប្បាយទេ', 'khnhom min sok sabay te'),
+    P('basics', "I'm fine", 'ខ្ញុំសុខសប្បាយ', 'khnhom sok-sah-bye'),
+    P('basics', "I'm not fine", 'ខ្ញុំមិនសុខសប្បាយទេ', 'khnhom min sok-sah-bye te'),
     P('basics', 'My name is ___', 'ខ្ញុំឈ្មោះ___', 'khnhom chhmuoh ___'),
     P('basics', "I don't understand", 'ខ្ញុំមិនយល់ទេ', 'khnhom min yol te'),
     P('basics', 'Do you speak English?', 'អ្នកចេះនិយាយភាសាអង់គ្លេសទេ?', 'neak cheh niyeay pheasa ongle te?', { replies: 'yesno' }),

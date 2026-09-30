@@ -189,7 +189,7 @@ button,input{font:inherit;color:inherit}
   ];
   const FEELINGS = [
     { km: 'សប្បាយចិត្ត', rom: 'sabei chet', en: "I'm happy" },
-    { km: 'មិនសប្បាយចិត្តទេ', rom: 'min sabay chet te', en: "I'm not happy" },
+    { km: 'មិនសប្បាយចិត្តទេ', rom: 'min sabei chet te', en: "I'm not happy" },
     { km: 'ពិបាកចិត្ត', rom: 'pibak chet', en: "I'm sad" },
     { km: 'ឃ្លាន', rom: 'khlean', en: "I'm hungry" },
     { km: 'ចង់ញ៉ាំបាយ', rom: 'chong nham bei', en: "I want to eat" },
@@ -218,7 +218,7 @@ button,input{font:inherit;color:inherit}
     { km: 'ថ្ងៃភ្លៀង', rom: 'thngai phlieng', en: 'Rainy day' }
   ];
   const BUILDERS = { weather: { label: 'Kind of day', list: WEATHER }, pets: { label: 'Animals', list: PETS }, feelings: { label: 'How I feel', list: FEELINGS }, family: { label: 'Family members', list: FAMILY }, places: { label: 'Choose a place', list: PLACES }, people: { label: 'Choose a person', list: PEOPLE }, symptoms: { label: 'Choose a symptom', list: SYMPTOMS } };
-  const FEELINGS_REPLIES = [['ខ្ញុំសប្បាយចិត្ត', 'khnhom sabei chet', "I'm happy"], ['ខ្ញុំមិនសប្បាយចិត្តទេ', 'khnhom min sabay chet te', "I'm not happy"], ['ខ្ញុំពិបាកចិត្ត', 'khnhom pibak chet', "I'm sad"], ['ខ្ញុំឃ្លាន', 'khnhom khlean', "I'm hungry"], ['ខ្ញុំចង់ញ៉ាំបាយ', 'khnhom chong nham bei', "I want to eat"], ['ខ្ញុំមិនឃ្លានទេ', 'khnhom min khlean te', "I'm not hungry"], ['ខ្ញុំឆ្អែតហើយ', 'khnhom chh\u2019aet haeuy', "I'm full"], ['ខ្ញុំស្រេកទឹក', 'khnhom srek tuk', "I'm thirsty"], ['ខ្ញុំហត់', 'khnhom h\u2019aout', "I'm tired"], ['ខ្ញុំអស់កម្លាំង', 'khnhom os kamlang', "I'm exhausted"], ['ខ្ញុំងងុយគេង', 'khnhom ngnguy keng', "I'm sleepy"], ['ខ្ញុំចង់សម្រាក', 'khnhom chong samrak', "I want to rest"], ['ខ្ញុំចង់សម្រាកលំហែ', 'khnhom chong samrak lumhae', "I want to relax"], ['ខ្ញុំចង់រាំ', 'khnhom chong roam', "I want to dance"]];
+  const FEELINGS_REPLIES = [['ខ្ញុំសប្បាយចិត្ត', 'khnhom sabei chet', "I'm happy"], ['ខ្ញុំមិនសប្បាយចិត្តទេ', 'khnhom min sabei chet te', "I'm not happy"], ['ខ្ញុំពិបាកចិត្ត', 'khnhom pibak chet', "I'm sad"], ['ខ្ញុំឃ្លាន', 'khnhom khlean', "I'm hungry"], ['ខ្ញុំចង់ញ៉ាំបាយ', 'khnhom chong nham bei', "I want to eat"], ['ខ្ញុំមិនឃ្លានទេ', 'khnhom min khlean te', "I'm not hungry"], ['ខ្ញុំឆ្អែតហើយ', 'khnhom chh\u2019aet haeuy', "I'm full"], ['ខ្ញុំស្រេកទឹក', 'khnhom srek tuk', "I'm thirsty"], ['ខ្ញុំហត់', 'khnhom h\u2019aout', "I'm tired"], ['ខ្ញុំអស់កម្លាំង', 'khnhom os kamlang', "I'm exhausted"], ['ខ្ញុំងងុយគេង', 'khnhom ngnguy keng', "I'm sleepy"], ['ខ្ញុំចង់សម្រាក', 'khnhom chong samrak', "I want to rest"], ['ខ្ញុំចង់សម្រាកលំហែ', 'khnhom chong samrak lumhae', "I want to relax"], ['ខ្ញុំចង់រាំ', 'khnhom chong roam', "I want to dance"]];
   const KM_DIGITS = '០១២៣៤៥៦៧៨៩';
   const kmNum = (n) => String(n).replace(/\d/g, (d) => KM_DIGITS[d]);
   const REPLIES = {

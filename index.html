@@ -131,7 +131,7 @@ button,input{font:inherit;color:inherit}
     { km: 'ផ្សារ', rom: 'phsar', en: 'the market' },
     { km: 'ផ្សារធំថ្មី', rom: 'phsar thom thmei', en: 'Central Market' },
     { km: 'អង្គរវត្ត', rom: 'angkor voat', en: 'Angkor Wat' },
-    { km: 'ព្រះបរមរាជវាំង', rom: 'preah borom reachea veang', en: 'the Royal Palace', over: { 'I am going to ___': { km: 'ខ្ញុំទៅវាំងស្ដេច', rom: 'khnhom t\u2019au wang s\u2019daich' } } },
+    { km: 'ព្រះបរមរាជវាំង', rom: 'preah borom reachea veang', btnRom: 'weing s\u2019dach', en: 'the Royal Palace', over: { 'I am going to ___': { km: 'ខ្ញុំទៅវាំងស្ដេច', rom: 'khnhom t\u2019au wang s\u2019daich' } } },
     { km: 'ចំណតឡានក្រុង', rom: 'chamnat lan krong', en: 'the bus station', over: { 'I am going to ___': { km: 'ខ្ញុំទៅចំណតឡានប៊ីសក្រុង', rom: 'khnhom t\u2019au chamnat lan bus krong' } } },
     { km: 'ហ្វាម៉ាស៊ី', rom: 'pharmacy', en: 'the pharmacy' },
     { km: 'ឆ្នេរ / សមុទ្រ', rom: 'chnnea / samut', en: 'the beach', reply: ['ឆ្នេរ / សមុទ្រ', 'chnnea / sa\u2019mouat', 'Beach'], over: { 'I am going to ___': { km: 'ខ្ញុំទៅឆ្នេរ / សមុទ្រ', rom: 'khnhom t\u2019au chnnea / sa\u2019mouat' }, 'Where is ___?': { km: 'ឆ្នេរ / សមុទ្រនៅឯណា?', rom: 'chnnea / sa\u2019mouat nhua ae na?' }, 'Please take me to ___': { km: 'សូមជូនខ្ញុំទៅឆ្នេរ / សមុទ្រ', rom: 'som choun khnhom t\u2019au chnnea / sa\u2019mouat' } } },
@@ -487,7 +487,7 @@ button,input{font:inherit;color:inherit}
           <span class="en">${esc(t.en)}</span>
         </div>
         ${p.builder ? `<span class="sectionlabel">${BUILDERS[p.builder].label}</span>
-          <div class="replies">${BUILDERS[p.builder].list.map((pl, i) => `<button type="button" class="reply" data-place="${i}" aria-pressed="${place === pl}"><span class="rkm" lang="km">${esc(pl.km)}</span>${p.builder === 'places' ? `<span class="rrom">${esc(pl.rom)}</span>` : ''}<span class="ren">${esc(pl.label || pl.en.replace(/^(the|a) /, ''))}</span></button>`).join('')}</div>` : ''}
+          <div class="replies">${BUILDERS[p.builder].list.map((pl, i) => `<button type="button" class="reply" data-place="${i}" aria-pressed="${place === pl}"><span class="rkm" lang="km">${esc(pl.km)}</span>${p.builder === 'places' ? `<span class="rrom">${esc(pl.btnRom || pl.rom)}</span>` : ''}<span class="ren">${esc(pl.label || pl.en.replace(/^(the|a) /, ''))}</span></button>`).join('')}</div>` : ''}
         <div class="showbar">
           ${canPlay(phraseText(showState.p, showState.place).km) ? `<button type="button" class="act primary" data-action="playShow">${I.play} Play in Khmer</button>` : ''}
           ${replies && SR ? `<button type="button" class="act" data-action="listenKm" id="listenKm">${I.mic} Listen to reply (beta)</button>` : ''}

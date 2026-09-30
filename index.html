@@ -91,6 +91,7 @@ button,input{font:inherit;color:inherit}
 .reply{min-height:64px;border-radius:14px;border:1px solid var(--line);background:var(--surface);cursor:pointer;padding:8px 10px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;text-align:center}
 .reply .rkm{font-size:20px;line-height:1.5}
 .reply .ren{font-size:13px;color:var(--muted)}
+.reply .rrom{font-size:13px;font-style:italic;color:var(--ink)}
 .reply[aria-pressed="true"]{background:var(--saffron);border-color:var(--saffron);color:var(--saffron-ink)}
 .reply[aria-pressed="true"] .ren{color:var(--saffron-ink)}
 .answer{background:var(--saffron);color:var(--saffron-ink);border-radius:18px;padding:16px;text-align:center;font-size:22px;font-weight:700}
@@ -486,7 +487,7 @@ button,input{font:inherit;color:inherit}
           <span class="en">${esc(t.en)}</span>
         </div>
         ${p.builder ? `<span class="sectionlabel">${BUILDERS[p.builder].label}</span>
-          <div class="replies">${BUILDERS[p.builder].list.map((pl, i) => `<button type="button" class="reply" data-place="${i}" aria-pressed="${place === pl}"><span class="rkm" lang="km">${esc(pl.km)}</span><span class="ren">${esc(pl.label || pl.en.replace(/^(the|a) /, ''))}</span></button>`).join('')}</div>` : ''}
+          <div class="replies">${BUILDERS[p.builder].list.map((pl, i) => `<button type="button" class="reply" data-place="${i}" aria-pressed="${place === pl}"><span class="rkm" lang="km">${esc(pl.km)}</span>${p.builder === 'places' ? `<span class="rrom">${esc(pl.rom)}</span>` : ''}<span class="ren">${esc(pl.label || pl.en.replace(/^(the|a) /, ''))}</span></button>`).join('')}</div>` : ''}
         <div class="showbar">
           ${canPlay(phraseText(showState.p, showState.place).km) ? `<button type="button" class="act primary" data-action="playShow">${I.play} Play in Khmer</button>` : ''}
           ${replies && SR ? `<button type="button" class="act" data-action="listenKm" id="listenKm">${I.mic} Listen to reply (beta)</button>` : ''}

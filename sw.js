@@ -1,5 +1,5 @@
 // Khmer for Travelers Phrasebook: offline cache. (c) 2026 Robert Son.
-const VERSION = 'kftp-v69';
+const VERSION = 'kftp-v70';
 const FILES = [
   './', './index.html', './privacy.html', './manifest.webmanifest', './fonts/fonts.css',
   './fonts/kantumruy-pro-khmer-400-normal.woff2', './fonts/kantumruy-pro-khmer-500-normal.woff2', './fonts/kantumruy-pro-khmer-700-normal.woff2',
@@ -23,5 +23,29 @@ self.addEventListener('fetch', (e) => {
       .catch(() => caches.match(req).then((r) => r || caches.match('./index.html'))));
     return;
   }
-  e.respondWith(caches.match(req).then((r) => r || fetch(req).then((res) => { const copy = res.clone(); caches.open(VERSION).then((c) => c.put(req, copy)); return res; })));
+  if (req.headers.has('range')) { e.respondWith(rangeResponse(req)); return; }
+  e.respondWith(caches.match(req).then((r) => r || fetch(req).then((res) => { if (res.status === 200) { const copy = res.clone(); caches.open(VERSION).then((c) => c.put(req, copy)); } return res; })));
 });
+// iPhone Safari asks for audio in byte ranges and will not play a full-file answer, so serve the requested slice.
+async function rangeResponse(req) {
+  const url = req.url;
+  let res = await caches.match(url);
+  if (!res) {
+    try {
+      res = await fetch(url);
+      if (res.ok) { const copy = res.clone(); caches.open(VERSION).then((c) => c.put(url, copy)); }
+    } catch (err) { return fetch(req); }
+  }
+  const buf = await res.arrayBuffer();
+  const size = buf.byteLength;
+  const m = /bytes=(\d*)-(\d*)/.exec(req.headers.get('range') || '');
+  let start = m && m[1] ? parseInt(m[1], 10) : 0;
+  let end = m && m[2] ? parseInt(m[2], 10) : size - 1;
+  if (m && !m[1] && m[2]) { start = Math.max(0, size - parseInt(m[2], 10)); end = size - 1; }
+  end = Math.min(end, size - 1);
+  if (start > end || start >= size) return new Response(null, { status: 416, headers: { 'Content-Range': 'bytes */' + size } });
+  return new Response(buf.slice(start, end + 1), { status: 206, statusText: 'Partial Content', headers: {
+    'Content-Type': res.headers.get('Content-Type') || 'audio/mp4',
+    'Content-Range': 'bytes ' + start + '-' + end + '/' + size,
+    'Content-Length': String(end - start + 1), 'Accept-Ranges': 'bytes' } });
+}
